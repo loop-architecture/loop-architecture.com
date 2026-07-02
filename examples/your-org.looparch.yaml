@@ -15,14 +15,6 @@ systems:
     name: App Repo
     description: Application source code
     repository: https://github.com/your-org/app
-  - id: app-azure
-    name: App on Azure
-    description: The running application on Azure
-    url: https://azure.microsoft.com
-  - id: ci-cd
-    name: CI/CD
-    description: CI/CD Runs
-    url: https://github.com/features/actions
   - id: jira
     name: Jira
     description: Service desk and tickets
@@ -80,16 +72,6 @@ loops:
     prompt: >
       Find recurring errors in the logs, locate the cause in the code, and open a
       pull request that fixes it, referencing the originating trace.
-
-  - id: deploy-previews
-    name: Deploy Previews
-    description: Ships a preview deploy for every commit.
-    trigger: push
-    observe: [ci-cd]
-    act: [app-azure]
-    prompt: >
-      On each pushed commit, once CI passes, deploy a preview of the app to Azure
-      and report the preview URL.
 
   - id: sync-docs
     name: Sync Docs
@@ -166,22 +148,23 @@ loops:
       request, and comment on the issue with the link.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
 
-  - id: check-repo-compliance
-    name: Check Repo Compliance
-    description: Checks the app repo is compliant with Kertos.
+  - id: implement-compliance
+    name: Implement Compliance
+    description: Implements Kertos compliance in the app repo.
     trigger: "0 5 * * *"
+    model: claude-opus-4-8
     observe: [code-repo, policies]
-    act: [jira]
+    act: [code-repo]
     prompt: >
-      Check the app repo against the policies in Kertos. Open a Jira issue for each
-      violation you find.
+      Check the app repo against the policies in Kertos and open a pull request that
+      implements any missing compliance controls, citing the policy.
+    tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
 
-  - id: check-evidence
-    name: Check Evidence
-    description: Checks OneDrive evidence matches Kertos policies.
+  - id: update-evidence
+    name: Update Evidence
+    description: Keeps OneDrive evidence in line with Kertos policies.
     trigger: "0 5 * * 1"
-    observe: [onedrive, policies]
-    act: [jira]
+    observe: [policies]
+    act: [onedrive]
     prompt: >
-      Check that the evidence in OneDrive is in line with the policies in Kertos.
-      Open a Jira issue for any gap.
+      Update the evidence in OneDrive so it stays in line with the policies in Kertos.

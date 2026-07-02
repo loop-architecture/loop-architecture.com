@@ -32,8 +32,8 @@ def test_example_architecture_is_valid() -> None:
     arch = load_architecture(EXAMPLE)
     errors = [i for i in check(arch) if i.level == "error"]
     assert not errors, errors
-    assert len(arch.loops) == 12
-    assert len(arch.systems) == 12
+    assert len(arch.loops) == 11
+    assert len(arch.systems) == 10
 
 
 def test_trigger_type_inference() -> None:
@@ -74,7 +74,7 @@ def test_lint_flags_unknown_system() -> None:
 def test_publish_all_loops(tmp_path: Path) -> None:
     arch = load_architecture(EXAMPLE)
     results = publish(arch, root=tmp_path)
-    assert len(results) == 12
+    assert len(results) == 11
     docs = next(r for r in results if r.loop_id == "sync-docs")
     assert docs.schedule == "0 6 * * *"
     body = docs.command_path.read_text()
@@ -90,10 +90,9 @@ def test_publish_all_loops(tmp_path: Path) -> None:
 def test_publish_event_trigger(tmp_path: Path) -> None:
     import json
     arch = load_architecture(EXAMPLE)
-    [r] = publish(arch, root=tmp_path, only="deploy-previews")
+    [r] = publish(arch, root=tmp_path, only="sync-docs")  # has a cron + a merged-PR event
     desc = json.loads(r.routine_path.read_text())
-    assert desc["triggers"][0]["githubTrigger"]["event"] == "push"
-    assert r.schedule is None
+    assert any(t.get("githubTrigger", {}).get("event") == "pull_request.merged" for t in desc["triggers"])
 
 
 def test_publish_single_loop(tmp_path: Path) -> None:
@@ -184,7 +183,7 @@ def test_architecture_diagram_svg_offline() -> None:
         assert lp.name in svg
     for s in arch.systems:
         assert s.name in svg
-    assert "12 loops · 12 systems" in svg
+    assert "11 loops · 10 systems" in svg
     # No sensor/actuator wording in the diagram, and no dashed edges.
     assert "sensor" not in svg and "actuator" not in svg
     assert "stroke-dasharray" not in svg

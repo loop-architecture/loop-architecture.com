@@ -21,7 +21,7 @@
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
         "readBy": [],
         "writtenBy": [
-          "Check Data Product",
+          "Implement Skills",
           "Align Data Contract"
         ]
       }
@@ -42,7 +42,7 @@
         "connector": null,
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
         "readBy": [
-          "Check Data Product"
+          "Implement Skills"
         ],
         "writtenBy": [
           "Govern Skills"
@@ -124,22 +124,22 @@
       }
     },
     {
-      "id": "check-data-product",
+      "id": "implement-skills",
       "type": "loop",
       "position": {
         "x": 1000,
         "y": 60.0
       },
       "data": {
-        "label": "Check Data Product",
-        "id": "check-data-product",
-        "description": "Checks the data product is implemented per the skills.",
+        "label": "Implement Skills",
+        "id": "implement-skills",
+        "description": "Implements the skills in the data product.",
         "emoji": "\u26a1\ud83d\udd50",
         "triggers": [
           "push",
           "0 7 * * *"
         ],
-        "prompt": "Check that the data product follows its skills and is implemented accordingly. Open a pull request (or an issue) for any place where the implementation drifts from what the skills prescribe.",
+        "prompt": "Implement the skills in the data product and open a pull request for any place where the implementation drifts from what the skills prescribe.",
         "model": "claude-opus-4-8",
         "tools": [
           "Read",
@@ -204,15 +204,15 @@
       "targetHandle": "lt"
     },
     {
-      "id": "use:skills->check-data-product",
+      "id": "use:skills->implement-skills",
       "source": "skills",
-      "target": "check-data-product",
+      "target": "implement-skills",
       "sourceHandle": "rs",
       "targetHandle": "lt"
     },
     {
-      "id": "act:check-data-product->data-product",
-      "source": "check-data-product",
+      "id": "act:implement-skills->data-product",
+      "source": "implement-skills",
       "target": "data-product",
       "sourceHandle": "rs",
       "targetHandle": "lt"

@@ -38,9 +38,9 @@ loops:
       policy it breaks.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
 
-  - id: check-data-product
-    name: Check Data Product
-    description: Checks the data product is implemented per the skills.
+  - id: implement-skills
+    name: Implement Skills
+    description: Implements the skills in the data product.
     trigger:
       - push
       - "0 7 * * *"
@@ -48,9 +48,8 @@ loops:
     observe: [skills]
     act: [data-product]
     prompt: >
-      Check that the data product follows its skills and is implemented accordingly.
-      Open a pull request (or an issue) for any place where the implementation drifts
-      from what the skills prescribe.
+      Implement the skills in the data product and open a pull request for any place
+      where the implementation drifts from what the skills prescribe.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
 
   - id: align-data-contract
