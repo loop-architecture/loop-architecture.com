@@ -136,14 +136,20 @@ def cmd_sync(args: argparse.Namespace) -> int:
     if args.loop and not arch.loop(args.loop):
         print(err(f"✗ no loop '{args.loop}'"), file=sys.stderr)
         return 1
-    results = sync(arch, root=args.root, only=args.loop)
+    results = sync(arch, root=args.root, only=args.loop, local=args.local)
     if not results:
         print(warn("no loops synced"))
         return 0
     for r in results:
-        sched = f"  ↻ {r.schedule}" if r.schedule else ""
-        print(ok(f"✓ /{'loop-' + r.loop_id}") + dim(f"  → {r.command_path}") + dim(sched))
+        print(ok(f"✓ /{r.command_name}") + dim(f"  → {r.command_path}"))
+        if not args.local:
+            # Routines are cloud-managed: register each command with /schedule.
+            print(dim(f"    cloud: run  /schedule  in Claude Code, running /{r.command_name}  (trigger: {r.trigger})"))
     print(ok(f"✓ synced {len(results)} loop(s)"))
+    if args.local:
+        print(dim("  wrote local .claude/routines descriptors (offline record; read back with --from-claude)"))
+    else:
+        print(dim("  routines live in your claude.ai account, create them at claude.ai/code with /schedule"))
     return 0
 
 
@@ -180,6 +186,8 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("loop", nargs="?", help="sync only this loop id (default: all)")
     s.add_argument("--root", default=".", help="project root to write .claude/ into")
     s.add_argument("--force", action="store_true", help="sync even if invalid")
+    s.add_argument("--local", action="store_true",
+                   help="also write local .claude/routines/*.json descriptors (default: cloud, print /schedule)")
     s.add_argument("--from-claude", action="store_true",
                    help="reverse: read Claude Code routines and reconstruct the Loop Architecture YAML")
     s.add_argument("-o", "--output", help="reverse only: output YAML (default: stdout)")

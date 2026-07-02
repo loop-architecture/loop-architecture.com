@@ -211,9 +211,11 @@ createController(document.getElementById(<span class="c-str">'flow'</span>)).sho
 <span class="c-p">$</span> looparch sync your-org.looparch.yaml     <span class="c-cmt"># → Claude Code routines</span>
 <span class="c-p">$</span> looparch sync ./my-project --from-claude  <span class="c-cmt"># ← reverse: routines back to YAML</span></code></pre>
       <p class="note">
-        <code>sync</code> writes, for each loop, a slash command
-        (<code>.claude/commands/loop-&lt;id&gt;.md</code>) and a routine descriptor
-        (<code>.claude/routines/&lt;id&gt;.json</code>) with the loop's schedule/event, model, and repos.
+        Routines are cloud-managed. By default <code>sync</code> writes each loop's slash command
+        (<code>.claude/commands/loop-&lt;id&gt;.md</code>) and prints the <code>/schedule</code> step to
+        create the routine in your claude.ai account. <code>--local</code> also writes a
+        <code>.claude/routines/&lt;id&gt;.json</code> descriptor (offline record, read back with
+        <code>--from-claude</code>).
       </p>
       <p><a class="more" href="looparch/README.md">CLI reference →</a></p>
     </section>
@@ -311,8 +313,10 @@ createController(document.getElementById(<span class="c-str">'flow'</span>)).sho
           code and storage), connect them into loops, name them, and set triggers.</dd>
 
         <dt>How do I sync a loop to Claude Code?</dt>
-        <dd>Encode your loops in one Loop Architecture YAML file and run <code>looparch sync</code>.
-          Each loop becomes a Claude Code routine: a slash command plus a schedule or event trigger.</dd>
+        <dd>Encode your loops in one Loop Architecture YAML file and run <code>looparch sync</code>. It
+          writes each loop's slash command and prints the <code>/schedule</code> step to register it as
+          a routine in your claude.ai account, routines are cloud-managed by default. Add
+          <code>--local</code> to also write <code>.claude/routines</code> descriptors you can read back.</dd>
 
         <dt>What is looparch?</dt>
         <dd><code>looparch</code> is a Python CLI (built with uv) that validates, visualizes and
@@ -386,7 +390,7 @@ createController(document.getElementById(<span class="c-str">'flow'</span>)).sho
           { "@type": "Question", "name": "What is an agentic loop?", "acceptedAnswer": { "@type": "Answer", "text": "An agentic loop is a continuous cycle where an agent reads from (uses) one or more systems, follows its instructions toward a goal, and writes back to systems, again and again on its trigger. It runs continuously and is self-learning." } },
           { "@type": "Question", "name": "Where is the loop in the diagram?", "acceptedAnswer": { "@type": "Answer", "text": "Each agentic-loop block is the loop. It is triggered, uses systems, follows its instructions, writes back, and then turns again on its next trigger, evaluating itself each time. The loop lives inside the block, so there is no separate feedback arrow. Loop Architecture is about these continuous, self-paced loops that run on a schedule or event, not goal-based loops that stop at a condition, nor turn-based back-and-forth loops, which are more human-driven." } },
           { "@type": "Question", "name": "What is Loop Storming?", "acceptedAnswer": { "@type": "Answer", "text": "Loop Storming is a collaborative workshop for discovering the agentic loops between your systems, in the spirit of Event Storming. You map the systems, connect them into loops, name them, and set triggers." } },
-          { "@type": "Question", "name": "How do I sync a loop to Claude Code?", "acceptedAnswer": { "@type": "Answer", "text": "Encode your loops in one Loop Architecture YAML file and run looparch sync. Each loop becomes a Claude Code routine: a slash command plus a schedule or event trigger." } },
+          { "@type": "Question", "name": "How do I sync a loop to Claude Code?", "acceptedAnswer": { "@type": "Answer", "text": "Encode your loops in one Loop Architecture YAML file and run looparch sync. It writes each loop's slash command and prints the /schedule step to register it as a routine in your claude.ai account, routines are cloud-managed by default. Add --local to also write .claude/routines descriptors you can read back." } },
           { "@type": "Question", "name": "What is looparch?", "acceptedAnswer": { "@type": "Answer", "text": "looparch is a Python CLI, built with uv, that validates, visualizes and syncs a Loop Architecture to Claude Code routines, and reads them back with --from-claude." } },
           { "@type": "Question", "name": "How is Loop Architecture different from event-driven or microservice architecture?", "acceptedAnswer": { "@type": "Answer", "text": "Traditional architecture designs the systems and the requests between them. Loop Architecture designs the agentic loops that run continuously between those systems, each using some systems and writing back to others." } },
           { "@type": "Question", "name": "Who created Loop Architecture?", "acceptedAnswer": { "@type": "Answer", "text": "Loop Architecture was coined by Arif Wider and Simon Harrer at SummerSOC on 1 July 2026, on the island of Crete." } }

@@ -81,7 +81,7 @@ def test_lint_flags_unknown_system() -> None:
 
 def test_sync_all_loops(tmp_path: Path) -> None:
     arch = load_architecture(EXAMPLE_DOCS)
-    results = sync(arch, root=tmp_path)
+    results = sync(arch, root=tmp_path, local=True)
     assert len(results) == 4
     docs = next(r for r in results if r.loop_id == "update-docs")
     assert docs.schedule == "0 6 * * *"
@@ -95,10 +95,19 @@ def test_sync_all_loops(tmp_path: Path) -> None:
     assert "https://github.com/your-org/app" in desc["repositories"]
 
 
+def test_sync_cloud_default_writes_command_not_descriptor(tmp_path: Path) -> None:
+    # Cloud is the default: the slash command is written, the local descriptor is not.
+    arch = load_architecture(EXAMPLE_DOCS)
+    results = sync(arch, root=tmp_path)
+    assert all(r.routine_path is None for r in results)
+    assert all(r.command_path.exists() for r in results)
+    assert not (tmp_path / ".claude" / "routines").exists()
+
+
 def test_sync_event_trigger(tmp_path: Path) -> None:
     import json
     arch = load_architecture(EXAMPLE_DOCS)
-    [r] = sync(arch, root=tmp_path, only="update-docs")  # has a cron + a merged-PR event
+    [r] = sync(arch, root=tmp_path, only="update-docs", local=True)  # cron + a merged-PR event
     desc = json.loads(r.routine_path.read_text())
     assert any(t.get("githubTrigger", {}).get("event") == "pull_request.merged" for t in desc["triggers"])
 
@@ -129,7 +138,7 @@ def test_loop_prompt_included_in_routine() -> None:
 def test_import_round_trip(tmp_path: Path) -> None:
     from looparch import importer
     arch = load_architecture(EXAMPLE_DOCS)
-    sync(arch, root=tmp_path)  # writes .claude/commands + .claude/routines
+    sync(arch, root=tmp_path, local=True)  # writes .claude/commands + .claude/routines
     descriptors = importer.load_descriptors(tmp_path)
     assert len(descriptors) == len(arch.loops)
     data = importer.build(descriptors, arch_id="round-trip")

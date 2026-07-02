@@ -125,7 +125,9 @@ code {
 .stages dd { margin: 0; color: var(--muted); }
 .note { font-size: 14px; color: var(--faint) !important; margin-top: 14px !important; }
 .more { font-weight: 600; }
-.more-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 14px; }
+.more-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 18px; }
+/* standalone "→ other page" links after a code/editor block need top spacing too */
+.doc p:has(> .more) { margin-top: 18px; }
 
 /* code panel */
 .code-panel { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg-alt); margin: 4px 0; }
@@ -167,7 +169,7 @@ code {
 .steps-list li { margin-bottom: 10px; }
 .steps-list b { color: var(--text); }
 .storm-photo-link {
-  display: inline-block; margin: 4px 0 18px; padding: 8px;
+  display: block; margin: 10px 0 6px; padding: 8px;
   max-width: 340px; width: 100%;
   border: 1px solid var(--border); border-radius: 12px; background: var(--bg-alt);
 }

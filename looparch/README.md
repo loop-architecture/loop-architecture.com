@@ -42,16 +42,19 @@ layout and favicons all live in the visualizer.
 
 ## What `sync` produces
 
-For each loop:
+Routines are **cloud-managed** (they live in your claude.ai account, created with `/schedule`), so
+cloud is the default. For each loop, `sync` writes the slash command and prints the `/schedule` step:
 
 ```
 .claude/
   commands/loop-<id>.md    # the prompt Claude Code runs (what to do + the systems it uses)
-  routines/<id>.json       # routine descriptor: schedule/event, model, repositories, connectors
 ```
 
-Run a loop once in Claude Code with `/loop-<id>`, or schedule it on its cadence with the `/schedule`
-skill using the emitted cron/event.
+Run a loop once in Claude Code with `/loop-<id>`, or register it as a routine on its cadence with
+`/schedule` at [claude.ai/code](https://claude.ai/code), using the printed cron/event.
+
+`--local` additionally writes a `.claude/routines/<id>.json` descriptor (schedule/event, model,
+repositories, connectors), an offline record that `sync --from-claude` can read back.
 
 ## The format
 
