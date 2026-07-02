@@ -36,6 +36,7 @@
         <span>Loop<b>Architecture</b></span>
       </a>
       <nav class="nav-links">
+        <a href="#principles">Principles</a>
         <a href="#loop">Anatomy</a>
         <a href="#storming">Loop Storming</a>
         <a href="#format">Spec</a>
@@ -56,6 +57,10 @@
         its <b>prompt</b>, and <b>writes back</b> to those systems. A <em>Loop Architecture</em> is all
         of your loops, mapped together.
       </p>
+      <p class="lead-eg">
+        For example: a loop that keeps the <b>changelog in sync</b> with merged pull requests, or one
+        that <b>translates the docs to German</b> whenever the English pages change.
+      </p>
       <div class="flow3">
         <a class="flow-step" href="#storming">
           <span class="flow-n">1</span>
@@ -75,6 +80,41 @@
           <span class="flow-d">Claude Code routines via <code>looparch</code></span>
         </a>
       </div>
+    </section>
+
+    <!-- PRINCIPLES -->
+    <section id="principles">
+      <h2>Four principles</h2>
+      <ol class="principles">
+        <li>
+          <span class="principle-n">1</span>
+          <div>
+            <b>The loop is the unit.</b>
+            <p>Make the agentic loop between systems first-class. Design the loops, not just the boxes.</p>
+          </div>
+        </li>
+        <li>
+          <span class="principle-n">2</span>
+          <div>
+            <b>Use and write back.</b>
+            <p>Every loop names the systems it uses (reads from) and the systems it writes back to.</p>
+          </div>
+        </li>
+        <li>
+          <span class="principle-n">3</span>
+          <div>
+            <b>A prompt on a trigger.</b>
+            <p>A loop is a prompt an agent runs when its trigger fires, on a schedule, an event, or manually.</p>
+          </div>
+        </li>
+        <li>
+          <span class="principle-n">4</span>
+          <div>
+            <b>One file, real routines.</b>
+            <p>The whole architecture is one reviewable YAML that publishes to runnable Claude Code routines.</p>
+          </div>
+        </li>
+      </ol>
     </section>
 
     <!-- ANATOMY -->
