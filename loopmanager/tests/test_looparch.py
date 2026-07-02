@@ -164,3 +164,32 @@ def test_view_page_embeds_yaml() -> None:
         assert lp.name in html
     for s in arch.systems:
         assert s.name in html
+
+
+def test_cron_matches() -> None:
+    from datetime import datetime
+
+    from loopmanager import cron
+    assert cron.matches("0 6 * * *", datetime(2026, 7, 6, 6, 0))
+    assert not cron.matches("0 6 * * *", datetime(2026, 7, 6, 7, 0))
+    assert cron.matches("*/5 * * * *", datetime(2026, 7, 6, 6, 5))
+    assert not cron.matches("*/5 * * * *", datetime(2026, 7, 6, 6, 4))
+    assert cron.matches("0 6 * * 1", datetime(2026, 7, 6, 6, 0))  # 2026-07-06 is a Monday
+
+
+def test_serve_dry_run_records_a_run(tmp_path: Path) -> None:
+    import time
+
+    from loopmanager import serve
+    arch = load_architecture(EXAMPLE_DOCS)
+    store = serve.RunStore(tmp_path)
+    runner = serve.Runner(arch, store, root=tmp_path, exec_real=False)
+    loop = arch.loop("update-docs")
+    assert runner.trigger(loop, "manual")
+    for _ in range(60):
+        if not store.is_running(loop.id):
+            break
+        time.sleep(0.1)
+    snap = store.snapshot()
+    assert snap["loops"]["update-docs"]["lastStatus"] == "ok"
+    assert snap["loops"]["update-docs"]["running"] is False

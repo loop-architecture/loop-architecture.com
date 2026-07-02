@@ -25,6 +25,7 @@ Or run without installing: `uvx loopmanager --help`.
 loopmanager init your-org                       # scaffold <id>.loopmanager.yaml
 loopmanager validate your-org.loopmanager.yaml     # schema + lint
 loopmanager view your-org.loopmanager.yaml         # open the interactive diagram in a browser
+loopmanager serve your-org.loopmanager.yaml        # run the whole architecture locally + monitor
 loopmanager sync your-org.loopmanager.yaml      # every loop → a Claude Code routine
 ```
 
@@ -36,8 +37,18 @@ loopmanager sync your-org.loopmanager.yaml      # every loop → a Claude Code r
 | `loopmanager validate <file>`                | Validate against the schema and lint. Exit non-zero on errors.    |
 | `loopmanager lint <file>`                    | Best-practice / safety checks.                                    |
 | `loopmanager view <file>`                    | Open the **interactive** diagram in a browser (via the visualizer). |
+| `loopmanager serve <file>`                   | Run the whole architecture locally: schedule, trigger agents, live monitoring. |
 | `loopmanager sync <file> [loop-id]`          | Sync all loops (or one) to Claude Code routines.                 |
 | `loopmanager sync <path> --from-claude`      | Reverse: reconstruct a Loop Architecture YAML from existing routines. |
+
+## `serve`
+
+`loopmanager serve <file>` starts a local server that schedules every loop from the YAML (5-field cron
+and one-off ISO triggers), triggers the agent for each run, tracks run history, and serves the diagram
+plus **live monitoring** (per-loop badges: running / last run / outcome) at `http://127.0.0.1:8700`.
+
+Runs are **dry-run by default** (safe, they only simulate a turn). Pass `--exec` to actually run each
+agent with `claude -p`. Trigger a loop by hand from the diagram's detail panel ("Run now").
 
 `view` writes a small HTML page that embeds the YAML and loads the shared visualizer
 (`visualizer/dist/visualizer.js`), which parses the YAML and builds the diagram itself, systems, loops,

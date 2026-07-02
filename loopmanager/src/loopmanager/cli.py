@@ -101,6 +101,17 @@ def cmd_view(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_serve(args: argparse.Namespace) -> int:
+    from . import serve as serve_mod
+
+    _load(args.file)  # validate it parses before starting the server
+    serve_mod.serve(
+        args.file, port=args.port, root=args.root,
+        exec_real=args.exec, open_browser=not args.no_open,
+    )
+    return 0
+
+
 def _sync_from_claude(args: argparse.Namespace) -> int:
     """Reverse sync: read Claude Code routines and reconstruct a Loop Architecture YAML."""
     descriptors = importer.load_descriptors(args.file)
@@ -180,6 +191,14 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("file")
     s.add_argument("-o", "--output", help="write the HTML page here instead of opening a temp file")
     s.set_defaults(func=cmd_view)
+
+    s = sub.add_parser("serve", help="run the whole architecture locally: schedule, trigger agents, and monitor")
+    s.add_argument("file")
+    s.add_argument("--port", type=int, default=8700, help="port for the monitoring site (default: 8700)")
+    s.add_argument("--root", default=".", help="working dir the agents run in")
+    s.add_argument("--exec", action="store_true", help="actually run agents via `claude -p` (default: dry-run)")
+    s.add_argument("--no-open", action="store_true", help="do not open the browser")
+    s.set_defaults(func=cmd_serve)
 
     s = sub.add_parser("sync", help="sync the YAML to Claude Code routines (or --from-claude to reverse)")
     s.add_argument("file", help="the .loopmanager.yaml (forward), or a project/.claude path (--from-claude)")

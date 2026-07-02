@@ -9,6 +9,7 @@ import { createElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Diagram } from './components/Diagram.jsx'
 import { Editor } from './components/Editor.jsx'
+import { Monitor } from './components/Monitor.jsx'
 import { parseArchitecture, architectureFromRaw } from './lib/model.js'
 import { build } from './lib/flow.js'
 
@@ -62,4 +63,19 @@ export function mountEditor(container, opts = {}) {
   return root
 }
 
-export { Diagram, Editor, build, parseArchitecture, architectureFromRaw }
+// Live monitor: the diagram + per-loop run status polled from a server (loopmanager serve).
+// opts: { source (yaml text/url or graph), statusUrl, pollMs, onRun(loopId) }.
+export function mountMonitor(container, opts = {}) {
+  container.classList.add('flow')
+  const cache = {}
+  const root = createRoot(container)
+  toGraph(opts.source, cache)
+    .then((graph) =>
+      root.render(createElement(Monitor, {
+        graph, statusUrl: opts.statusUrl, pollMs: opts.pollMs, onRun: opts.onRun,
+      })))
+    .catch(() => { container.innerHTML = '<p class="flow-loading">Could not load the diagram.</p>' })
+  return root
+}
+
+export { Diagram, Editor, Monitor, build, parseArchitecture, architectureFromRaw }
