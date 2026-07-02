@@ -120,10 +120,10 @@ loops:
     name: Answer Tickets
     description: Drafts answers to service-desk tickets.
     trigger: "*/10 * * * *"
-    observe: [jira]
+    observe: [docs]
     act: [jira]
     prompt: >
-      Triage new service-desk tickets, draft an answer from the docs, and reply for
+      For each new service-desk ticket, draft an answer from the docs and reply for
       a human to review.
 
   - id: review-compliance
@@ -142,10 +142,10 @@ loops:
     trigger: "*/15 * * * *"
     model: claude-opus-4-8
     observe: [jira]
-    act: [code-repo, jira]
+    act: [code-repo]
     prompt: >
-      For each Jira issue that is ready for an agent, implement a fix, open a pull
-      request, and comment on the issue with the link.
+      For each Jira issue that is ready for an agent, implement a fix and open a pull
+      request.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
 
   - id: implement-compliance
@@ -153,11 +153,11 @@ loops:
     description: Implements Kertos compliance in the app repo.
     trigger: "0 5 * * *"
     model: claude-opus-4-8
-    observe: [code-repo, policies]
+    observe: [policies]
     act: [code-repo]
     prompt: >
-      Check the app repo against the policies in Kertos and open a pull request that
-      implements any missing compliance controls, citing the policy.
+      Bring the app repo in line with the policies in Kertos and open a pull request
+      that implements any missing compliance controls, citing the policy.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
 
   - id: update-evidence

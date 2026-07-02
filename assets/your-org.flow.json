@@ -9,7 +9,7 @@
       "type": "system",
       "position": {
         "x": 40,
-        "y": 78.15767475981652
+        "y": 62.42222132129818
       },
       "data": {
         "label": "Dash0",
@@ -31,7 +31,7 @@
       "type": "system",
       "position": {
         "x": 1320,
-        "y": 125.53308758023297
+        "y": 109.5665796512196
       },
       "data": {
         "label": "App Repo",
@@ -43,8 +43,7 @@
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
         "readBy": [
           "Sync Docs",
-          "Sync Confluence",
-          "Implement Compliance"
+          "Sync Confluence"
         ],
         "writtenBy": [
           "Fix Errors",
@@ -58,7 +57,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 46.42707290196808
+        "y": 42.48344533346647
       },
       "data": {
         "label": "Jira",
@@ -69,13 +68,11 @@
         "connector": "jira",
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=www.atlassian.com",
         "readBy": [
-          "Answer Tickets",
           "Fix Jira Issues"
         ],
         "writtenBy": [
           "Triage Incidents",
-          "Answer Tickets",
-          "Fix Jira Issues"
+          "Answer Tickets"
         ]
       }
     },
@@ -84,7 +81,7 @@
       "type": "system",
       "position": {
         "x": 1960,
-        "y": 32.015234231902056
+        "y": 52.87614126860577
       },
       "data": {
         "label": "Confluence",
@@ -105,7 +102,7 @@
       "type": "system",
       "position": {
         "x": 1960,
-        "y": 281.28204636093443
+        "y": 174.6507692125008
       },
       "data": {
         "label": "Docs (EN)",
@@ -117,7 +114,8 @@
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=docs.your-org.com",
         "readBy": [
           "Translate Docs",
-          "Sync Landing Page"
+          "Sync Landing Page",
+          "Answer Tickets"
         ],
         "writtenBy": [
           "Sync Docs"
@@ -129,7 +127,7 @@
       "type": "system",
       "position": {
         "x": 2600,
-        "y": 223.5987493931925
+        "y": 172.8200627819834
       },
       "data": {
         "label": "Docs (DE)",
@@ -150,7 +148,7 @@
       "type": "system",
       "position": {
         "x": 2600,
-        "y": 343.5987493931925
+        "y": 292.82006278198344
       },
       "data": {
         "label": "Landing Page",
@@ -171,7 +169,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 315.82100528976935
+        "y": 420.0
       },
       "data": {
         "label": "OneDrive",
@@ -193,7 +191,7 @@
       "type": "system",
       "position": {
         "x": 40,
-        "y": 263.5532431891801
+        "y": 362.4222213212982
       },
       "data": {
         "label": "Kertos",
@@ -216,7 +214,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 166.42707290196807
+        "y": 162.48344533346648
       },
       "data": {
         "label": "Slack",
@@ -237,7 +235,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 135.82100528976935
+        "y": 120.0
       },
       "data": {
         "label": "Triage Incidents",
@@ -264,7 +262,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 15.821005289769339
+        "y": 0.0
       },
       "data": {
         "label": "Fix Errors",
@@ -290,7 +288,7 @@
       "type": "loop",
       "position": {
         "x": 1640,
-        "y": 272.01523423190207
+        "y": 172.87614126860578
       },
       "data": {
         "label": "Sync Docs",
@@ -322,7 +320,7 @@
       "type": "loop",
       "position": {
         "x": 2280,
-        "y": 223.5987493931925
+        "y": 172.8200627819834
       },
       "data": {
         "label": "Translate Docs",
@@ -348,7 +346,7 @@
       "type": "loop",
       "position": {
         "x": 1640,
-        "y": 32.015234231902056
+        "y": 52.87614126860577
       },
       "data": {
         "label": "Sync Confluence",
@@ -374,7 +372,7 @@
       "type": "loop",
       "position": {
         "x": 2280,
-        "y": 343.5987493931925
+        "y": 292.82006278198344
       },
       "data": {
         "label": "Sync Landing Page",
@@ -399,8 +397,8 @@
       "id": "answer-tickets",
       "type": "loop",
       "position": {
-        "x": 1000,
-        "y": 0.0
+        "x": 2280,
+        "y": 52.82006278198342
       },
       "data": {
         "label": "Answer Tickets",
@@ -410,11 +408,11 @@
         "triggers": [
           "*/10 * * * *"
         ],
-        "prompt": "Triage new service-desk tickets, draft an answer from the docs, and reply for a human to review.",
+        "prompt": "For each new service-desk ticket, draft an answer from the docs and reply for a human to review.",
         "model": null,
         "tools": [],
         "uses": [
-          "Jira"
+          "Docs (EN)"
         ],
         "writesBack": [
           "Jira"
@@ -426,7 +424,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 255.82100528976935
+        "y": 360.0
       },
       "data": {
         "label": "Review Compliance",
@@ -452,7 +450,7 @@
       "type": "loop",
       "position": {
         "x": 1000,
-        "y": 120.0
+        "y": 77.23612923292747
       },
       "data": {
         "label": "Fix Jira Issues",
@@ -462,7 +460,7 @@
         "triggers": [
           "*/15 * * * *"
         ],
-        "prompt": "For each Jira issue that is ready for an agent, implement a fix, open a pull request, and comment on the issue with the link.",
+        "prompt": "For each Jira issue that is ready for an agent, implement a fix and open a pull request.",
         "model": "claude-opus-4-8",
         "tools": [
           "Read",
@@ -474,8 +472,7 @@
           "Jira"
         ],
         "writesBack": [
-          "App Repo",
-          "Jira"
+          "App Repo"
         ]
       }
     },
@@ -483,8 +480,8 @@
       "id": "implement-compliance",
       "type": "loop",
       "position": {
-        "x": 1640,
-        "y": 152.01523423190204
+        "x": 360,
+        "y": 240.0
       },
       "data": {
         "label": "Implement Compliance",
@@ -494,7 +491,7 @@
         "triggers": [
           "0 5 * * *"
         ],
-        "prompt": "Check the app repo against the policies in Kertos and open a pull request that implements any missing compliance controls, citing the policy.",
+        "prompt": "Bring the app repo in line with the policies in Kertos and open a pull request that implements any missing compliance controls, citing the policy.",
         "model": "claude-opus-4-8",
         "tools": [
           "Read",
@@ -503,7 +500,6 @@
           "Bash(gh pr *)"
         ],
         "uses": [
-          "App Repo",
           "Kertos"
         ],
         "writesBack": [
@@ -516,7 +512,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 375.82100528976935
+        "y": 480.0
       },
       "data": {
         "label": "Update Evidence",
@@ -631,8 +627,8 @@
       "targetHandle": "lt"
     },
     {
-      "id": "use:jira->answer-tickets",
-      "source": "jira",
+      "id": "use:docs->answer-tickets",
+      "source": "docs",
       "target": "answer-tickets",
       "sourceHandle": "rs",
       "targetHandle": "lt"
@@ -673,20 +669,6 @@
       "targetHandle": "lt"
     },
     {
-      "id": "act:fix-jira-issues->jira",
-      "source": "fix-jira-issues",
-      "target": "jira",
-      "sourceHandle": "ls",
-      "targetHandle": "rt"
-    },
-    {
-      "id": "use:code-repo->implement-compliance",
-      "source": "code-repo",
-      "target": "implement-compliance",
-      "sourceHandle": "rs",
-      "targetHandle": "lt"
-    },
-    {
       "id": "use:policies->implement-compliance",
       "source": "policies",
       "target": "implement-compliance",
@@ -697,8 +679,8 @@
       "id": "act:implement-compliance->code-repo",
       "source": "implement-compliance",
       "target": "code-repo",
-      "sourceHandle": "ls",
-      "targetHandle": "rt"
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
     },
     {
       "id": "use:policies->update-evidence",
