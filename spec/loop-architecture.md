@@ -46,7 +46,7 @@ systems:
 | `id`          | Referenced by a loop's `observe` / `act`.                         |
 | `description` | Free text.                                                        |
 | `url`         | Homepage/console URL; its favicon is fetched as the system icon.  |
-| `repository`  | Git repo URL; mapped to the published routine's `repositories`.   |
+| `repository`  | Git repo URL; mapped to the synced routine's `repositories`.   |
 | `connector`   | MCP connector name; mapped to the routine's `connectors`.         |
 
 A system's **role** is inferred: observed only → `sensor`, acted on only → `actuator`, both → `both`.

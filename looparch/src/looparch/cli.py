@@ -10,7 +10,7 @@ import yaml
 
 from . import __version__, flow, importer
 from .model import Architecture, LoopError, load_architecture
-from .publish import publish
+from .sync import sync
 from .templates import scaffold
 from .validate import check, validate_schema
 
@@ -83,7 +83,9 @@ def cmd_view(args: argparse.Namespace) -> int:
     import webbrowser
 
     arch = _load(args.file)
-    html = flow.page(arch, favicons=not args.no_favicons)
+    # The visualizer builds the diagram from the YAML itself; we just hand it the file.
+    yaml_text = Path(args.file).read_text(encoding="utf-8")
+    html = flow.page(yaml_text, title=arch.name)
     if args.output:
         out = Path(args.output)
         out.write_text(html, encoding="utf-8")
@@ -99,12 +101,13 @@ def cmd_view(args: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_import(args: argparse.Namespace) -> int:
-    descriptors = importer.load_descriptors(args.path)
+def _sync_from_claude(args: argparse.Namespace) -> int:
+    """Reverse sync: read Claude Code routines and reconstruct a Loop Architecture YAML."""
+    descriptors = importer.load_descriptors(args.file)
     if not descriptors:
-        print(err(f"✗ no routine descriptors found under {args.path}"), file=sys.stderr)
+        print(err(f"✗ no routine descriptors found under {args.file}"), file=sys.stderr)
         return 1
-    arch_id = args.id or (Path(args.path).resolve().name if Path(args.path).is_dir() else "imported")
+    arch_id = args.id or (Path(args.file).resolve().name if Path(args.file).is_dir() else "imported")
     arch_id = "".join(c if c.isalnum() else "-" for c in arch_id.lower()).strip("-") or "imported"
     data = importer.build(descriptors, arch_id=arch_id)
     text = yaml.safe_dump(data, sort_keys=False, allow_unicode=True, default_flow_style=False, width=100)
@@ -117,40 +120,37 @@ def cmd_import(args: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_export(args: argparse.Namespace) -> int:
-    arch = _load(args.file)
-    out = Path(args.output or f"{arch.id or 'loop-architecture'}.flow.json")
-    flow.render(arch, out, favicons=not args.no_favicons)
-    print(ok(f"✓ wrote {out}  ({len(arch.loops)} loops, {len(arch.systems)} systems)"))
-    return 0
+def cmd_sync(args: argparse.Namespace) -> int:
+    # Reverse: pull the architecture out of existing Claude Code routines.
+    if args.from_claude:
+        return _sync_from_claude(args)
 
-
-def cmd_publish(args: argparse.Namespace) -> int:
+    # Forward: sync the YAML to Claude Code routines.
     arch = _load(args.file)
     errors = [i for i in check(arch) if i.level == "error"]
     if errors and not args.force:
         for i in errors:
             print(err(str(i)))
-        print(err("✗ refusing to publish an invalid architecture (use --force)"))
+        print(err("✗ refusing to sync an invalid architecture (use --force)"))
         return 1
     if args.loop and not arch.loop(args.loop):
         print(err(f"✗ no loop '{args.loop}'"), file=sys.stderr)
         return 1
-    results = publish(arch, root=args.root, only=args.loop)
+    results = sync(arch, root=args.root, only=args.loop)
     if not results:
-        print(warn("no loops published"))
+        print(warn("no loops synced"))
         return 0
     for r in results:
         sched = f"  ↻ {r.schedule}" if r.schedule else ""
         print(ok(f"✓ /{'loop-' + r.loop_id}") + dim(f"  → {r.command_path}") + dim(sched))
-    print(ok(f"✓ published {len(results)} loop(s)"))
+    print(ok(f"✓ synced {len(results)} loop(s)"))
     return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="looparch",
-        description="Loop Architecture, validate, visualize and publish agentic loops.",
+        description="Loop Architecture, validate, visualize and sync agentic loops.",
     )
     p.add_argument("--version", action="version", version=f"looparch {__version__}")
     sub = p.add_subparsers(dest="command", required=True)
@@ -173,27 +173,18 @@ def build_parser() -> argparse.ArgumentParser:
     s = sub.add_parser("view", help="open the interactive diagram in a browser")
     s.add_argument("file")
     s.add_argument("-o", "--output", help="write the HTML page here instead of opening a temp file")
-    s.add_argument("--no-favicons", action="store_true", help="omit favicon URLs")
     s.set_defaults(func=cmd_view)
 
-    s = sub.add_parser("import", help="import existing Claude Code routines into a Loop Architecture YAML")
-    s.add_argument("path", help="project root, a .claude/routines dir, or a routine .json")
-    s.add_argument("-o", "--output", help="output YAML (default: stdout)")
-    s.add_argument("--id", help="architecture id (default: from the directory name)")
-    s.set_defaults(func=cmd_import)
-
-    s = sub.add_parser("export", help="export React Flow JSON for the interactive diagram")
-    s.add_argument("file")
-    s.add_argument("-o", "--output", help="output JSON (default: <id>.flow.json)")
-    s.add_argument("--no-favicons", action="store_true", help="omit favicon URLs")
-    s.set_defaults(func=cmd_export)
-
-    s = sub.add_parser("publish", help="publish loops as Claude Code routines")
-    s.add_argument("file")
-    s.add_argument("loop", nargs="?", help="publish only this loop id (default: all)")
+    s = sub.add_parser("sync", help="sync the YAML to Claude Code routines (or --from-claude to reverse)")
+    s.add_argument("file", help="the .looparch.yaml (forward), or a project/.claude path (--from-claude)")
+    s.add_argument("loop", nargs="?", help="sync only this loop id (default: all)")
     s.add_argument("--root", default=".", help="project root to write .claude/ into")
-    s.add_argument("--force", action="store_true", help="publish even if invalid")
-    s.set_defaults(func=cmd_publish)
+    s.add_argument("--force", action="store_true", help="sync even if invalid")
+    s.add_argument("--from-claude", action="store_true",
+                   help="reverse: read Claude Code routines and reconstruct the Loop Architecture YAML")
+    s.add_argument("-o", "--output", help="reverse only: output YAML (default: stdout)")
+    s.add_argument("--id", help="reverse only: architecture id (default: from the directory name)")
+    s.set_defaults(func=cmd_sync)
 
     return p
 

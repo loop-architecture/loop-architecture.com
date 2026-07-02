@@ -1,4 +1,6 @@
-"""Publish loops as Claude Code routines (slash command + routine descriptor)."""
+"""Sync a Loop Architecture to Claude Code routines (a slash command + a routine
+descriptor per loop). The reverse direction, reading routines back into a Loop
+Architecture YAML, lives in `importer.py`."""
 
 from __future__ import annotations
 
@@ -11,14 +13,14 @@ from .templates import routine_prompt
 
 
 @dataclass
-class PublishResult:
+class SyncResult:
     loop_id: str
     command_path: Path
     routine_path: Path
     schedule: str | None
 
 
-def publish_loop(arch: Architecture, loop: Loop, root: str | Path = ".") -> PublishResult:
+def sync_loop(arch: Architecture, loop: Loop, root: str | Path = ".") -> SyncResult:
     """Write a Claude Code slash command and a routine descriptor for one loop."""
     root = Path(root)
     commands_dir = root / ".claude" / "commands"
@@ -64,14 +66,14 @@ def publish_loop(arch: Architecture, loop: Loop, root: str | Path = ".") -> Publ
     descriptor["triggers"] = triggers
 
     routine_path.write_text(json.dumps(descriptor, indent=2) + "\n", encoding="utf-8")
-    return PublishResult(loop.id, command_path, routine_path, loop.schedule())
+    return SyncResult(loop.id, command_path, routine_path, loop.schedule())
 
 
-def publish(arch: Architecture, root: str | Path = ".", only: str | None = None) -> list[PublishResult]:
-    """Publish all loops (or just the loop with id == only)."""
-    results: list[PublishResult] = []
+def sync(arch: Architecture, root: str | Path = ".", only: str | None = None) -> list[SyncResult]:
+    """Sync all loops (or just the loop with id == only) to Claude Code routines."""
+    results: list[SyncResult] = []
     for lp in arch.loops:
         if only and lp.id != only:
             continue
-        results.append(publish_loop(arch, lp, root=root))
+        results.append(sync_loop(arch, lp, root=root))
     return results

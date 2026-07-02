@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from looparch.model import Architecture, load_architecture, trigger_type
-from looparch.publish import publish
+from looparch.sync import sync
 from looparch.templates import routine_prompt, scaffold
 from looparch.validate import check, lint, validate_schema
 
@@ -79,9 +79,9 @@ def test_lint_flags_unknown_system() -> None:
     assert any("ghost" in str(i) for i in lint(arch))
 
 
-def test_publish_all_loops(tmp_path: Path) -> None:
+def test_sync_all_loops(tmp_path: Path) -> None:
     arch = load_architecture(EXAMPLE_DOCS)
-    results = publish(arch, root=tmp_path)
+    results = sync(arch, root=tmp_path)
     assert len(results) == 4
     docs = next(r for r in results if r.loop_id == "update-docs")
     assert docs.schedule == "0 6 * * *"
@@ -95,17 +95,17 @@ def test_publish_all_loops(tmp_path: Path) -> None:
     assert "https://github.com/your-org/app" in desc["repositories"]
 
 
-def test_publish_event_trigger(tmp_path: Path) -> None:
+def test_sync_event_trigger(tmp_path: Path) -> None:
     import json
     arch = load_architecture(EXAMPLE_DOCS)
-    [r] = publish(arch, root=tmp_path, only="update-docs")  # has a cron + a merged-PR event
+    [r] = sync(arch, root=tmp_path, only="update-docs")  # has a cron + a merged-PR event
     desc = json.loads(r.routine_path.read_text())
     assert any(t.get("githubTrigger", {}).get("event") == "pull_request.merged" for t in desc["triggers"])
 
 
-def test_publish_single_loop(tmp_path: Path) -> None:
+def test_sync_single_loop(tmp_path: Path) -> None:
     arch = load_architecture(EXAMPLE)
-    results = publish(arch, root=tmp_path, only="triage-incidents")
+    results = sync(arch, root=tmp_path, only="triage-incidents")
     assert len(results) == 1 and results[0].loop_id == "triage-incidents"
 
 
@@ -126,36 +126,10 @@ def test_loop_prompt_included_in_routine() -> None:
     assert "drifted" in prompt
 
 
-def test_layout_is_left_to_right() -> None:
-    from looparch import layout
-    arch = load_architecture(EXAMPLE)
-    order = [s.id for s in arch.systems]
-    loop_ids = [lp.id for lp in arch.loops]
-    observes = {lp.id: lp.observe for lp in arch.loops}
-    acts = {lp.id: lp.act for lp in arch.loops}
-    plan = layout.solve(order, loop_ids, observes, acts)
-
-    # Every real node is placed exactly once (dummies are routing waypoints).
-    placed = [n for col in plan.columns for n in col if n not in plan.dummies]
-    assert sorted(placed) == sorted(order + loop_ids)
-
-    # The graph reads left-to-right: forward edges dominate right-to-left ones.
-    fwd = back = 0
-    for lp in arch.loops:
-        edges = [(s, lp.id) for s in lp.observe] + [(lp.id, s) for s in lp.act]
-        for src, dst in edges:
-            if plan.col_of[src] <= plan.col_of[dst]:
-                fwd += 1
-            else:
-                back += 1
-    assert fwd > back
-    assert plan.crossings >= 0
-
-
 def test_import_round_trip(tmp_path: Path) -> None:
     from looparch import importer
     arch = load_architecture(EXAMPLE_DOCS)
-    publish(arch, root=tmp_path)  # writes .claude/commands + .claude/routines
+    sync(arch, root=tmp_path)  # writes .claude/commands + .claude/routines
     descriptors = importer.load_descriptors(tmp_path)
     assert len(descriptors) == len(arch.loops)
     data = importer.build(descriptors, arch_id="round-trip")
@@ -168,28 +142,15 @@ def test_import_round_trip(tmp_path: Path) -> None:
     assert "pull_request.merged" in docs.triggers
 
 
-def test_flow_export_shape() -> None:
+def test_view_page_embeds_yaml() -> None:
+    # `looparch view` embeds the YAML and lets the visualizer build the diagram.
     from looparch import flow
-    arch = load_architecture(EXAMPLE_DOCS)
-    graph = flow.build(arch, favicons=True)
-    real = [n for n in graph["nodes"] if n["type"] != "dummy"]
-    assert len(real) == len(arch.systems) + len(arch.loops)
-    # Every edge references existing nodes and carries handle ids.
-    ids = {n["id"] for n in graph["nodes"]}
-    for e in graph["edges"]:
-        assert e["source"] in ids and e["target"] in ids
-        assert e["sourceHandle"] and e["targetHandle"]
-    # A loop with a schedule + event carries both trigger emojis.
-    docs = next(n for n in graph["nodes"] if n["id"] == "update-docs")
-    assert "🕐" in docs["data"]["emoji"] and "⚡" in docs["data"]["emoji"]
-
-
-def test_view_page_offline() -> None:
-    from looparch import flow
+    text = EXAMPLE.read_text(encoding="utf-8")
     arch = load_architecture(EXAMPLE)
-    html = flow.page(arch, favicons=False)  # no network
+    html = flow.page(text, title=arch.name)
     assert html.lstrip().startswith("<!DOCTYPE html>")
     assert "visualizer.js" in html and "createController" in html
+    # The YAML (systems, loops) is embedded for the visualizer to parse.
     for lp in arch.loops:
         assert lp.name in html
     for s in arch.systems:

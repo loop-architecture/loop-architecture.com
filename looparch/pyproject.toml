@@ -1,7 +1,7 @@
 [project]
 name = "looparch"
 version = "0.1.0"
-description = "Validate, visualize and publish Loop Architecture (looparch/v1) loops as Claude Code routines."
+description = "Validate, visualize and sync Loop Architecture (looparch/v1) loops to Claude Code routines."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }

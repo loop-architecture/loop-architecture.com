@@ -1,6 +1,6 @@
 """looparch, Loop Architecture tooling.
 
-Validate, lint, visualize and publish `looparch/v1` loops.
+Validate, lint, visualize and sync `looparch/v1` loops.
 """
 
 __version__ = "0.1.0"

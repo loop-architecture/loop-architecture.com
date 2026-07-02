@@ -3,7 +3,7 @@
 `looparch` is the CLI for [Loop Architecture](https://loop-architecture.com), an architecture style
 that makes the **agentic loop** between systems the first-class unit of design.
 
-It validates, visualizes, and publishes a **Loop Architecture**, one YAML document that defines many
+It validates, visualizes, and syncs a **Loop Architecture**, one YAML document that defines many
 systems and many loops, and turns each loop into a runnable **Claude Code routine**.
 
 ## Install
@@ -22,7 +22,7 @@ Or run without installing: `uvx looparch --help`.
 looparch init your-org                       # scaffold <id>.looparch.yaml
 looparch validate your-org.looparch.yaml     # schema + lint
 looparch view your-org.looparch.yaml         # open the interactive diagram in a browser
-looparch publish your-org.looparch.yaml      # every loop → a Claude Code routine
+looparch sync your-org.looparch.yaml      # every loop → a Claude Code routine
 ```
 
 ## Commands
@@ -33,15 +33,14 @@ looparch publish your-org.looparch.yaml      # every loop → a Claude Code rout
 | `looparch validate <file>`                | Validate against the schema and lint. Exit non-zero on errors.    |
 | `looparch lint <file>`                    | Best-practice / safety checks.                                    |
 | `looparch view <file>`                    | Open the **interactive** diagram in a browser (via the visualizer). |
-| `looparch export <file>`                  | Export React Flow JSON for the **interactive** web diagram.       |
-| `looparch publish <file> [loop-id]`       | Publish all loops (or one) as Claude Code routines.              |
-| `looparch import <path>`                  | Reconstruct a Loop Architecture YAML from existing Claude Code routines. |
+| `looparch sync <file> [loop-id]`          | Sync all loops (or one) to Claude Code routines.                 |
+| `looparch sync <path> --from-claude`      | Reverse: reconstruct a Loop Architecture YAML from existing routines. |
 
-`view` writes a small HTML page that loads the shared visualizer (`visualizer/visualizer.js`) and renders
-the architecture; `export` emits the same graph as JSON. Both embed each system's favicon (from its
-`url`/`repository`) as its icon, pass `--no-favicons` to skip the network.
+`view` writes a small HTML page that embeds the YAML and loads the shared visualizer
+(`visualizer/dist/visualizer.js`), which parses the YAML and builds the diagram itself, systems, loops,
+layout and favicons all live in the visualizer.
 
-## What `publish` produces
+## What `sync` produces
 
 For each loop:
 

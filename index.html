@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Loop Architecture: designing agentic loops between systems</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <meta name="description" content="Loop Architecture is an architecture style that makes the agentic loop between systems the first-class unit of design. Discover loops with Loop Storming, encode them as one YAML file, and publish them as Claude Code routines with the looparch CLI." />
+  <meta name="description" content="Loop Architecture is an architecture style that makes the agentic loop between systems the first-class unit of design. Discover loops with Loop Storming, encode them as one YAML file, and sync them to Claude Code routines with the looparch CLI." />
   <link rel="canonical" href="https://www.loop-architecture.com/" />
   <meta name="author" content="Arif Wider, Simon Harrer" />
   <meta name="keywords" content="Loop Architecture, agentic loop, Loop Storming, agentic architecture, Claude Code routines, looparch, AI agents, agentic AI" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Loop Architecture" />
   <meta property="og:title" content="Loop Architecture: designing agentic loops between systems" />
-  <meta property="og:description" content="An architecture style that makes the agentic loop between systems the first-class unit of design. Discover loops with Loop Storming, encode them as YAML, publish them as Claude Code routines." />
+  <meta property="og:description" content="An architecture style that makes the agentic loop between systems the first-class unit of design. Discover loops with Loop Storming, encode them as YAML, sync them to Claude Code routines." />
   <meta property="og:url" content="https://www.loop-architecture.com/" />
   <meta property="og:image" content="https://www.loop-architecture.com/assets/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -40,9 +40,9 @@
       <nav class="nav-links">
         <a href="#principles">Principles</a>
         <a href="#diagram">Examples</a>
-        <a href="#storming">Loop Storming</a>
         <a href="#format">Spec</a>
         <a href="#cli">Tooling</a>
+        <a href="#storming">Getting Started</a>
       </nav>
     </div>
   </header>
@@ -52,7 +52,7 @@
     <section class="lead">
       <h1>Loop Architecture</h1>
       <p>
-        An architecture style that makes the <b>agentic loop</b> between systems the first-class unit
+        An architecture style that makes the <a href="https://claude.com/blog/getting-started-with-loops" target="_blank" rel="noopener"><b>agentic loop</b></a> between systems the first-class unit
         of design. A loop is triggered on a schedule or event, <b>uses</b> one or more systems, follows
         its <b>instructions</b>, and <b>writes back</b> to those systems. A <em>Loop Architecture</em> is all
         of your loops, mapped together.
@@ -128,41 +128,6 @@
       });
     </script>
 
-    <!-- LOOP STORMING -->
-    <section id="storming">
-      <h2>Loop Storming</h2>
-      <p>
-        Loop Storming is a collaborative workshop for discovering loops, in the spirit of Event
-        Storming. The team maps the systems, connects them into loops (what each loop uses and writes
-        back to), names them, writes their instructions, and sets triggers. The messy wall is your initial
-        map; you then refine it into a formal Loop Architecture YAML.
-      </p>
-      <a class="storm-photo-link" href="loop-storming.html" aria-label="Read the Loop Storming guide">
-        <img class="storm-photo" src="assets/loop-storming-example.png"
-             alt="A pen-and-paper Loop Storming wall: systems, agentic loops drawn between them, and trigger symbols." />
-      </a>
-      <div class="flow3">
-        <div class="flow-step">
-          <span class="flow-n">1</span>
-          <span class="flow-t">Discover</span>
-          <span class="flow-d">Loop Storming workshop</span>
-        </div>
-        <span class="flow-arrow" aria-hidden="true">→</span>
-        <div class="flow-step">
-          <span class="flow-n">2</span>
-          <span class="flow-t">Encode</span>
-          <span class="flow-d">as one YAML file</span>
-        </div>
-        <span class="flow-arrow" aria-hidden="true">→</span>
-        <div class="flow-step">
-          <span class="flow-n">3</span>
-          <span class="flow-t">Publish</span>
-          <span class="flow-d">Claude Code routines via <code>looparch</code></span>
-        </div>
-      </div>
-      <p><a class="more" href="loop-storming.html">Read the Loop Storming guide →</a></p>
-    </section>
-
     <!-- FORMAT -->
     <section id="format">
       <h2>The format</h2>
@@ -216,39 +181,76 @@
       <h2>Tooling</h2>
       <p>
         Two tools work directly with a Loop Architecture YAML: the <b>looparch visualizer</b> to see
-        it, and the <b>looparch CLI</b> to validate, visualize and publish it.
+        it, and the <b>looparch CLI</b> to validate, visualize and sync it.
       </p>
 
       <h3>looparch visualizer</h3>
       <p>
-        A small, embeddable React component (built on <a href="https://reactflow.dev/" target="_blank" rel="noopener">React Flow</a>)
-        that renders a Loop Architecture as the interactive diagram above: the systems, the agentic
-        loops, and the edges between them. Drop it into any page, or open it from the CLI with
-        <code>looparch view</code>.
+        A small, embeddable component (built on <a href="https://reactflow.dev/" target="_blank" rel="noopener">React Flow</a>)
+        that reads a Loop Architecture YAML and maps it to the interactive diagram above itself: the
+        systems, the agentic loops, and the edges between them. Drop it into any page, or open it from
+        the CLI with <code>looparch view</code>.
       </p>
-      <pre class="code plain"><code><span class="c-cmt">// the host page provides an import map (react, @xyflow/react) and visualizer.css</span>
-<span class="c-key">import</span> { createController } <span class="c-key">from</span> <span class="c-str">'./visualizer/visualizer.js'</span>;
+      <pre class="code plain"><code><span class="c-cmt">// the bundle includes React + React Flow; just load it and its CSS</span>
+<span class="c-key">import</span> { mountEditor, createController } <span class="c-key">from</span> <span class="c-str">'./visualizer/dist/visualizer.js'</span>;
 
-<span class="c-key">const</span> viz = createController(document.getElementById(<span class="c-str">'flow'</span>));
-viz.show(<span class="c-str">'your-org.flow.json'</span>);   <span class="c-cmt">// a URL, or a graph object from `looparch export`</span></code></pre>
-      <p><a class="more" href="visualizer/visualizer.js">Visualizer module →</a></p>
+<span class="c-cmt">// editable: YAML editor + live diagram</span>
+mountEditor(document.getElementById(<span class="c-str">'editor'</span>), { examples: [ ... ] });
+
+<span class="c-cmt">// or read-only: the visualizer parses the YAML itself</span>
+createController(document.getElementById(<span class="c-str">'flow'</span>)).show(<span class="c-str">'your-org.looparch.yaml'</span>);</code></pre>
+      <p><a class="more" href="editor.html">Open the editor →</a></p>
 
       <h3>looparch CLI</h3>
-      <p>A Python CLI (built with <a href="https://docs.astral.sh/uv/">uv</a>) to validate, visualize and publish loops.</p>
+      <p>A Python CLI (built with <a href="https://docs.astral.sh/uv/">uv</a>) to validate, visualize and sync loops.</p>
       <pre class="code plain"><code><span class="c-p">$</span> uv tool install looparch
 
 <span class="c-p">$</span> looparch init your-org              <span class="c-cmt"># scaffold an architecture</span>
 <span class="c-p">$</span> looparch validate your-org.looparch.yaml    <span class="c-cmt"># schema + lint</span>
 <span class="c-p">$</span> looparch view your-org.looparch.yaml        <span class="c-cmt"># open the interactive diagram</span>
-<span class="c-p">$</span> looparch export your-org.looparch.yaml      <span class="c-cmt"># → React Flow JSON (interactive)</span>
-<span class="c-p">$</span> looparch publish your-org.looparch.yaml     <span class="c-cmt"># → Claude Code routines</span>
-<span class="c-p">$</span> looparch import ./my-project                    <span class="c-cmt"># ← existing routines back to YAML</span></code></pre>
+<span class="c-p">$</span> looparch sync your-org.looparch.yaml     <span class="c-cmt"># → Claude Code routines</span>
+<span class="c-p">$</span> looparch sync ./my-project --from-claude  <span class="c-cmt"># ← reverse: routines back to YAML</span></code></pre>
       <p class="note">
-        <code>publish</code> writes, for each loop, a slash command
+        <code>sync</code> writes, for each loop, a slash command
         (<code>.claude/commands/loop-&lt;id&gt;.md</code>) and a routine descriptor
         (<code>.claude/routines/&lt;id&gt;.json</code>) with the loop's schedule/event, model, and repos.
       </p>
       <p><a class="more" href="looparch/README.md">CLI reference →</a></p>
+    </section>
+
+    <!-- LOOP STORMING -->
+    <section id="storming">
+      <h2>Loop Storming</h2>
+      <p>
+        Loop Storming is a collaborative workshop for discovering loops, in the spirit of Event
+        Storming. The team maps the systems, connects them into loops (what each loop uses and writes
+        back to), names them, writes their instructions, and sets triggers. The messy wall is your initial
+        map; you then refine it into a formal Loop Architecture YAML.
+      </p>
+      <a class="storm-photo-link" href="loop-storming.html" aria-label="Read the Loop Storming guide">
+        <img class="storm-photo" src="assets/loop-storming-example.png"
+             alt="A pen-and-paper Loop Storming wall: systems, agentic loops drawn between them, and trigger symbols." />
+      </a>
+      <div class="flow3">
+        <div class="flow-step">
+          <span class="flow-n">1</span>
+          <span class="flow-t">Discover</span>
+          <span class="flow-d">Loop Storming workshop</span>
+        </div>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <div class="flow-step">
+          <span class="flow-n">2</span>
+          <span class="flow-t">Encode</span>
+          <span class="flow-d">as one YAML file</span>
+        </div>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <div class="flow-step">
+          <span class="flow-n">3</span>
+          <span class="flow-t">Sync</span>
+          <span class="flow-d">Claude Code routines via <code>looparch</code></span>
+        </div>
+      </div>
+      <p><a class="more" href="loop-storming.html">Read the Loop Storming guide →</a></p>
     </section>
 
     <!-- FAQ -->
@@ -271,13 +273,13 @@ viz.show(<span class="c-str">'your-org.flow.json'</span>);   <span class="c-cmt"
           systems, in the spirit of Event Storming. You map the systems (focusing on data, source
           code and storage), connect them into loops, name them, and set triggers.</dd>
 
-        <dt>How do I publish a loop to Claude Code?</dt>
-        <dd>Encode your loops in one Loop Architecture YAML file and run <code>looparch publish</code>.
+        <dt>How do I sync a loop to Claude Code?</dt>
+        <dd>Encode your loops in one Loop Architecture YAML file and run <code>looparch sync</code>.
           Each loop becomes a Claude Code routine: a slash command plus a schedule or event trigger.</dd>
 
         <dt>What is looparch?</dt>
         <dd><code>looparch</code> is a Python CLI (built with uv) that validates, visualizes and
-          publishes a Loop Architecture, and can import existing Claude Code routines back into YAML.</dd>
+          syncs a Loop Architecture to Claude Code routines, and reads them back with <code>--from-claude</code>.</dd>
 
         <dt>How is Loop Architecture different from event-driven or microservice architecture?</dt>
         <dd>Traditional architecture designs the systems and the requests between them. Loop
@@ -285,32 +287,12 @@ viz.show(<span class="c-str">'your-org.flow.json'</span>);   <span class="c-cmt"
           using some systems and writing back to others.</dd>
 
         <dt>Who created Loop Architecture?</dt>
-        <dd>Loop Architecture was coined by Arif Wider and Simon Harrer at SummerSOC on 1 July 2026,
-          on the island of Crete.</dd>
+        <dd>Loop Architecture was coined by
+          <a href="https://www.linkedin.com/in/arifwider/" target="_blank" rel="noopener">Arif Wider</a> and
+          <a href="https://www.linkedin.com/in/simonharrer/" target="_blank" rel="noopener">Simon Harrer</a>
+          at <a href="https://www.summersoc.eu/" target="_blank" rel="noopener">SummerSOC</a> on 1 July 2026,
+          on the island of Crete. <a href="origin.html">Read the origin story →</a></dd>
       </dl>
-    </section>
-
-    <!-- ORIGIN -->
-    <section id="origin" class="origin">
-      <h2>Origin</h2>
-      <p class="origin-lede">
-        The term <b>Loop Architecture</b> was coined by
-        <a href="https://www.linkedin.com/in/arifwider/" target="_blank" rel="noopener">Arif Wider</a>
-        and
-        <a href="https://www.linkedin.com/in/simonharrer/" target="_blank" rel="noopener">Simon Harrer</a>
-        at <a href="https://www.summersoc.eu/" target="_blank" rel="noopener">SummerSOC</a> on
-        <time datetime="2026-07-01">1 July 2026</time>, on the island of Crete, the same day they
-        visited the cave where, in myth, Zeus was born.
-      </p>
-      <div class="authors">
-        <a class="author" href="https://www.linkedin.com/in/arifwider/" target="_blank" rel="noopener">
-          <span class="author-name">Arif Wider</span><span class="author-link">LinkedIn ↗</span>
-        </a>
-        <a class="author" href="https://www.linkedin.com/in/simonharrer/" target="_blank" rel="noopener">
-          <span class="author-name">Simon Harrer</span><span class="author-link">LinkedIn ↗</span>
-        </a>
-      </div>
-      <p><a class="more" href="origin.html">Read the origin story →</a></p>
     </section>
   </main>
 
@@ -345,7 +327,7 @@ viz.show(<span class="c-str">'your-org.flow.json'</span>);   <span class="c-cmt"
         "name": "looparch",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "macOS, Linux, Windows",
-        "description": "A Python CLI to validate, visualize and publish a Loop Architecture, and to import existing Claude Code routines back into YAML.",
+        "description": "A Python CLI to validate, visualize and sync a Loop Architecture, and to import existing Claude Code routines back into YAML.",
         "url": "https://www.loop-architecture.com/",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
       },
@@ -366,8 +348,8 @@ viz.show(<span class="c-str">'your-org.flow.json'</span>);   <span class="c-cmt"
           { "@type": "Question", "name": "What is Loop Architecture?", "acceptedAnswer": { "@type": "Answer", "text": "Loop Architecture is an architecture style that makes the agentic loop between systems the first-class unit of design. A loop is triggered on a schedule or event, uses one or more systems, follows its instructions, and writes back to those systems. A Loop Architecture is all of your loops, mapped together." } },
           { "@type": "Question", "name": "What is an agentic loop?", "acceptedAnswer": { "@type": "Answer", "text": "An agentic loop is a continuous cycle where an agent reads from (uses) one or more systems, follows its instructions toward a goal, and writes back to systems, again and again on its trigger. It runs continuously and is self-learning." } },
           { "@type": "Question", "name": "What is Loop Storming?", "acceptedAnswer": { "@type": "Answer", "text": "Loop Storming is a collaborative workshop for discovering the agentic loops between your systems, in the spirit of Event Storming. You map the systems, connect them into loops, name them, and set triggers." } },
-          { "@type": "Question", "name": "How do I publish a loop to Claude Code?", "acceptedAnswer": { "@type": "Answer", "text": "Encode your loops in one Loop Architecture YAML file and run looparch publish. Each loop becomes a Claude Code routine: a slash command plus a schedule or event trigger." } },
-          { "@type": "Question", "name": "What is looparch?", "acceptedAnswer": { "@type": "Answer", "text": "looparch is a Python CLI, built with uv, that validates, visualizes and publishes a Loop Architecture, and can import existing Claude Code routines back into YAML." } },
+          { "@type": "Question", "name": "How do I sync a loop to Claude Code?", "acceptedAnswer": { "@type": "Answer", "text": "Encode your loops in one Loop Architecture YAML file and run looparch sync. Each loop becomes a Claude Code routine: a slash command plus a schedule or event trigger." } },
+          { "@type": "Question", "name": "What is looparch?", "acceptedAnswer": { "@type": "Answer", "text": "looparch is a Python CLI, built with uv, that validates, visualizes and syncs a Loop Architecture to Claude Code routines, and reads them back with --from-claude." } },
           { "@type": "Question", "name": "How is Loop Architecture different from event-driven or microservice architecture?", "acceptedAnswer": { "@type": "Answer", "text": "Traditional architecture designs the systems and the requests between them. Loop Architecture designs the agentic loops that run continuously between those systems, each using some systems and writing back to others." } },
           { "@type": "Question", "name": "Who created Loop Architecture?", "acceptedAnswer": { "@type": "Answer", "text": "Loop Architecture was coined by Arif Wider and Simon Harrer at SummerSOC on 1 July 2026, on the island of Crete." } }
         ]

@@ -78,13 +78,13 @@ The wall is your **initial** loop map, deliberately messy. Afterwards you *refin
 [Loop Architecture document](../spec/loop-architecture.md): give each system its URL/repo/connector,
 sharpen each loop's trigger and instructions, name the exact systems it uses and writes back to, and pick a
 model and tools where it matters. `looparch` then validates it, draws the whole architecture as one
-diagram, and publishes each loop as a Claude Code routine.
+diagram, and syncs each loop to a Claude Code routine.
 
 ```bash
 looparch init your-org                    # scaffold the architecture
 looparch validate your-org.looparch.yaml
 looparch view your-org.looparch.yaml      # all your loops in one interactive diagram
-looparch publish your-org.looparch.yaml   # turn each loop into a Claude Code routine
+looparch sync your-org.looparch.yaml   # turn each loop into a Claude Code routine
 ```
 
 ## Facilitation tips

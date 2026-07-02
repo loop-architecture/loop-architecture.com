@@ -2,7 +2,7 @@
 
 Reads a project's `.claude/routines/*.json` descriptors (and the matching
 `.claude/commands/loop-*.md` prompts, when present), the artifacts `looparch
-publish` produces, and reconstructs the `id` / `systems` / `loops` document.
+sync` produces, and reconstructs the `id` / `systems` / `loops` document.
 
 The routine descriptor carries the trigger, model, repositories and connectors;
 the command prompt carries the systems the loop uses / writes back to and their

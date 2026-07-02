@@ -60,7 +60,7 @@
             "items": { "type": "string" },
             "description": "System ids the loop writes back to."
           },
-          "instructions": { "type": "string", "description": "The instructions the loop follows, what it should do each turn. Included verbatim in the published routine prompt." },
+          "instructions": { "type": "string", "description": "The instructions the loop follows, what it should do each turn. Included verbatim in the synced routine prompt." },
           "model": { "type": "string" },
           "tools": { "type": "array", "items": { "type": "string" } }
         }
