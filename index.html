@@ -200,6 +200,10 @@
         the whole architecture as a single <b>interactive</b> diagram that flows left to right, sources on the left, loops in the middle, sinks on the right, a trigger icon
         (🕐 schedule · ⚡ event) on each. Click any system or loop for details.
       </p>
+      <div class="flow-tabs" role="tablist">
+        <button class="flow-tab active" data-src="assets/your-org.flow.json">Your Org</button>
+        <button class="flow-tab" data-src="assets/skills-governance.flow.json">Skills Governance</button>
+      </div>
       <div id="flow" class="flow">
         <p class="flow-loading">Loading interactive diagram…</p>
       </div>
@@ -279,34 +283,48 @@
         </aside>`;
       };
 
-      try {
-        const graph = await fetch('assets/your-org.flow.json').then((r) => r.json());
-        const edgeColor = graph.edge || '#9ca3af';
-        const edges = graph.edges.map((e) => ({
-          id: e.id, source: e.source, target: e.target,
-          sourceHandle: e.sourceHandle, targetHandle: e.targetHandle,
-          style: { stroke: edgeColor, strokeWidth: 1.5 },
-          markerEnd: { type: MarkerType.ArrowClosed, color: edgeColor, width: 15, height: 15 },
-        }));
-        const App = () => {
-          const [sel, setSel] = useState(null);
-          return html`<div class="flow-wrap">
-            <${ReactFlow} nodes=${graph.nodes} edges=${edges} nodeTypes=${nodeTypes}
-                fitView minZoom=${0.2} nodesConnectable=${false}
-                onNodeClick=${(_, n) => setSel(n)} onPaneClick=${() => setSel(null)}
-                proOptions=${{ hideAttribution: true }}>
-              <${Background} color="#e5e7eb" gap=${22} />
-              <${Controls} showInteractive=${false} />
-            <//>
-            ${sel ? html`<${Panel} node=${sel} onClose=${() => setSel(null)} />` : null}
-          </div>`;
-        };
-        document.getElementById('flow').innerHTML = '';
-        createRoot(document.getElementById('flow')).render(html`<${App} />`);
-      } catch (err) {
-        document.querySelector('.flow-loading').textContent =
-          'Could not load the interactive diagram (needs network).';
+      const container = document.getElementById('flow');
+      let root = null;
+      const cache = {};
+
+      async function show(url) {
+        try {
+          const graph = cache[url] || (cache[url] = await fetch(url).then((r) => r.json()));
+          const edgeColor = graph.edge || '#9ca3af';
+          const edges = graph.edges.map((e) => ({
+            id: e.id, source: e.source, target: e.target,
+            sourceHandle: e.sourceHandle, targetHandle: e.targetHandle,
+            style: { stroke: edgeColor, strokeWidth: 1.5 },
+            markerEnd: { type: MarkerType.ArrowClosed, color: edgeColor, width: 15, height: 15 },
+          }));
+          const App = () => {
+            const [sel, setSel] = useState(null);
+            return html`<div class="flow-wrap">
+              <${ReactFlow} nodes=${graph.nodes} edges=${edges} nodeTypes=${nodeTypes}
+                  fitView minZoom=${0.2} nodesConnectable=${false}
+                  onNodeClick=${(_, n) => setSel(n)} onPaneClick=${() => setSel(null)}
+                  proOptions=${{ hideAttribution: true }}>
+                <${Background} color="#e5e7eb" gap=${22} />
+                <${Controls} showInteractive=${false} />
+              <//>
+              ${sel ? html`<${Panel} node=${sel} onClose=${() => setSel(null)} />` : null}
+            </div>`;
+          };
+          if (!root) { container.innerHTML = ''; root = createRoot(container); }
+          root.render(html`<${App} key=${url} />`);
+        } catch (err) {
+          container.innerHTML = '<p class="flow-loading">Could not load the diagram (needs network).</p>';
+        }
       }
+
+      document.querySelectorAll('.flow-tab').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.flow-tab').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          show(btn.dataset.src);
+        });
+      });
+      show(document.querySelector('.flow-tab.active').dataset.src);
     </script>
 
     <!-- CLI -->

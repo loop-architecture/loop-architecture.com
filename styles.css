@@ -136,6 +136,16 @@ code {
 .c-cmt { color: var(--faint); font-style: italic; }
 .c-p { color: var(--accent); }
 
+/* diagram tabs */
+.flow-tabs { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.flow-tab {
+  font-family: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border);
+  background: var(--panel); color: var(--muted);
+}
+.flow-tab:hover { border-color: var(--accent); color: var(--text); }
+.flow-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
 /* interactive react-flow diagram, full-bleed (breaks out of the text column) */
 .flow {
   position: relative; left: 50%; transform: translateX(-50%);

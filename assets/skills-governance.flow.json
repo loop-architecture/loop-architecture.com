@@ -1,0 +1,272 @@
+{
+  "name": "Skills Governance",
+  "id": "skills-governance",
+  "accent": "#7c3aed",
+  "edge": "#9ca3af",
+  "nodes": [
+    {
+      "id": "data-product",
+      "type": "system",
+      "position": {
+        "x": 40,
+        "y": 119.99999999999997
+      },
+      "data": {
+        "label": "Data Product Repo",
+        "id": "data-product",
+        "description": "GitHub repository for a data product",
+        "url": null,
+        "repository": "https://github.com/your-org/data-product",
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
+        "readBy": [
+          "Govern Skills",
+          "Check Data Product",
+          "Align Data Contract"
+        ],
+        "writtenBy": [
+          "Check Data Product",
+          "Align Data Contract"
+        ]
+      }
+    },
+    {
+      "id": "skills",
+      "type": "system",
+      "position": {
+        "x": 680,
+        "y": 168.3302752293578
+      },
+      "data": {
+        "label": "Skills Repo",
+        "id": "skills",
+        "description": "GitHub repository with Claude Code skills",
+        "url": null,
+        "repository": "https://github.com/your-org/skills",
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
+        "readBy": [
+          "Govern Skills",
+          "Check Data Product"
+        ],
+        "writtenBy": [
+          "Govern Skills"
+        ]
+      }
+    },
+    {
+      "id": "policies",
+      "type": "system",
+      "position": {
+        "x": 40,
+        "y": 239.99999999999997
+      },
+      "data": {
+        "label": "Global Policies",
+        "id": "policies",
+        "description": "Global data governance policies in Entropy Data",
+        "url": "https://entropy-data.com",
+        "repository": null,
+        "connector": "entropy-data",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=entropy-data.com",
+        "readBy": [
+          "Govern Skills"
+        ],
+        "writtenBy": []
+      }
+    },
+    {
+      "id": "data-contract",
+      "type": "system",
+      "position": {
+        "x": 40,
+        "y": 0.0
+      },
+      "data": {
+        "label": "Data Contract",
+        "id": "data-contract",
+        "description": "Published data product and data contract YAML in Entropy Data",
+        "url": "https://entropy-data.com",
+        "repository": null,
+        "connector": "entropy-data",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=entropy-data.com",
+        "readBy": [
+          "Align Data Contract"
+        ],
+        "writtenBy": []
+      }
+    },
+    {
+      "id": "govern-skills",
+      "type": "loop",
+      "position": {
+        "x": 360,
+        "y": 186.2018348623853
+      },
+      "data": {
+        "label": "Govern Skills",
+        "id": "govern-skills",
+        "description": "Keeps the skills compliant with global policies.",
+        "emoji": "\u26a1\ud83d\udd50",
+        "triggers": [
+          "push",
+          "0 6 * * *"
+        ],
+        "prompt": "Check the data product's skills against the global policies in Entropy Data. Open a pull request that fixes any skill which violates a policy, citing the policy it breaks.",
+        "model": "claude-opus-4-8",
+        "tools": [
+          "Read",
+          "Grep",
+          "Bash(git *)",
+          "Bash(gh pr *)"
+        ],
+        "uses": [
+          "Skills Repo",
+          "Data Product Repo",
+          "Global Policies"
+        ],
+        "writesBack": [
+          "Skills Repo"
+        ]
+      }
+    },
+    {
+      "id": "check-data-product",
+      "type": "loop",
+      "position": {
+        "x": 1000,
+        "y": 136.11009174311923
+      },
+      "data": {
+        "label": "Check Data Product",
+        "id": "check-data-product",
+        "description": "Checks the data product is implemented per the skills.",
+        "emoji": "\u26a1\ud83d\udd50",
+        "triggers": [
+          "push",
+          "0 7 * * *"
+        ],
+        "prompt": "Check that the data product follows its skills and is implemented accordingly. Open a pull request (or an issue) for any place where the implementation drifts from what the skills prescribe.",
+        "model": "claude-opus-4-8",
+        "tools": [
+          "Read",
+          "Grep",
+          "Bash(git *)",
+          "Bash(gh pr *)"
+        ],
+        "uses": [
+          "Data Product Repo",
+          "Skills Repo"
+        ],
+        "writesBack": [
+          "Data Product Repo"
+        ]
+      }
+    },
+    {
+      "id": "align-data-contract",
+      "type": "loop",
+      "position": {
+        "x": 360,
+        "y": 66.20183486238533
+      },
+      "data": {
+        "label": "Align Data Contract",
+        "id": "align-data-contract",
+        "description": "Keeps the data product in line with its published YAML.",
+        "emoji": "\u26a1\ud83d\udd50",
+        "triggers": [
+          "push",
+          "0 8 * * *"
+        ],
+        "prompt": "Keep the data product in line with its published data product YAML and data contract YAML in Entropy Data. Open a pull request to fix any drift between the implementation and the published contract.",
+        "model": "claude-opus-4-8",
+        "tools": [
+          "Read",
+          "Grep",
+          "Bash(git *)",
+          "Bash(gh pr *)"
+        ],
+        "uses": [
+          "Data Contract",
+          "Data Product Repo"
+        ],
+        "writesBack": [
+          "Data Product Repo"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "use:skills->govern-skills",
+      "source": "skills",
+      "target": "govern-skills",
+      "sourceHandle": "ls",
+      "targetHandle": "rt"
+    },
+    {
+      "id": "use:data-product->govern-skills",
+      "source": "data-product",
+      "target": "govern-skills",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:policies->govern-skills",
+      "source": "policies",
+      "target": "govern-skills",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:govern-skills->skills",
+      "source": "govern-skills",
+      "target": "skills",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:data-product->check-data-product",
+      "source": "data-product",
+      "target": "check-data-product",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:skills->check-data-product",
+      "source": "skills",
+      "target": "check-data-product",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:check-data-product->data-product",
+      "source": "check-data-product",
+      "target": "data-product",
+      "sourceHandle": "ls",
+      "targetHandle": "rt"
+    },
+    {
+      "id": "use:data-contract->align-data-contract",
+      "source": "data-contract",
+      "target": "align-data-contract",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:data-product->align-data-contract",
+      "source": "data-product",
+      "target": "align-data-contract",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:align-data-contract->data-product",
+      "source": "align-data-contract",
+      "target": "data-product",
+      "sourceHandle": "ls",
+      "targetHandle": "rt"
+    }
+  ]
+}
