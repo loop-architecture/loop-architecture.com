@@ -6,7 +6,6 @@ from pathlib import Path
 
 import pytest
 
-from looparch import architecture
 from looparch.model import Architecture, load_architecture, trigger_type
 from looparch.publish import publish
 from looparch.templates import routine_prompt, scaffold
@@ -14,6 +13,7 @@ from looparch.validate import check, lint, validate_schema
 
 EXAMPLES = Path(__file__).resolve().parents[2] / "examples"
 EXAMPLE = EXAMPLES / "your-org.looparch.yaml"
+EXAMPLE_DOCS = EXAMPLES / "docs.looparch.yaml"
 
 
 def _write(tmp_path: Path, text: str) -> Path:
@@ -32,8 +32,16 @@ def test_example_architecture_is_valid() -> None:
     arch = load_architecture(EXAMPLE)
     errors = [i for i in check(arch) if i.level == "error"]
     assert not errors, errors
-    assert len(arch.loops) == 10
-    assert len(arch.systems) == 10
+    assert len(arch.loops) == 5
+    assert len(arch.systems) == 6
+
+
+def test_docs_example_is_valid() -> None:
+    arch = load_architecture(EXAMPLE_DOCS)
+    errors = [i for i in check(arch) if i.level == "error"]
+    assert not errors, errors
+    assert len(arch.loops) == 4
+    assert len(arch.systems) == 5
 
 
 def test_trigger_type_inference() -> None:
@@ -47,7 +55,7 @@ def test_trigger_type_inference() -> None:
 
 def test_system_role_inference() -> None:
     arch = load_architecture(EXAMPLE)
-    assert arch.system_role("code-repo") == "both"    # observed and acted on
+    assert arch.system_role("jira") == "both"         # observed and acted on
     assert arch.system_role("dash0") == "sensor"      # only observed
     assert arch.system_role("slack") == "actuator"    # only acted on
 
@@ -72,16 +80,16 @@ def test_lint_flags_unknown_system() -> None:
 
 
 def test_publish_all_loops(tmp_path: Path) -> None:
-    arch = load_architecture(EXAMPLE)
+    arch = load_architecture(EXAMPLE_DOCS)
     results = publish(arch, root=tmp_path)
-    assert len(results) == 10
-    docs = next(r for r in results if r.loop_id == "sync-docs")
+    assert len(results) == 4
+    docs = next(r for r in results if r.loop_id == "update-docs")
     assert docs.schedule == "0 6 * * *"
     body = docs.command_path.read_text()
     assert "Systems you use" in body and "What to do" in body
     import json
     desc = json.loads(docs.routine_path.read_text())
-    # docs-sync has two triggers: a cron and a merged-PR event.
+    # update-docs has two triggers: a cron and a merged-PR event.
     assert any(t.get("schedule") == "0 6 * * *" for t in desc["triggers"])
     assert any(t.get("githubTrigger", {}).get("event") == "pull_request.merged" for t in desc["triggers"])
     assert "https://github.com/your-org/app" in desc["repositories"]
@@ -89,8 +97,8 @@ def test_publish_all_loops(tmp_path: Path) -> None:
 
 def test_publish_event_trigger(tmp_path: Path) -> None:
     import json
-    arch = load_architecture(EXAMPLE)
-    [r] = publish(arch, root=tmp_path, only="sync-docs")  # has a cron + a merged-PR event
+    arch = load_architecture(EXAMPLE_DOCS)
+    [r] = publish(arch, root=tmp_path, only="update-docs")  # has a cron + a merged-PR event
     desc = json.loads(r.routine_path.read_text())
     assert any(t.get("githubTrigger", {}).get("event") == "pull_request.merged" for t in desc["triggers"])
 
@@ -102,20 +110,20 @@ def test_publish_single_loop(tmp_path: Path) -> None:
 
 
 def test_routine_prompt_has_core_sections() -> None:
-    arch = load_architecture(EXAMPLE)
-    prompt = routine_prompt(arch, arch.loop("sync-docs"))
+    arch = load_architecture(EXAMPLE_DOCS)
+    prompt = routine_prompt(arch, arch.loop("update-docs"))
     assert "## What to do" in prompt
     assert "Systems you use" in prompt
     assert "code-repo" in prompt
 
 
 def test_loop_prompt_included_in_routine() -> None:
-    arch = load_architecture(EXAMPLE)
-    loop = arch.loop("sync-docs")
+    arch = load_architecture(EXAMPLE_DOCS)
+    loop = arch.loop("update-docs")
     assert loop.prompt  # the example defines a custom prompt
     prompt = routine_prompt(arch, loop)
     assert "## What to do" in prompt
-    assert "last 24 hours" in prompt
+    assert "drifted" in prompt
 
 
 def test_layout_is_left_to_right() -> None:
@@ -146,7 +154,7 @@ def test_layout_is_left_to_right() -> None:
 
 def test_import_round_trip(tmp_path: Path) -> None:
     from looparch import importer
-    arch = load_architecture(EXAMPLE)
+    arch = load_architecture(EXAMPLE_DOCS)
     publish(arch, root=tmp_path)  # writes .claude/commands + .claude/routines
     descriptors = importer.load_descriptors(tmp_path)
     assert len(descriptors) == len(arch.loops)
@@ -155,14 +163,14 @@ def test_import_round_trip(tmp_path: Path) -> None:
     # No schema errors, and the loops + their observe/act come back.
     assert not [i for i in check(rebuilt) if i.level == "error"]
     assert {lp.id for lp in rebuilt.loops} == {lp.id for lp in arch.loops}
-    docs = rebuilt.loop("sync-docs")
+    docs = rebuilt.loop("update-docs")
     assert docs.observe == ["code-repo"] and docs.act == ["docs"]
     assert "pull_request.merged" in docs.triggers
 
 
 def test_flow_export_shape() -> None:
     from looparch import flow
-    arch = load_architecture(EXAMPLE)
+    arch = load_architecture(EXAMPLE_DOCS)
     graph = flow.build(arch, favicons=True)
     real = [n for n in graph["nodes"] if n["type"] != "dummy"]
     assert len(real) == len(arch.systems) + len(arch.loops)
@@ -172,19 +180,17 @@ def test_flow_export_shape() -> None:
         assert e["source"] in ids and e["target"] in ids
         assert e["sourceHandle"] and e["targetHandle"]
     # A loop with a schedule + event carries both trigger emojis.
-    docs = next(n for n in graph["nodes"] if n["id"] == "sync-docs")
+    docs = next(n for n in graph["nodes"] if n["id"] == "update-docs")
     assert "🕐" in docs["data"]["emoji"] and "⚡" in docs["data"]["emoji"]
 
 
-def test_architecture_diagram_svg_offline() -> None:
+def test_view_page_offline() -> None:
+    from looparch import flow
     arch = load_architecture(EXAMPLE)
-    svg = architecture.to_svg(arch, favicons=False)  # no network
-    assert svg.lstrip().startswith("<?xml")
+    html = flow.page(arch, favicons=False)  # no network
+    assert html.lstrip().startswith("<!DOCTYPE html>")
+    assert "visualizer.js" in html and "createController" in html
     for lp in arch.loops:
-        assert lp.name in svg
+        assert lp.name in html
     for s in arch.systems:
-        assert s.name in svg
-    assert "10 loops · 10 systems" in svg
-    # No sensor/actuator wording in the diagram, and no dashed edges.
-    assert "sensor" not in svg and "actuator" not in svg
-    assert "stroke-dasharray" not in svg
+        assert s.name in html

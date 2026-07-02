@@ -83,7 +83,7 @@ diagram, and publishes each loop as a Claude Code routine.
 ```bash
 looparch init your-org                    # scaffold the architecture
 looparch validate your-org.looparch.yaml
-looparch diagram your-org.looparch.yaml   # all your loops in one diagram
+looparch view your-org.looparch.yaml      # all your loops in one interactive diagram
 looparch publish your-org.looparch.yaml   # turn each loop into a Claude Code routine
 ```
 

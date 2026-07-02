@@ -24,6 +24,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xyflow/react@12/dist/style.css" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="visualizer/visualizer.css" />
   <script type="importmap">
   {
     "imports": {
@@ -49,12 +50,11 @@
         <span>Loop<b>Architecture</b></span>
       </a>
       <nav class="nav-links">
-        <a href="#diagram">Examples</a>
         <a href="#principles">Principles</a>
+        <a href="#diagram">Examples</a>
         <a href="#storming">Loop Storming</a>
         <a href="#format">Spec</a>
         <a href="#cli">Tooling</a>
-        <a href="#origin">Origin</a>
       </nav>
     </div>
   </header>
@@ -74,8 +74,8 @@
         that <b>translates the docs to German</b> whenever the English pages change.
       </p>
       <a class="hero-diagram-link" href="#diagram" aria-label="See the interactive examples">
-        <img class="hero-diagram" src="assets/docs.svg"
-             alt="An example Loop Architecture: an App Repo feeding agentic loops that keep the docs, the changelog, and the German translation up to date." />
+        <img class="hero-diagram" src="assets/hero.png"
+             alt="An example Loop Architecture: an App Repo feeding agentic loops that keep the changelog, the docs, the German translation, and the landing page up to date." />
       </a>
     </section>
 
@@ -132,125 +132,17 @@
     </section>
 
     <script type="module">
-      import React from 'react';
-      import { createRoot } from 'react-dom/client';
-      import htm from 'htm';
-      import { ReactFlow, Background, Controls, Handle, Position, MarkerType } from '@xyflow/react';
-      const html = htm.bind(React.createElement);
-      const { useState } = React;
+      import { createController } from './visualizer/visualizer.js';
 
-      const Handles = () => html`
-        <${Handle} type="target" position=${Position.Left} id="lt" className="rf-h" />
-        <${Handle} type="source" position=${Position.Left} id="ls" className="rf-h" />
-        <${Handle} type="target" position=${Position.Right} id="rt" className="rf-h" />
-        <${Handle} type="source" position=${Position.Right} id="rs" className="rf-h" />`;
-
-      const SystemNode = ({ data }) => html`
-        <div class="rf-system">
-          ${data.favicon
-            ? html`<img class="rf-ico" src=${data.favicon} width="20" height="20"
-                 onError=${(e) => { e.target.style.visibility = 'hidden'; }} />`
-            : html`<span class="rf-fallback">${(data.label || '?')[0].toUpperCase()}</span>`}
-          <div class="rf-sys-body">
-            <div class="rf-sys-name">${data.label}</div>
-            ${data.description ? html`<div class="rf-sys-desc">${data.description}</div>` : null}
-          </div>
-          <${Handles} />
-        </div>`;
-
-      const LoopNode = ({ data }) => html`
-        <div class="rf-loop">
-          <div class="rf-loop-head">
-            <span>Agentic Loop</span>
-            ${data.emoji ? html`<span class="rf-emoji">${data.emoji}</span>` : null}
-          </div>
-          <div class="rf-loop-body">
-            <div class="rf-loop-name">${data.label}</div>
-            ${data.description ? html`<div class="rf-loop-desc">${data.description}</div>` : null}
-          </div>
-          <${Handles} />
-        </div>`;
-
-      const DummyNode = () => html`<div class="rf-dummy"><${Handles} /></div>`;
-
-      const nodeTypes = { system: SystemNode, loop: LoopNode, dummy: DummyNode };
-
-      const field = (label, value) => value
-        ? html`<div class="flow-field"><div class="flow-field-label">${label}</div>
-                 <div class="flow-field-value">${value}</div></div>` : null;
-      const chips = (label, arr) => (arr && arr.length)
-        ? html`<div class="flow-field"><div class="flow-field-label">${label}</div>
-                 <div>${arr.map((x) => html`<span class="flow-chip">${x}</span>`)}</div></div>` : null;
-      const link = (url) => html`<a href=${url} target="_blank" rel="noopener">${url}</a>`;
-
-      const Panel = ({ node, onClose }) => {
-        const d = node.data;
-        const isLoop = node.type === 'loop';
-        return html`<aside class="flow-panel">
-          <button class="flow-panel-close" onClick=${onClose} aria-label="Close">×</button>
-          <div class="flow-panel-kind">${isLoop ? 'Loop' : 'System'}</div>
-          <h3>${d.label}</h3>
-          <div class="flow-panel-id">${d.id}</div>
-          ${d.description ? html`<p class="flow-panel-desc">${d.description}</p>` : null}
-          ${isLoop ? html`
-            ${field('Prompt', d.prompt)}
-            ${chips('Triggers', d.triggers)}
-            ${field('Model', d.model)}
-            ${chips('Uses', d.uses)}
-            ${chips('Writes back', d.writesBack)}
-            ${chips('Tools', d.tools)}
-          ` : html`
-            ${d.url ? field('URL', link(d.url)) : null}
-            ${d.repository ? field('Repository', link(d.repository)) : null}
-            ${field('Connector', d.connector)}
-            ${chips('Read by', d.readBy)}
-            ${chips('Written by', d.writtenBy)}
-          `}
-        </aside>`;
-      };
-
-      const container = document.getElementById('flow');
-      let root = null;
-      const cache = {};
-
-      async function show(url) {
-        try {
-          const graph = cache[url] || (cache[url] = await fetch(url).then((r) => r.json()));
-          const edgeColor = graph.edge || '#9ca3af';
-          const edges = graph.edges.map((e) => ({
-            id: e.id, source: e.source, target: e.target,
-            sourceHandle: e.sourceHandle, targetHandle: e.targetHandle,
-            style: { stroke: edgeColor, strokeWidth: 1.5 },
-            markerEnd: e.end === false ? undefined
-              : { type: MarkerType.ArrowClosed, color: edgeColor, width: 15, height: 15 },
-          }));
-          const App = () => {
-            const [sel, setSel] = useState(null);
-            return html`<div class="flow-wrap">
-              <${ReactFlow} nodes=${graph.nodes} edges=${edges} nodeTypes=${nodeTypes}
-                  fitView minZoom=${0.2} nodesConnectable=${false}
-                  onNodeClick=${(_, n) => setSel(n)} onPaneClick=${() => setSel(null)}>
-                <${Background} color="#e5e7eb" gap=${22} />
-                <${Controls} showInteractive=${false} />
-              <//>
-              ${sel ? html`<${Panel} node=${sel} onClose=${() => setSel(null)} />` : null}
-            </div>`;
-          };
-          if (!root) { container.innerHTML = ''; root = createRoot(container); }
-          root.render(html`<${App} key=${url} />`);
-        } catch (err) {
-          container.innerHTML = '<p class="flow-loading">Could not load the diagram (needs network).</p>';
-        }
-      }
-
+      const viz = createController(document.getElementById('flow'));
       document.querySelectorAll('.flow-tab').forEach((btn) => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.flow-tab').forEach((b) => b.classList.remove('active'));
           btn.classList.add('active');
-          show(btn.dataset.src);
+          viz.show(btn.dataset.src);
         });
       });
-      show(document.querySelector('.flow-tab.active').dataset.src);
+      viz.show(document.querySelector('.flow-tab.active').dataset.src);
     </script>
 
     <!-- LOOP STORMING -->
@@ -332,16 +224,35 @@
       </p>
     </section>
 
-    <!-- CLI -->
+    <!-- TOOLING -->
     <section id="cli">
-      <h2>looparch</h2>
-      <p>A Python CLI (built with <a href="https://docs.astral.sh/uv/">uv</a>) to validate, visualize, and publish loops.</p>
+      <h2>Tooling</h2>
+      <p>
+        Two tools work directly with a Loop Architecture YAML: the <b>looparch visualizer</b> to see
+        it, and the <b>looparch CLI</b> to validate, visualize and publish it.
+      </p>
+
+      <h3>looparch visualizer</h3>
+      <p>
+        A small, embeddable React component (built on <a href="https://reactflow.dev/" target="_blank" rel="noopener">React Flow</a>)
+        that renders a Loop Architecture as the interactive diagram above: the systems, the agentic
+        loops, and the edges between them. Drop it into any page, or open it from the CLI with
+        <code>looparch view</code>.
+      </p>
+      <pre class="code plain"><code><span class="c-cmt">// the host page provides an import map (react, @xyflow/react) and visualizer.css</span>
+<span class="c-key">import</span> { createController } <span class="c-key">from</span> <span class="c-str">'./visualizer/visualizer.js'</span>;
+
+<span class="c-key">const</span> viz = createController(document.getElementById(<span class="c-str">'flow'</span>));
+viz.show(<span class="c-str">'your-org.flow.json'</span>);   <span class="c-cmt">// a URL, or a graph object from `looparch export`</span></code></pre>
+      <p><a class="more" href="visualizer/visualizer.js">Visualizer module →</a></p>
+
+      <h3>looparch CLI</h3>
+      <p>A Python CLI (built with <a href="https://docs.astral.sh/uv/">uv</a>) to validate, visualize and publish loops.</p>
       <pre class="code plain"><code><span class="c-p">$</span> uv tool install looparch
 
 <span class="c-p">$</span> looparch init your-org              <span class="c-cmt"># scaffold an architecture</span>
 <span class="c-p">$</span> looparch validate your-org.looparch.yaml    <span class="c-cmt"># schema + lint</span>
-<span class="c-p">$</span> looparch show your-org.looparch.yaml        <span class="c-cmt"># readable summary</span>
-<span class="c-p">$</span> looparch diagram your-org.looparch.yaml     <span class="c-cmt"># ALL loops → one diagram (SVG)</span>
+<span class="c-p">$</span> looparch view your-org.looparch.yaml        <span class="c-cmt"># open the interactive diagram</span>
 <span class="c-p">$</span> looparch export your-org.looparch.yaml      <span class="c-cmt"># → React Flow JSON (interactive)</span>
 <span class="c-p">$</span> looparch publish your-org.looparch.yaml     <span class="c-cmt"># → Claude Code routines</span>
 <span class="c-p">$</span> looparch import ./my-project                    <span class="c-cmt"># ← existing routines back to YAML</span></code></pre>

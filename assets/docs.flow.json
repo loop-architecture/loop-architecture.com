@@ -9,7 +9,7 @@
       "type": "system",
       "position": {
         "x": 40,
-        "y": 60.00000000005457
+        "y": 60.00000000007277
       },
       "data": {
         "label": "App Repo",
@@ -42,7 +42,8 @@
         "connector": null,
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=docs.your-org.com",
         "readBy": [
-          "Translate Docs"
+          "Translate Docs",
+          "Sync Landing Page"
         ],
         "writtenBy": [
           "Update Docs"
@@ -75,7 +76,7 @@
       "type": "system",
       "position": {
         "x": 1320,
-        "y": 119.99999999995907
+        "y": 59.99999999996362
       },
       "data": {
         "label": "Docs (DE)",
@@ -92,11 +93,32 @@
       }
     },
     {
+      "id": "landing-page",
+      "type": "system",
+      "position": {
+        "x": 1320,
+        "y": 179.99999999996362
+      },
+      "data": {
+        "label": "Landing Page",
+        "id": "landing-page",
+        "description": "Marketing landing page",
+        "url": "https://www.your-org.com",
+        "repository": null,
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=www.your-org.com",
+        "readBy": [],
+        "writtenBy": [
+          "Sync Landing Page"
+        ]
+      }
+    },
+    {
       "id": "update-docs",
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 120.00000000002728
+        "y": 120.0000000000364
       },
       "data": {
         "label": "Update Docs",
@@ -128,7 +150,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 2.7284841053187847e-11
+        "y": 3.638422896301563e-11
       },
       "data": {
         "label": "Update Changelog",
@@ -159,7 +181,7 @@
       "type": "loop",
       "position": {
         "x": 1000,
-        "y": 119.99999999995907
+        "y": 59.99999999996362
       },
       "data": {
         "label": "Translate Docs",
@@ -177,6 +199,32 @@
         ],
         "writesBack": [
           "Docs (DE)"
+        ]
+      }
+    },
+    {
+      "id": "sync-landing-page",
+      "type": "loop",
+      "position": {
+        "x": 1000,
+        "y": 179.99999999996362
+      },
+      "data": {
+        "label": "Sync Landing Page",
+        "id": "sync-landing-page",
+        "description": "Keeps the landing page on message.",
+        "emoji": "\ud83d\udd50",
+        "triggers": [
+          "0 9 * * *"
+        ],
+        "prompt": "Keep the feature descriptions on the landing page consistent with the docs.",
+        "model": null,
+        "tools": [],
+        "uses": [
+          "Docs (EN)"
+        ],
+        "writesBack": [
+          "Landing Page"
         ]
       }
     }
@@ -226,6 +274,22 @@
       "id": "translate-docs->docs-de:0",
       "source": "translate-docs",
       "target": "docs-de",
+      "sourceHandle": "rs",
+      "targetHandle": "lt",
+      "end": true
+    },
+    {
+      "id": "docs->sync-landing-page:0",
+      "source": "docs",
+      "target": "sync-landing-page",
+      "sourceHandle": "rs",
+      "targetHandle": "lt",
+      "end": true
+    },
+    {
+      "id": "sync-landing-page->landing-page:0",
+      "source": "sync-landing-page",
+      "target": "landing-page",
       "sourceHandle": "rs",
       "targetHandle": "lt",
       "end": true

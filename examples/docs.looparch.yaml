@@ -19,6 +19,10 @@ systems:
     name: Docs (DE)
     description: German translation of the docs
     url: https://docs.your-org.com/de
+  - id: landing-page
+    name: Landing Page
+    description: Marketing landing page
+    url: https://www.your-org.com
 
 loops:
   - id: update-docs
@@ -57,3 +61,12 @@ loops:
     prompt: >
       For every English page changed since the German version was last updated,
       update the matching German page and open a pull request.
+
+  - id: sync-landing-page
+    name: Sync Landing Page
+    description: Keeps the landing page on message.
+    trigger: "0 9 * * *"
+    observe: [docs]
+    act: [landing-page]
+    prompt: >
+      Keep the feature descriptions on the landing page consistent with the docs.

@@ -8,7 +8,7 @@ from pathlib import Path
 
 import yaml
 
-from . import __version__, architecture, flow, importer
+from . import __version__, flow, importer
 from .model import Architecture, LoopError, load_architecture
 from .publish import publish
 from .templates import scaffold
@@ -78,34 +78,24 @@ def cmd_lint(args: argparse.Namespace) -> int:
     return _report(arch, do_lint=True)
 
 
-def cmd_show(args: argparse.Namespace) -> int:
-    arch = _load(args.file)
-    p = print
-    p(_c(arch.name, "1;35") + dim(f"  [{arch.id}]"))
-    p(dim(f"{len(arch.loops)} loops · {len(arch.systems)} systems"))
-    p("")
-    p(_c("systems", "1"))
-    for s in arch.systems:
-        meta = s.url or s.repository or ""
-        p(f"  · {s.id} " + dim(f"({arch.system_role(s.id)})") + (f" {dim(meta)}" if meta else ""))
-    p("")
-    p(_c("loops", "1"))
-    for lp in arch.loops:
-        p(f"  {_c(lp.name, '1;36')} " + dim(f"{lp.trigger}"))
-        p(f"    {dim('use:')} {', '.join(lp.observe)}  {dim('→')}  {dim('write:')} {', '.join(lp.act)}")
-        p(f"    {dim('prompt:')} {lp.prompt}")
-    return 0
+def cmd_view(args: argparse.Namespace) -> int:
+    import tempfile
+    import webbrowser
 
-
-def cmd_diagram(args: argparse.Namespace) -> int:
     arch = _load(args.file)
-    out = Path(args.output or f"{arch.id or 'loop-architecture'}.svg")
-    try:
-        architecture.render(arch, out, favicons=not args.no_favicons)
-    except RuntimeError as e:
-        print(err(f"✗ {e}"), file=sys.stderr)
-        return 1
-    print(ok(f"✓ wrote {out}  ({len(arch.loops)} loops, {len(arch.systems)} systems)"))
+    html = flow.page(arch, favicons=not args.no_favicons)
+    if args.output:
+        out = Path(args.output)
+        out.write_text(html, encoding="utf-8")
+    else:
+        fd = tempfile.NamedTemporaryFile(
+            prefix=f"{arch.id or 'loop-architecture'}-", suffix=".html", delete=False, mode="w", encoding="utf-8"
+        )
+        fd.write(html)
+        fd.close()
+        out = Path(fd.name)
+    print(ok(f"✓ opening {out}  ({len(arch.loops)} loops, {len(arch.systems)} systems)"))
+    webbrowser.open(out.resolve().as_uri())
     return 0
 
 
@@ -180,15 +170,11 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("file")
     s.set_defaults(func=cmd_lint)
 
-    s = sub.add_parser("show", help="pretty-print the architecture")
+    s = sub.add_parser("view", help="open the interactive diagram in a browser")
     s.add_argument("file")
-    s.set_defaults(func=cmd_show)
-
-    s = sub.add_parser("diagram", help="render ALL loops + systems as one architecture diagram")
-    s.add_argument("file")
-    s.add_argument("-o", "--output", help="output image (.svg or .png; default: <id>.svg)")
-    s.add_argument("--no-favicons", action="store_true", help="skip fetching system favicons")
-    s.set_defaults(func=cmd_diagram)
+    s.add_argument("-o", "--output", help="write the HTML page here instead of opening a temp file")
+    s.add_argument("--no-favicons", action="store_true", help="omit favicon URLs")
+    s.set_defaults(func=cmd_view)
 
     s = sub.add_parser("import", help="import existing Claude Code routines into a Loop Architecture YAML")
     s.add_argument("path", help="project root, a .claude/routines dir, or a routine .json")

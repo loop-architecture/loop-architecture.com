@@ -11,12 +11,18 @@ import json
 from pathlib import Path
 
 from . import favicon, layout
-from .architecture import ACCENT, EDGE, TRIGGER_EMOJI
 from .model import Architecture
+
+# Diagram palette + trigger glyphs, consumed by the visualizer.
+ACCENT = "#7c3aed"
+EDGE = "#9ca3af"
+TRIGGER_EMOJI = {"schedule": "🕐", "event": "⚡", "once": "📅", "manual": "👆"}
 
 COL_W = 320
 ROW = 120
 MARGIN = 40
+NODE_W = 220
+NODE_H = 76
 
 
 def build(arch: Architecture, favicons: bool = True) -> dict:
@@ -76,9 +82,15 @@ def build(arch: Architecture, favicons: bool = True) -> dict:
             },
         })
 
-    # Invisible waypoint nodes so long edges route around boxes (through empty rows).
+    # Invisible zero-size waypoints (centered on the column, at a real node's handle
+    # height) so long edges route around boxes through empty rows without gaps.
     for d in plan.dummies:
-        nodes.append({"id": d, "type": "dummy", "position": pos(d), "data": {}})
+        nodes.append({
+            "id": d, "type": "dummy",
+            "position": {"x": MARGIN + plan.col_of[d] * COL_W + NODE_W / 2,
+                         "y": plan.y_of[d] * ROW + NODE_H / 2},
+            "data": {},
+        })
 
     def handles(a: str, b: str) -> tuple[str, str]:
         # Forward (left→right): out of a's right, into b's left. Back edge mirrors.
@@ -106,3 +118,49 @@ def render(arch: Architecture, out_path: str | Path, favicons: bool = True) -> P
     out = Path(out_path)
     out.write_text(json.dumps(build(arch, favicons=favicons), indent=2) + "\n", encoding="utf-8")
     return out
+
+
+# Where `looparch view` loads the shared visualizer module + styles from.
+VISUALIZER_BASE = "https://www.loop-architecture.com/visualizer"
+
+_PAGE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title} - Loop Architecture</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xyflow/react@12/dist/style.css" />
+<link rel="stylesheet" href="{base}/visualizer.css" />
+<script type="importmap">
+{{
+  "imports": {{
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom": "https://esm.sh/react-dom@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "htm": "https://esm.sh/htm@3.1.1",
+    "@xyflow/react": "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1"
+  }}
+}}
+</script>
+<style>
+  html, body {{ margin: 0; min-height: 100%; background: #fff; font-family: Inter, system-ui, sans-serif; }}
+  /* fill the viewport; .flow (from visualizer.css) provides border, palette and layout */
+  #flow {{ height: 94vh; }}
+</style>
+</head>
+<body>
+  <div id="flow"><p class="flow-loading">Loading interactive diagram...</p></div>
+  <script type="module">
+    import {{ createController }} from '{base}/visualizer.js';
+    const graph = {graph};
+    createController(document.getElementById('flow')).show(graph);
+  </script>
+</body>
+</html>
+"""
+
+
+def page(arch: Architecture, favicons: bool = True, base: str = VISUALIZER_BASE) -> str:
+    """A standalone HTML page that renders this architecture with the visualizer."""
+    graph = json.dumps(build(arch, favicons=favicons))
+    return _PAGE.format(title=arch.name or arch.id or "Loop Architecture", base=base, graph=graph)

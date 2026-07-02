@@ -21,8 +21,7 @@ Or run without installing: `uvx looparch --help`.
 ```bash
 looparch init your-org                       # scaffold <id>.looparch.yaml
 looparch validate your-org.looparch.yaml     # schema + lint
-looparch show your-org.looparch.yaml         # readable summary
-looparch diagram your-org.looparch.yaml      # ALL loops + systems → one SVG
+looparch view your-org.looparch.yaml         # open the interactive diagram in a browser
 looparch publish your-org.looparch.yaml      # every loop → a Claude Code routine
 ```
 
@@ -33,14 +32,14 @@ looparch publish your-org.looparch.yaml      # every loop → a Claude Code rout
 | `looparch init <id>`                      | Scaffold a new `<id>.looparch.yaml`.                              |
 | `looparch validate <file>`                | Validate against the schema and lint. Exit non-zero on errors.    |
 | `looparch lint <file>`                    | Best-practice / safety checks.                                    |
-| `looparch show <file>`                    | Pretty-print the architecture.                                    |
-| `looparch diagram <file>`                 | Render **all** loops + systems as one architecture diagram (SVG/PNG). |
+| `looparch view <file>`                    | Open the **interactive** diagram in a browser (via the visualizer). |
 | `looparch export <file>`                  | Export React Flow JSON for the **interactive** web diagram.       |
 | `looparch publish <file> [loop-id]`       | Publish all loops (or one) as Claude Code routines.              |
 | `looparch import <path>`                  | Reconstruct a Loop Architecture YAML from existing Claude Code routines. |
 
-`diagram` writes `.svg` by default; pass `-o out.png` for PNG (needs the `png` extra). It fetches each
-system's favicon (from its `url`/`repository`) as its icon, pass `--no-favicons` to skip the network.
+`view` writes a small HTML page that loads the shared visualizer (`visualizer/visualizer.js`) and renders
+the architecture; `export` emits the same graph as JSON. Both embed each system's favicon (from its
+`url`/`repository`) as its icon, pass `--no-favicons` to skip the network.
 
 ## What `publish` produces
 

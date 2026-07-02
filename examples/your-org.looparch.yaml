@@ -20,23 +20,6 @@ systems:
     description: Service desk and tickets
     url: https://www.atlassian.com
     connector: jira
-  - id: confluence
-    name: Confluence
-    description: Internal docs and admin runbooks
-    url: https://www.atlassian.com/software/confluence
-    connector: confluence
-  - id: docs
-    name: Docs (EN)
-    description: Product documentation
-    url: https://docs.your-org.com
-  - id: docs-de
-    name: Docs (DE)
-    description: German translation of the docs
-    url: https://docs.your-org.com/de
-  - id: landing-page
-    name: Landing Page
-    description: Marketing landing page
-    url: https://www.your-org.com
   - id: onedrive
     name: OneDrive
     description: Policies and vendor documents
@@ -72,59 +55,6 @@ loops:
     prompt: >
       Find recurring errors in the logs, locate the cause in the code, and open a
       pull request that fixes it, referencing the originating trace.
-
-  - id: sync-docs
-    name: Sync Docs
-    description: Keeps the docs in step with the code.
-    trigger:
-      - "0 6 * * *"
-      - pull_request.merged
-    model: claude-opus-4-8
-    observe: [code-repo]
-    act: [docs]
-    prompt: >
-      Diff the docs against the changes merged in the last 24 hours, update the
-      pages that drifted, and open a pull request.
-    tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
-
-  - id: translate-docs
-    name: Translate Docs
-    description: Keeps the German docs current.
-    trigger: "0 7 * * *"
-    observe: [docs]
-    act: [docs-de]
-    prompt: >
-      For every English page changed since the German version was last updated,
-      update the matching German page and open a pull request.
-
-  - id: sync-confluence
-    name: Sync Confluence
-    description: Keeps internal runbooks up to date.
-    trigger: "0 8 * * *"
-    observe: [code-repo]
-    act: [confluence]
-    prompt: >
-      Keep the internal admin/runbook pages in Confluence in sync with the code and
-      configuration.
-
-  - id: sync-landing-page
-    name: Sync Landing Page
-    description: Keeps the landing page on message.
-    trigger: "0 9 * * *"
-    observe: [docs]
-    act: [landing-page]
-    prompt: >
-      Keep the feature descriptions on the landing page consistent with the docs.
-
-  - id: answer-tickets
-    name: Answer Tickets
-    description: Drafts answers to service-desk tickets.
-    trigger: "*/10 * * * *"
-    observe: [docs]
-    act: [jira]
-    prompt: >
-      For each new service-desk ticket, draft an answer from the docs and reply for
-      a human to review.
 
   - id: fix-jira-issues
     name: Fix Jira Issues
