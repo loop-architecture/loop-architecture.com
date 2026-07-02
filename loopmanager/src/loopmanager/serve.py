@@ -21,11 +21,12 @@ from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from . import cron
+from . import bundle, cron
 from .model import Architecture, load_architecture
 from .templates import routine_prompt
 
-VISUALIZER_BASE = "https://www.loop-architecture.com/visualizer/dist"
+# The server hosts the bundled visualizer itself (see routes below), so serve is offline.
+VISUALIZER_BASE = "/visualizer"
 
 
 def _now() -> datetime:
@@ -236,6 +237,12 @@ def _make_handler(store: RunStore, runner: Runner, arch: Architecture, yaml_text
                 self._send(200, page, "text/html; charset=utf-8")
             elif self.path == "/api/status":
                 self._send(200, json.dumps(store.snapshot()))
+            elif self.path.startswith("/visualizer/"):
+                name = self.path.rsplit("/", 1)[-1]
+                if name in bundle.NAMES:
+                    self._send(200, bundle.read(name), bundle.CONTENT_TYPE[name])
+                else:
+                    self._send(404, json.dumps({"error": "not found"}))
             else:
                 self._send(404, json.dumps({"error": "not found"}))
 

@@ -7,7 +7,7 @@
   "description": "Interactive Loop Architecture visualizer + YAML editor (React Flow + Monaco).",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && mkdir -p ../loopmanager/src/loopmanager/vendor/visualizer && cp dist/visualizer.js dist/visualizer.css ../loopmanager/src/loopmanager/vendor/visualizer/",
     "preview": "vite preview"
   },
   "dependencies": {

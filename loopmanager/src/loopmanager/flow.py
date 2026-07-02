@@ -9,9 +9,9 @@ from __future__ import annotations
 
 import json
 
-# Where `loopmanager view` loads the shared visualizer bundle (React + React Flow are
-# bundled in, so the page needs no import map).
-VISUALIZER_BASE = "https://www.loop-architecture.com/visualizer/dist"
+# `loopmanager view` ships the visualizer bundle next to the generated page, so it
+# renders fully offline (React + React Flow are bundled in; no import map, no CDN).
+VISUALIZER_BASE = "."
 
 _PAGE = """<!DOCTYPE html>
 <html lang="en">

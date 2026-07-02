@@ -82,20 +82,22 @@ def cmd_view(args: argparse.Namespace) -> int:
     import tempfile
     import webbrowser
 
+    from . import bundle
+
     arch = _load(args.file)
-    # The visualizer builds the diagram from the YAML itself; we just hand it the file.
+    # The visualizer builds the diagram from the YAML itself; we hand it the file and
+    # ship the bundle next to the page so it renders fully offline.
     yaml_text = Path(args.file).read_text(encoding="utf-8")
     html = flow.page(yaml_text, title=arch.name)
     if args.output:
         out = Path(args.output)
         out.write_text(html, encoding="utf-8")
+        bundle.write_to(out.parent)
     else:
-        fd = tempfile.NamedTemporaryFile(
-            prefix=f"{arch.id or 'loop-architecture'}-", suffix=".html", delete=False, mode="w", encoding="utf-8"
-        )
-        fd.write(html)
-        fd.close()
-        out = Path(fd.name)
+        d = Path(tempfile.mkdtemp(prefix=f"{arch.id or 'loop-architecture'}-"))
+        out = d / "index.html"
+        out.write_text(html, encoding="utf-8")
+        bundle.write_to(d)
     print(ok(f"✓ opening {out}  ({len(arch.loops)} loops, {len(arch.systems)} systems)"))
     webbrowser.open(out.resolve().as_uri())
     return 0
