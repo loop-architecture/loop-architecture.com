@@ -32,8 +32,8 @@ def test_example_architecture_is_valid() -> None:
     arch = load_architecture(EXAMPLE)
     errors = [i for i in check(arch) if i.level == "error"]
     assert not errors, errors
-    assert len(arch.loops) == 10
-    assert len(arch.systems) == 13
+    assert len(arch.loops) == 12
+    assert len(arch.systems) == 12
 
 
 def test_trigger_type_inference() -> None:
@@ -74,7 +74,7 @@ def test_lint_flags_unknown_system() -> None:
 def test_publish_all_loops(tmp_path: Path) -> None:
     arch = load_architecture(EXAMPLE)
     results = publish(arch, root=tmp_path)
-    assert len(results) == 10
+    assert len(results) == 12
     docs = next(r for r in results if r.loop_id == "sync-docs")
     assert docs.schedule == "0 6 * * *"
     body = docs.command_path.read_text()
@@ -184,7 +184,7 @@ def test_architecture_diagram_svg_offline() -> None:
         assert lp.name in svg
     for s in arch.systems:
         assert s.name in svg
-    assert "10 loops · 13 systems" in svg
+    assert "12 loops · 12 systems" in svg
     # No sensor/actuator wording in the diagram, and no dashed edges.
     assert "sensor" not in svg and "actuator" not in svg
     assert "stroke-dasharray" not in svg

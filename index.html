@@ -243,8 +243,10 @@
             <span>Agentic Loop</span>
             ${data.emoji ? html`<span class="rf-emoji">${data.emoji}</span>` : null}
           </div>
-          <div class="rf-loop-name">${data.label}</div>
-          ${data.description ? html`<div class="rf-loop-desc">${data.description}</div>` : null}
+          <div class="rf-loop-body">
+            <div class="rf-loop-name">${data.label}</div>
+            ${data.description ? html`<div class="rf-loop-desc">${data.description}</div>` : null}
+          </div>
           <${Handles} />
         </div>`;
 

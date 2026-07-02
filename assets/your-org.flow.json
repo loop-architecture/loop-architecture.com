@@ -9,7 +9,7 @@
       "type": "system",
       "position": {
         "x": 40,
-        "y": 525.9901185280044
+        "y": 445.791426998842
       },
       "data": {
         "label": "Dash0",
@@ -30,8 +30,8 @@
       "id": "code-repo",
       "type": "system",
       "position": {
-        "x": 680,
-        "y": 646.3698213291594
+        "x": 1960,
+        "y": 466.02206698024173
       },
       "data": {
         "label": "App Repo",
@@ -43,32 +43,13 @@
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
         "readBy": [
           "Sync Docs",
-          "Sync Confluence"
+          "Sync Confluence",
+          "Check Repo Compliance"
         ],
         "writtenBy": [
-          "Fix Errors"
+          "Fix Errors",
+          "Fix Jira Issues"
         ]
-      }
-    },
-    {
-      "id": "infra",
-      "type": "system",
-      "position": {
-        "x": 40,
-        "y": 120.0
-      },
-      "data": {
-        "label": "Terraform Infra",
-        "id": "infra",
-        "description": "Infrastructure as code (Terraform)",
-        "url": null,
-        "repository": "https://github.com/your-org/infra",
-        "connector": null,
-        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
-        "readBy": [
-          "Reconcile Infra Drift"
-        ],
-        "writtenBy": []
       }
     },
     {
@@ -76,7 +57,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 60.0
+        "y": 0.0
       },
       "data": {
         "label": "App on Azure",
@@ -88,8 +69,7 @@
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=azure.microsoft.com",
         "readBy": [],
         "writtenBy": [
-          "Deploy Previews",
-          "Reconcile Infra Drift"
+          "Deploy Previews"
         ]
       }
     },
@@ -118,8 +98,8 @@
       "id": "jira",
       "type": "system",
       "position": {
-        "x": 680,
-        "y": 526.3698213291594
+        "x": 1320,
+        "y": 529.2459519092737
       },
       "data": {
         "label": "Jira",
@@ -130,11 +110,15 @@
         "connector": "jira",
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=www.atlassian.com",
         "readBy": [
-          "Answer Tickets"
+          "Answer Tickets",
+          "Fix Jira Issues"
         ],
         "writtenBy": [
           "Triage Incidents",
-          "Answer Tickets"
+          "Answer Tickets",
+          "Fix Jira Issues",
+          "Check Repo Compliance",
+          "Check Evidence"
         ]
       }
     },
@@ -142,8 +126,8 @@
       "id": "confluence",
       "type": "system",
       "position": {
-        "x": 1320,
-        "y": 603.458324546966
+        "x": 2600,
+        "y": 333.27962740785824
       },
       "data": {
         "label": "Confluence",
@@ -163,8 +147,8 @@
       "id": "docs",
       "type": "system",
       "position": {
-        "x": 1320,
-        "y": 723.458324546966
+        "x": 2600,
+        "y": 453.27962740785824
       },
       "data": {
         "label": "Docs (EN)",
@@ -187,8 +171,8 @@
       "id": "docs-de",
       "type": "system",
       "position": {
-        "x": 1960,
-        "y": 657.0025700511359
+        "x": 3240,
+        "y": 386.3539336836408
       },
       "data": {
         "label": "Docs (DE)",
@@ -208,8 +192,8 @@
       "id": "landing-page",
       "type": "system",
       "position": {
-        "x": 1960,
-        "y": 777.0025700511359
+        "x": 3240,
+        "y": 506.35393368364083
       },
       "data": {
         "label": "Landing Page",
@@ -230,7 +214,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 766.3698213291594
+        "y": 616.8590324683609
       },
       "data": {
         "label": "OneDrive",
@@ -240,7 +224,9 @@
         "repository": null,
         "connector": null,
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=onedrive.live.com",
-        "readBy": [],
+        "readBy": [
+          "Check Evidence"
+        ],
         "writtenBy": [
           "Review Compliance"
         ]
@@ -251,7 +237,7 @@
       "type": "system",
       "position": {
         "x": 40,
-        "y": 747.0027906677549
+        "y": 589.4518975452831
       },
       "data": {
         "label": "Kertos",
@@ -262,7 +248,9 @@
         "connector": null,
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=kertos.com",
         "readBy": [
-          "Review Compliance"
+          "Review Compliance",
+          "Check Repo Compliance",
+          "Check Evidence"
         ],
         "writtenBy": []
       }
@@ -272,7 +260,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 406.3698213291594
+        "y": 496.8590324683608
       },
       "data": {
         "label": "Slack",
@@ -293,7 +281,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 472.4457947891076
+        "y": 512.7171576063724
       },
       "data": {
         "label": "Triage Incidents",
@@ -320,7 +308,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 592.4457947891076
+        "y": 392.71715760637244
       },
       "data": {
         "label": "Fix Errors",
@@ -368,37 +356,11 @@
       }
     },
     {
-      "id": "reconcile-infra",
-      "type": "loop",
-      "position": {
-        "x": 360,
-        "y": 120.0
-      },
-      "data": {
-        "label": "Reconcile Infra Drift",
-        "id": "reconcile-infra",
-        "description": "Keeps Azure in line with Terraform.",
-        "emoji": "\ud83d\udd50",
-        "triggers": [
-          "0 * * * *"
-        ],
-        "prompt": "Compare the Terraform state against the running Azure infrastructure and open a pull request to reconcile any drift.",
-        "model": null,
-        "tools": [],
-        "uses": [
-          "Terraform Infra"
-        ],
-        "writesBack": [
-          "App on Azure"
-        ]
-      }
-    },
-    {
       "id": "sync-docs",
       "type": "loop",
       "position": {
-        "x": 1000,
-        "y": 729.914079042796
+        "x": 2280,
+        "y": 460.2053211320757
       },
       "data": {
         "label": "Sync Docs",
@@ -429,8 +391,8 @@
       "id": "translate-docs",
       "type": "loop",
       "position": {
-        "x": 1640,
-        "y": 657.0025700511359
+        "x": 2920,
+        "y": 386.3539336836408
       },
       "data": {
         "label": "Translate Docs",
@@ -455,8 +417,8 @@
       "id": "sync-confluence",
       "type": "loop",
       "position": {
-        "x": 1000,
-        "y": 609.914079042796
+        "x": 2280,
+        "y": 340.2053211320757
       },
       "data": {
         "label": "Sync Confluence",
@@ -481,8 +443,8 @@
       "id": "sync-landing-page",
       "type": "loop",
       "position": {
-        "x": 1640,
-        "y": 777.0025700511359
+        "x": 2920,
+        "y": 506.35393368364083
       },
       "data": {
         "label": "Sync Landing Page",
@@ -507,8 +469,8 @@
       "id": "answer-tickets",
       "type": "loop",
       "position": {
-        "x": 1000,
-        "y": 489.91407904279595
+        "x": 1640,
+        "y": 457.5543515467908
       },
       "data": {
         "label": "Answer Tickets",
@@ -534,7 +496,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 753.4584628216825
+        "y": 632.7171576063724
       },
       "data": {
         "label": "Review Compliance",
@@ -552,6 +514,92 @@
         ],
         "writesBack": [
           "OneDrive"
+        ]
+      }
+    },
+    {
+      "id": "fix-jira-issues",
+      "type": "loop",
+      "position": {
+        "x": 1640,
+        "y": 577.5543515467908
+      },
+      "data": {
+        "label": "Fix Jira Issues",
+        "id": "fix-jira-issues",
+        "description": "Automatically fixes ready Jira issues.",
+        "emoji": "\ud83d\udd50",
+        "triggers": [
+          "*/15 * * * *"
+        ],
+        "prompt": "For each Jira issue that is ready for an agent, implement a fix, open a pull request, and comment on the issue with the link.",
+        "model": "claude-opus-4-8",
+        "tools": [
+          "Read",
+          "Grep",
+          "Bash(git *)",
+          "Bash(gh pr *)"
+        ],
+        "uses": [
+          "Jira"
+        ],
+        "writesBack": [
+          "App Repo",
+          "Jira"
+        ]
+      }
+    },
+    {
+      "id": "check-repo-compliance",
+      "type": "loop",
+      "position": {
+        "x": 2280,
+        "y": 580.2053211320757
+      },
+      "data": {
+        "label": "Check Repo Compliance",
+        "id": "check-repo-compliance",
+        "description": "Checks the app repo is compliant with Kertos.",
+        "emoji": "\ud83d\udd50",
+        "triggers": [
+          "0 5 * * *"
+        ],
+        "prompt": "Check the app repo against the policies in Kertos. Open a Jira issue for each violation you find.",
+        "model": null,
+        "tools": [],
+        "uses": [
+          "App Repo",
+          "Kertos"
+        ],
+        "writesBack": [
+          "Jira"
+        ]
+      }
+    },
+    {
+      "id": "check-evidence",
+      "type": "loop",
+      "position": {
+        "x": 1000,
+        "y": 576.2103856557926
+      },
+      "data": {
+        "label": "Check Evidence",
+        "id": "check-evidence",
+        "description": "Checks OneDrive evidence matches Kertos policies.",
+        "emoji": "\ud83d\udd50",
+        "triggers": [
+          "0 5 * * 1"
+        ],
+        "prompt": "Check that the evidence in OneDrive is in line with the policies in Kertos. Open a Jira issue for any gap.",
+        "model": null,
+        "tools": [],
+        "uses": [
+          "OneDrive",
+          "Kertos"
+        ],
+        "writesBack": [
+          "Jira"
         ]
       }
     }
@@ -602,20 +650,6 @@
     {
       "id": "act:deploy-previews->app-azure",
       "source": "deploy-previews",
-      "target": "app-azure",
-      "sourceHandle": "rs",
-      "targetHandle": "lt"
-    },
-    {
-      "id": "use:infra->reconcile-infra",
-      "source": "infra",
-      "target": "reconcile-infra",
-      "sourceHandle": "rs",
-      "targetHandle": "lt"
-    },
-    {
-      "id": "act:reconcile-infra->app-azure",
-      "source": "reconcile-infra",
       "target": "app-azure",
       "sourceHandle": "rs",
       "targetHandle": "lt"
@@ -701,6 +735,69 @@
       "id": "act:review-compliance->onedrive",
       "source": "review-compliance",
       "target": "onedrive",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:jira->fix-jira-issues",
+      "source": "jira",
+      "target": "fix-jira-issues",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:fix-jira-issues->code-repo",
+      "source": "fix-jira-issues",
+      "target": "code-repo",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:fix-jira-issues->jira",
+      "source": "fix-jira-issues",
+      "target": "jira",
+      "sourceHandle": "ls",
+      "targetHandle": "rt"
+    },
+    {
+      "id": "use:code-repo->check-repo-compliance",
+      "source": "code-repo",
+      "target": "check-repo-compliance",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:policies->check-repo-compliance",
+      "source": "policies",
+      "target": "check-repo-compliance",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:check-repo-compliance->jira",
+      "source": "check-repo-compliance",
+      "target": "jira",
+      "sourceHandle": "ls",
+      "targetHandle": "rt"
+    },
+    {
+      "id": "use:onedrive->check-evidence",
+      "source": "onedrive",
+      "target": "check-evidence",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:policies->check-evidence",
+      "source": "policies",
+      "target": "check-evidence",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:check-evidence->jira",
+      "source": "check-evidence",
+      "target": "jira",
       "sourceHandle": "rs",
       "targetHandle": "lt"
     }

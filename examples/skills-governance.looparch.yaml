@@ -30,10 +30,10 @@ loops:
       - push
       - "0 6 * * *"
     model: claude-opus-4-8
-    observe: [skills, data-product, policies]
+    observe: [policies]
     act: [skills]
     prompt: >
-      Check the data product's skills against the global policies in Entropy Data.
+      Check the skills against the global policies in Entropy Data.
       Open a pull request that fixes any skill which violates a policy, citing the
       policy it breaks.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
@@ -45,7 +45,7 @@ loops:
       - push
       - "0 7 * * *"
     model: claude-opus-4-8
-    observe: [data-product, skills]
+    observe: [skills]
     act: [data-product]
     prompt: >
       Check that the data product follows its skills and is implemented accordingly.
@@ -60,7 +60,7 @@ loops:
       - push
       - "0 8 * * *"
     model: claude-opus-4-8
-    observe: [data-contract, data-product]
+    observe: [data-contract]
     act: [data-product]
     prompt: >
       Keep the data product in line with its published data product YAML and data
