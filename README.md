@@ -2,7 +2,7 @@
 
 **Loop Architecture**, an architecture style that makes the *agentic loop* between systems the
 first-class unit of design. Discover loops with **Loop Storming**, encode them as a versionable
-YAML format, and sync them to runnable **Claude Code routines** with the `looparch` CLI.
+YAML format, and sync them to runnable **Claude Code routines** with the `loopmanager` CLI.
 
 > Coined by [Arif Wider](https://www.linkedin.com/in/arifwider/) and
 > [Simon Harrer](https://www.linkedin.com/in/simonharrer/) on Crete, 1 July 2026,
@@ -18,7 +18,7 @@ YAML format, and sync them to runnable **Claude Code routines** with the `loopar
 | `docs/`             | The Loop Storming workshop guide.                                    |
 | `examples/`         | Example architectures (Docs, DevOps, Data Product Builder, Self-Learning). |
 | `assets/`           | Images shown on the site (hero, og, photos).                        |
-| `looparch/`         | The `looparch` Python CLI (built with uv).                          |
+| `loopmanager/`         | The `loopmanager` Python CLI (built with uv).                          |
 
 ## The website
 
@@ -33,21 +33,21 @@ python3 -m http.server 8000   # then open http://localhost:8000
 One YAML document with `id`, `systems`, and `loops`. See
 [`spec/loop-architecture.md`](spec/loop-architecture.md) and
 [`spec/loop-architecture.schema.json`](spec/loop-architecture.schema.json), plus the full example in
-[`examples/your-org.looparch.yaml`](examples/your-org.looparch.yaml).
+[`examples/your-org.loopmanager.yaml`](examples/your-org.loopmanager.yaml).
 
 ## The CLI
 
 ```bash
-cd looparch
+cd loopmanager
 uv sync --extra dev
 uv run pytest
-uv run looparch --help
+uv run loopmanager --help
 ```
 
-See [`looparch/README.md`](looparch/README.md) for the full command reference.
+See [`loopmanager/README.md`](loopmanager/README.md) for the full command reference.
 
 ## Three moves
 
 1. **Storm**, run a [Loop Storming](docs/loop-storming.md) workshop to discover your loops.
-2. **Encode**, refine them into one reviewable `*.looparch.yaml`.
-3. **Sync**, `looparch sync` turns each loop into a Claude Code routine that runs on its cadence.
+2. **Encode**, refine them into one reviewable `*.loopmanager.yaml`.
+3. **Sync**, `loopmanager sync` turns each loop into a Claude Code routine that runs on its cadence.

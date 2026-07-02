@@ -98,8 +98,8 @@ mirrors [Claude Code routines](https://code.claude.com/docs/en/routines):
 The canonical schema is [`loop-architecture.schema.json`](./loop-architecture.schema.json).
 
 ```bash
-looparch validate your-org.looparch.yaml
+loopmanager validate your-org.loopmanager.yaml
 ```
 
-`looparch lint` additionally checks: every `observe`/`act` references a declared system; schedules are
+`loopmanager lint` additionally checks: every `observe`/`act` references a declared system; schedules are
 5-field cron; and no system is left unused.

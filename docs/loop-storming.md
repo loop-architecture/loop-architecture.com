@@ -17,7 +17,7 @@ systems it **writes back** to.
 - **A prioritized backlog.** You leave with a ranked list of loops worth building, not a vague sense
   that "we should automate some things."
 
-> The [example architecture](../examples/your-org.looparch.yaml) on this site came straight out of
+> The [example architecture](../examples/your-org.loopmanager.yaml) on this site came straight out of
 > a Loop Storming session, the systems and loop edges from the wall, refined into one file.
 
 ## Who should be there
@@ -77,14 +77,14 @@ safely it can run today). Start building from the top-right: high impact, high c
 The wall is your **initial** loop map, deliberately messy. Afterwards you *refine* it into one
 [Loop Architecture document](../spec/loop-architecture.md): give each system its URL/repo/connector,
 sharpen each loop's trigger and instructions, name the exact systems it uses and writes back to, and pick a
-model and tools where it matters. `looparch` then validates it, draws the whole architecture as one
+model and tools where it matters. `loopmanager` then validates it, draws the whole architecture as one
 diagram, and syncs each loop to a Claude Code routine.
 
 ```bash
-looparch init your-org                    # scaffold the architecture
-looparch validate your-org.looparch.yaml
-looparch view your-org.looparch.yaml      # all your loops in one interactive diagram
-looparch sync your-org.looparch.yaml   # turn each loop into a Claude Code routine
+loopmanager init your-org                    # scaffold the architecture
+loopmanager validate your-org.loopmanager.yaml
+loopmanager view your-org.loopmanager.yaml      # all your loops in one interactive diagram
+loopmanager sync your-org.loopmanager.yaml   # turn each loop into a Claude Code routine
 ```
 
 ## Facilitation tips

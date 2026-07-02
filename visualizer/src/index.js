@@ -1,8 +1,8 @@
-// Public API of the looparch visualizer bundle.
+// Public API of the loopmanager visualizer bundle.
 //
 // The visualizer works on the Loop Architecture YAML directly: it parses the YAML
 // and maps it to the React Flow format itself (layout + graph), so pages only need
-// to point it at a .looparch.yaml file (or pass raw YAML / a prebuilt graph).
+// to point it at a .loopmanager.yaml file (or pass raw YAML / a prebuilt graph).
 import '@xyflow/react/dist/style.css'
 import './styles.css'
 import { createElement } from 'react'
@@ -31,7 +31,7 @@ async function toGraph(source, cache) {
   throw new Error('unsupported diagram source')
 }
 
-// Read-only diagram controller. show() accepts a .looparch.yaml URL, a .flow.json
+// Read-only diagram controller. show() accepts a .loopmanager.yaml URL, a .flow.json
 // URL, raw YAML text, or a prebuilt graph object. Can be called repeatedly.
 export function createController(container) {
   container.classList.add('flow')

@@ -64,7 +64,7 @@ export function Editor({ initialYaml = '', examples = [] }) {
   }
 
   return (
-    <div className="looparch-editor">
+    <div className="loopmanager-editor">
       {examples.length > 0 ? (
         <div className="flow-tabs" role="tablist">
           {examples.map((eg) => (

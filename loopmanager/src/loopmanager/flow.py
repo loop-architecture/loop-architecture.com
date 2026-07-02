@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 
-# Where `looparch view` loads the shared visualizer bundle (React + React Flow are
+# Where `loopmanager view` loads the shared visualizer bundle (React + React Flow are
 # bundled in, so the page needs no import map).
 VISUALIZER_BASE = "https://www.loop-architecture.com/visualizer/dist"
 

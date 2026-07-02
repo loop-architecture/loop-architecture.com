@@ -23,7 +23,7 @@ class Issue:
 
 
 def load_schema() -> dict[str, Any]:
-    text = resources.files("looparch").joinpath("loop-architecture.schema.json").read_text("utf-8")
+    text = resources.files("loopmanager").joinpath("loop-architecture.schema.json").read_text("utf-8")
     return json.loads(text)
 
 

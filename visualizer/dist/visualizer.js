@@ -17680,7 +17680,7 @@ function OI({ initialYaml: e = "", examples: t = [] }) {
   const p = (v) => {
     c(v.label), fetch(v.url).then((w) => w.text()).then((w) => r(w)).catch(() => l("Could not load the example (needs network)."));
   };
-  return /* @__PURE__ */ L.jsxs("div", { className: "looparch-editor", children: [
+  return /* @__PURE__ */ L.jsxs("div", { className: "loopmanager-editor", children: [
     t.length > 0 ? /* @__PURE__ */ L.jsx("div", { className: "flow-tabs", role: "tablist", children: t.map((v) => /* @__PURE__ */ L.jsxs(
       "button",
       {

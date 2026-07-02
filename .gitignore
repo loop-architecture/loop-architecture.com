@@ -2,10 +2,10 @@
 __pycache__/
 *.py[cod]
 .venv/
-looparch/.venv/
+loopmanager/.venv/
 *.egg-info/
-looparch/dist/
-looparch/build/
+loopmanager/dist/
+loopmanager/build/
 .pytest_cache/
 
 # Node (visualizer build tooling); visualizer/dist IS committed so the static site can load it

@@ -1,4 +1,4 @@
-"""Command-line interface for looparch."""
+"""Command-line interface for loopmanager."""
 
 from __future__ import annotations
 
@@ -37,13 +37,13 @@ def _load(path: str) -> Architecture:
 
 # --- commands ---------------------------------------------------------------
 def cmd_init(args: argparse.Namespace) -> int:
-    out = Path(args.output or f"{args.id}.looparch.yaml")
+    out = Path(args.output or f"{args.id}.loopmanager.yaml")
     if out.exists() and not args.force:
         print(err(f"✗ {out} already exists (use --force to overwrite)"), file=sys.stderr)
         return 1
     out.write_text(scaffold(args.id), encoding="utf-8")
     print(ok(f"✓ wrote {out}"))
-    print(dim(f"  next: looparch validate {out}"))
+    print(dim(f"  next: loopmanager validate {out}"))
     return 0
 
 
@@ -114,7 +114,7 @@ def _sync_from_claude(args: argparse.Namespace) -> int:
     if args.output:
         Path(args.output).write_text(text, encoding="utf-8")
         print(ok(f"✓ wrote {args.output}  ({len(data['loops'])} loops, {len(data['systems'])} systems)"))
-        print(dim("  review observe/act and triggers, then: looparch validate"))
+        print(dim("  review observe/act and triggers, then: loopmanager validate"))
     else:
         print(text, end="")
     return 0
@@ -155,15 +155,15 @@ def cmd_sync(args: argparse.Namespace) -> int:
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
-        prog="looparch",
+        prog="loopmanager",
         description="Loop Architecture, validate, visualize and sync agentic loops.",
     )
-    p.add_argument("--version", action="version", version=f"looparch {__version__}")
+    p.add_argument("--version", action="version", version=f"loopmanager {__version__}")
     sub = p.add_subparsers(dest="command", required=True)
 
     s = sub.add_parser("init", help="scaffold a new Loop Architecture file")
     s.add_argument("id", help="architecture id (kebab-case)")
-    s.add_argument("-o", "--output", help="output path (default: <id>.looparch.yaml)")
+    s.add_argument("-o", "--output", help="output path (default: <id>.loopmanager.yaml)")
     s.add_argument("--force", action="store_true")
     s.set_defaults(func=cmd_init)
 
@@ -182,7 +182,7 @@ def build_parser() -> argparse.ArgumentParser:
     s.set_defaults(func=cmd_view)
 
     s = sub.add_parser("sync", help="sync the YAML to Claude Code routines (or --from-claude to reverse)")
-    s.add_argument("file", help="the .looparch.yaml (forward), or a project/.claude path (--from-claude)")
+    s.add_argument("file", help="the .loopmanager.yaml (forward), or a project/.claude path (--from-claude)")
     s.add_argument("loop", nargs="?", help="sync only this loop id (default: all)")
     s.add_argument("--root", default=".", help="project root to write .claude/ into")
     s.add_argument("--force", action="store_true", help="sync even if invalid")

@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Loop Architecture: designing agentic loops between systems</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <meta name="description" content="Loop Architecture is an architecture style that makes the agentic loop between systems the first-class unit of design. Discover loops with Loop Storming, encode them as one YAML file, and sync them to Claude Code routines with the looparch CLI." />
+  <meta name="description" content="Loop Architecture is an architecture style that makes the agentic loop between systems the first-class unit of design. Discover loops with Loop Storming, encode them as one YAML file, and sync them to Claude Code routines with the loopmanager CLI." />
   <link rel="canonical" href="https://www.loop-architecture.com/" />
   <meta name="author" content="Arif Wider, Simon Harrer" />
-  <meta name="keywords" content="Loop Architecture, agentic loop, Loop Storming, agentic architecture, Claude Code routines, looparch, AI agents, agentic AI" />
+  <meta name="keywords" content="Loop Architecture, agentic loop, Loop Storming, agentic architecture, Claude Code routines, loopmanager, AI agents, agentic AI" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Loop Architecture" />
   <meta property="og:title" content="Loop Architecture: designing agentic loops between systems" />
@@ -120,10 +120,10 @@
       import { mountEditor } from './visualizer/dist/visualizer.js';
       mountEditor(document.getElementById('examples-editor'), {
         examples: [
-          { label: 'Docs', url: 'examples/docs.looparch.yaml' },
-          { label: 'DevOps', url: 'examples/your-org.looparch.yaml' },
-          { label: 'Data Product Builder', url: 'examples/data-product-builder.looparch.yaml' },
-          { label: 'Self-Learning', url: 'examples/self-learning.looparch.yaml' },
+          { label: 'Docs', url: 'examples/docs.loopmanager.yaml' },
+          { label: 'DevOps', url: 'examples/your-org.loopmanager.yaml' },
+          { label: 'Data Product Builder', url: 'examples/data-product-builder.loopmanager.yaml' },
+          { label: 'Self-Learning', url: 'examples/self-learning.loopmanager.yaml' },
         ],
       });
     </script>
@@ -139,7 +139,7 @@
       <div class="code-panel">
         <div class="code-head">
           <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-          <span class="code-file">your-org.looparch.yaml</span>
+          <span class="code-file">your-org.loopmanager.yaml</span>
         </div>
         <pre class="code"><code><span class="c-key">id</span>: <span class="c-str">your-org</span>
 <span class="c-key">systems</span>:
@@ -172,7 +172,7 @@
       <p class="more-row">
         <a class="more" href="spec/loop-architecture.md">Specification →</a>
         <a class="more" href="spec/loop-architecture.schema.json">JSON schema →</a>
-        <a class="more" href="examples/your-org.looparch.yaml">Full example →</a>
+        <a class="more" href="examples/your-org.loopmanager.yaml">Full example →</a>
       </p>
     </section>
 
@@ -180,33 +180,33 @@
     <section id="cli">
       <h2>Tooling</h2>
       <p>
-        Two tools work directly with a Loop Architecture YAML: the <b>looparch visualizer</b> to see
-        it, and the <b>looparch CLI</b> to validate, visualize and sync it.
+        Two tools work directly with a Loop Architecture YAML: the <b>loopmanager visualizer</b> to see
+        it, and the <b>loopmanager CLI</b> to validate, visualize and sync it.
       </p>
 
-      <h3>looparch visualizer</h3>
+      <h3>loopmanager visualizer</h3>
       <p>
         A small, embeddable component (built on <a href="https://reactflow.dev/" target="_blank" rel="noopener">React Flow</a>)
         that reads a Loop Architecture YAML and maps it to the interactive diagram above itself: the
         systems, the agentic loops, and the edges between them. Drop it into any page, or open it from
-        the CLI with <code>looparch view</code>.
+        the CLI with <code>loopmanager view</code>.
       </p>
       <p class="more-row">
         <a class="more" href="https://github.com/loop-architecture/loop-architecture.com/tree/main/visualizer" target="_blank" rel="noopener">Visualizer component →</a>
         <a class="more" href="editor.html">Open the editor →</a>
       </p>
 
-      <h3>looparch CLI <span class="tag">Preview</span></h3>
+      <h3>loopmanager CLI <span class="tag">Preview</span></h3>
       <p>A Python CLI (built with <a href="https://docs.astral.sh/uv/">uv</a>) to validate, visualize and sync loops.
         It is a preview: the format and commands may still change, and it targets Claude Code routines,
         itself a research preview.</p>
-      <pre class="code plain"><code><span class="c-p">$</span> uv tool install looparch
+      <pre class="code plain"><code><span class="c-p">$</span> uv tool install loopmanager
 
-<span class="c-p">$</span> looparch init your-org              <span class="c-cmt"># scaffold an architecture</span>
-<span class="c-p">$</span> looparch validate your-org.looparch.yaml    <span class="c-cmt"># schema + lint</span>
-<span class="c-p">$</span> looparch view your-org.looparch.yaml        <span class="c-cmt"># open the interactive diagram</span>
-<span class="c-p">$</span> looparch sync your-org.looparch.yaml     <span class="c-cmt"># → Claude Code routines</span>
-<span class="c-p">$</span> looparch sync ./my-project --from-claude  <span class="c-cmt"># ← reverse: routines back to YAML</span></code></pre>
+<span class="c-p">$</span> loopmanager init your-org              <span class="c-cmt"># scaffold an architecture</span>
+<span class="c-p">$</span> loopmanager validate your-org.loopmanager.yaml    <span class="c-cmt"># schema + lint</span>
+<span class="c-p">$</span> loopmanager view your-org.loopmanager.yaml        <span class="c-cmt"># open the interactive diagram</span>
+<span class="c-p">$</span> loopmanager sync your-org.loopmanager.yaml     <span class="c-cmt"># → Claude Code routines</span>
+<span class="c-p">$</span> loopmanager sync ./my-project --from-claude  <span class="c-cmt"># ← reverse: routines back to YAML</span></code></pre>
       <p class="note">
         Routines are cloud-managed. By default <code>sync</code> writes each loop's slash command
         (<code>.claude/commands/loop-&lt;id&gt;.md</code>) and prints the <code>/schedule</code> step to
@@ -214,7 +214,7 @@
         <code>.claude/routines/&lt;id&gt;.json</code> descriptor (offline record, read back with
         <code>--from-claude</code>).
       </p>
-      <p><a class="more" href="looparch/README.md">CLI reference →</a></p>
+      <p><a class="more" href="loopmanager/README.md">CLI reference →</a></p>
     </section>
 
     <!-- GETTING STARTED -->
@@ -249,7 +249,7 @@
         <div class="flow-step">
           <span class="flow-n">3</span>
           <span class="flow-t">Sync</span>
-          <span class="flow-d">to Claude Code routines via <code>looparch</code></span>
+          <span class="flow-d">to Claude Code routines via <code>loopmanager</code></span>
         </div>
       </div>
       <p><a class="more" href="loop-storming.html">Read the Loop Storming guide →</a></p>
@@ -257,14 +257,14 @@
       <h3>Or start from what you already run</h3>
       <p>
         Already have Claude Code routines? Pull them into one Loop Architecture with
-        <code>looparch sync --from-claude</code>, see the whole picture as a diagram, then refine and
+        <code>loopmanager sync --from-claude</code>, see the whole picture as a diagram, then refine and
         improve the loops from there, and sync back.
       </p>
       <div class="flow3">
         <div class="flow-step">
           <span class="flow-n">1</span>
           <span class="flow-t">Import</span>
-          <span class="flow-d"><code>looparch sync --from-claude</code></span>
+          <span class="flow-d"><code>loopmanager sync --from-claude</code></span>
         </div>
         <span class="flow-arrow" aria-hidden="true">→</span>
         <div class="flow-step">
@@ -310,19 +310,28 @@
           code and storage), connect them into loops, name them, and set triggers.</dd>
 
         <dt>How do I sync a loop to Claude Code?</dt>
-        <dd>Encode your loops in one Loop Architecture YAML file and run <code>looparch sync</code>. It
+        <dd>Encode your loops in one Loop Architecture YAML file and run <code>loopmanager sync</code>. It
           writes each loop's slash command and prints the <code>/schedule</code> step to register it as
           a routine in your claude.ai account, routines are cloud-managed by default. Add
           <code>--local</code> to also write <code>.claude/routines</code> descriptors you can read back.</dd>
 
-        <dt>What is looparch?</dt>
-        <dd><code>looparch</code> is a Python CLI (built with uv) that validates, visualizes and
+        <dt>What is loopmanager?</dt>
+        <dd><code>loopmanager</code> is a Python CLI (built with uv) that validates, visualizes and
           syncs a Loop Architecture to Claude Code routines, and reads them back with <code>--from-claude</code>.</dd>
 
         <dt>How is Loop Architecture different from event-driven or microservice architecture?</dt>
         <dd>Traditional architecture designs the systems and the requests between them. Loop
           Architecture designs the agentic loops that run continuously between those systems, each
           using some systems and writing back to others.</dd>
+
+        <dt>How is this different from a CI/CD pipeline or a GitHub workflow?</dt>
+        <dd>You can absolutely run a single loop as a pipeline or a GitHub workflow, a trigger plus a
+          script that calls an agent, and <code>loopmanager</code> can even sync loops to those
+          runtimes. The difference is the level: a pipeline automates one job with fixed steps, while a
+          Loop Architecture maps <em>all</em> of your loops across all systems in one file, makes the
+          agentic loop (the agent decides how, you don't script each step) the unit of design, and keeps
+          them continuous, autonomous and self-learning with a human on the loop. The pipeline is one
+          runtime; Loop Architecture is the design above it.</dd>
 
         <dt>Who created Loop Architecture?</dt>
         <dd>Loop Architecture was coined by
@@ -362,7 +371,7 @@
       },
       {
         "@type": "SoftwareApplication",
-        "name": "looparch",
+        "name": "loopmanager",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "macOS, Linux, Windows",
         "description": "A Python CLI to validate, visualize and sync a Loop Architecture, and to import existing Claude Code routines back into YAML.",
@@ -387,9 +396,10 @@
           { "@type": "Question", "name": "What is an agentic loop?", "acceptedAnswer": { "@type": "Answer", "text": "An agentic loop is a continuous cycle where an agent reads from (uses) one or more systems, follows its instructions toward a goal, and writes back to systems, again and again on its trigger. It runs continuously and is self-learning." } },
           { "@type": "Question", "name": "Where is the loop in the diagram?", "acceptedAnswer": { "@type": "Answer", "text": "Each agentic-loop block is the loop. It is triggered, uses systems, follows its instructions, writes back, and then turns again on its next trigger, evaluating itself each time. The loop lives inside the block, so there is no separate feedback arrow. Loop Architecture is about these continuous, self-paced loops that run on a schedule or event, not goal-based loops that stop at a condition, nor turn-based back-and-forth loops, which are more human-driven." } },
           { "@type": "Question", "name": "What is Loop Storming?", "acceptedAnswer": { "@type": "Answer", "text": "Loop Storming is a collaborative workshop for discovering the agentic loops between your systems, in the spirit of Event Storming. You map the systems, connect them into loops, name them, and set triggers." } },
-          { "@type": "Question", "name": "How do I sync a loop to Claude Code?", "acceptedAnswer": { "@type": "Answer", "text": "Encode your loops in one Loop Architecture YAML file and run looparch sync. It writes each loop's slash command and prints the /schedule step to register it as a routine in your claude.ai account, routines are cloud-managed by default. Add --local to also write .claude/routines descriptors you can read back." } },
-          { "@type": "Question", "name": "What is looparch?", "acceptedAnswer": { "@type": "Answer", "text": "looparch is a Python CLI, built with uv, that validates, visualizes and syncs a Loop Architecture to Claude Code routines, and reads them back with --from-claude." } },
+          { "@type": "Question", "name": "How do I sync a loop to Claude Code?", "acceptedAnswer": { "@type": "Answer", "text": "Encode your loops in one Loop Architecture YAML file and run loopmanager sync. It writes each loop's slash command and prints the /schedule step to register it as a routine in your claude.ai account, routines are cloud-managed by default. Add --local to also write .claude/routines descriptors you can read back." } },
+          { "@type": "Question", "name": "What is loopmanager?", "acceptedAnswer": { "@type": "Answer", "text": "loopmanager is a Python CLI, built with uv, that validates, visualizes and syncs a Loop Architecture to Claude Code routines, and reads them back with --from-claude." } },
           { "@type": "Question", "name": "How is Loop Architecture different from event-driven or microservice architecture?", "acceptedAnswer": { "@type": "Answer", "text": "Traditional architecture designs the systems and the requests between them. Loop Architecture designs the agentic loops that run continuously between those systems, each using some systems and writing back to others." } },
+          { "@type": "Question", "name": "How is this different from a CI/CD pipeline or a GitHub workflow?", "acceptedAnswer": { "@type": "Answer", "text": "You can run a single loop as a pipeline or a GitHub workflow, a trigger plus a script that calls an agent, and loopmanager can even sync loops to those runtimes. The difference is the level: a pipeline automates one job with fixed steps, while a Loop Architecture maps all of your loops across all systems in one file, makes the agentic loop the unit of design, and keeps them continuous, autonomous and self-learning with a human on the loop. The pipeline is one runtime; Loop Architecture is the design above it." } },
           { "@type": "Question", "name": "Who created Loop Architecture?", "acceptedAnswer": { "@type": "Answer", "text": "Loop Architecture was coined by Arif Wider and Simon Harrer at SummerSOC on 1 July 2026, on the island of Crete." } }
         ]
       }

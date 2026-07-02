@@ -1,4 +1,4 @@
-// Build React Flow JSON from an architecture, ported from looparch's flow.py so
+// Build React Flow JSON from an architecture, ported from loopmanager's flow.py so
 // the browser can lay a Loop Architecture out directly from its YAML.
 import { serviceUrl } from './favicon.js'
 import { solve } from './layout.js'

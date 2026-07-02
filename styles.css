@@ -161,7 +161,7 @@ code {
 .flow-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 .flow-tab-eg { font-weight: 500; opacity: .55; }
 
-/* The interactive diagram + editor (.flow / .looparch-editor) are styled in the
+/* The interactive diagram + editor (.flow / .loopmanager-editor) are styled in the
    visualizer bundle (visualizer/dist/visualizer.css). This just sizes the host,
    full-bleed so the editor breaks out of the text column. */
 .editor-host {

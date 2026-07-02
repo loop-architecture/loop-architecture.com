@@ -1,9 +1,9 @@
-# looparch
+# loopmanager
 
-> **Preview.** `looparch` is an early preview: the YAML format and the commands may still change, and
+> **Preview.** `loopmanager` is an early preview: the YAML format and the commands may still change, and
 > it targets Claude Code routines, itself a research preview.
 
-`looparch` is the CLI for [Loop Architecture](https://loop-architecture.com), an architecture style
+`loopmanager` is the CLI for [Loop Architecture](https://loop-architecture.com), an architecture style
 that makes the **agentic loop** between systems the first-class unit of design.
 
 It validates, visualizes, and syncs a **Loop Architecture**, one YAML document that defines many
@@ -12,32 +12,32 @@ systems and many loops, and turns each loop into a runnable **Claude Code routin
 ## Install
 
 ```bash
-uv tool install looparch
+uv tool install loopmanager
 # with PNG visualization support (needs native Cairo, e.g. `brew install cairo`):
-uv tool install "looparch[png]"
+uv tool install "loopmanager[png]"
 ```
 
-Or run without installing: `uvx looparch --help`.
+Or run without installing: `uvx loopmanager --help`.
 
 ## Quick start
 
 ```bash
-looparch init your-org                       # scaffold <id>.looparch.yaml
-looparch validate your-org.looparch.yaml     # schema + lint
-looparch view your-org.looparch.yaml         # open the interactive diagram in a browser
-looparch sync your-org.looparch.yaml      # every loop → a Claude Code routine
+loopmanager init your-org                       # scaffold <id>.loopmanager.yaml
+loopmanager validate your-org.loopmanager.yaml     # schema + lint
+loopmanager view your-org.loopmanager.yaml         # open the interactive diagram in a browser
+loopmanager sync your-org.loopmanager.yaml      # every loop → a Claude Code routine
 ```
 
 ## Commands
 
 | Command                                   | What it does                                                       |
 |-------------------------------------------|-------------------------------------------------------------------|
-| `looparch init <id>`                      | Scaffold a new `<id>.looparch.yaml`.                              |
-| `looparch validate <file>`                | Validate against the schema and lint. Exit non-zero on errors.    |
-| `looparch lint <file>`                    | Best-practice / safety checks.                                    |
-| `looparch view <file>`                    | Open the **interactive** diagram in a browser (via the visualizer). |
-| `looparch sync <file> [loop-id]`          | Sync all loops (or one) to Claude Code routines.                 |
-| `looparch sync <path> --from-claude`      | Reverse: reconstruct a Loop Architecture YAML from existing routines. |
+| `loopmanager init <id>`                      | Scaffold a new `<id>.loopmanager.yaml`.                              |
+| `loopmanager validate <file>`                | Validate against the schema and lint. Exit non-zero on errors.    |
+| `loopmanager lint <file>`                    | Best-practice / safety checks.                                    |
+| `loopmanager view <file>`                    | Open the **interactive** diagram in a browser (via the visualizer). |
+| `loopmanager sync <file> [loop-id]`          | Sync all loops (or one) to Claude Code routines.                 |
+| `loopmanager sync <path> --from-claude`      | Reverse: reconstruct a Loop Architecture YAML from existing routines. |
 
 `view` writes a small HTML page that embeds the YAML and loads the shared visualizer
 (`visualizer/dist/visualizer.js`), which parses the YAML and builds the diagram itself, systems, loops,
@@ -63,7 +63,7 @@ repositories, connectors), an offline record that `sync --from-claude` can read 
 
 See the [specification](https://loop-architecture.com/spec/loop-architecture.md) and the
 [JSON schema](https://loop-architecture.com/spec/loop-architecture.schema.json). A full example lives
-in [`examples/your-org.looparch.yaml`](../examples/your-org.looparch.yaml).
+in [`examples/your-org.loopmanager.yaml`](../examples/your-org.loopmanager.yaml).
 
 ## Development
 

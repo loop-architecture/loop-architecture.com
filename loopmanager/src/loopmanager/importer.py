@@ -1,7 +1,7 @@
 """Import existing Claude Code routines back into a Loop Architecture YAML.
 
 Reads a project's `.claude/routines/*.json` descriptors (and the matching
-`.claude/commands/loop-*.md` prompts, when present), the artifacts `looparch
+`.claude/commands/loop-*.md` prompts, when present), the artifacts `loopmanager
 sync` produces, and reconstructs the `id` / `systems` / `loops` document.
 
 The routine descriptor carries the trigger, model, repositories and connectors;

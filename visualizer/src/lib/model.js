@@ -1,4 +1,4 @@
-// Data model for a Loop Architecture, ported from looparch's Python model.py so
+// Data model for a Loop Architecture, ported from loopmanager's Python model.py so
 // the diagram can be computed in the browser directly from YAML.
 import { parse as parseYaml } from 'yaml'
 

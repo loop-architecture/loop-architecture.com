@@ -1,4 +1,4 @@
-"""Tests for looparch."""
+"""Tests for loopmanager."""
 
 from __future__ import annotations
 
@@ -6,18 +6,18 @@ from pathlib import Path
 
 import pytest
 
-from looparch.model import Architecture, load_architecture, trigger_type
-from looparch.sync import sync
-from looparch.templates import routine_prompt, scaffold
-from looparch.validate import check, lint, validate_schema
+from loopmanager.model import Architecture, load_architecture, trigger_type
+from loopmanager.sync import sync
+from loopmanager.templates import routine_prompt, scaffold
+from loopmanager.validate import check, lint, validate_schema
 
 EXAMPLES = Path(__file__).resolve().parents[2] / "examples"
-EXAMPLE = EXAMPLES / "your-org.looparch.yaml"
-EXAMPLE_DOCS = EXAMPLES / "docs.looparch.yaml"
+EXAMPLE = EXAMPLES / "your-org.loopmanager.yaml"
+EXAMPLE_DOCS = EXAMPLES / "docs.loopmanager.yaml"
 
 
 def _write(tmp_path: Path, text: str) -> Path:
-    p = tmp_path / "a.looparch.yaml"
+    p = tmp_path / "a.loopmanager.yaml"
     p.write_text(text, encoding="utf-8")
     return p
 
@@ -136,7 +136,7 @@ def test_loop_prompt_included_in_routine() -> None:
 
 
 def test_import_round_trip(tmp_path: Path) -> None:
-    from looparch import importer
+    from loopmanager import importer
     arch = load_architecture(EXAMPLE_DOCS)
     sync(arch, root=tmp_path, local=True)  # writes .claude/commands + .claude/routines
     descriptors = importer.load_descriptors(tmp_path)
@@ -152,8 +152,8 @@ def test_import_round_trip(tmp_path: Path) -> None:
 
 
 def test_view_page_embeds_yaml() -> None:
-    # `looparch view` embeds the YAML and lets the visualizer build the diagram.
-    from looparch import flow
+    # `loopmanager view` embeds the YAML and lets the visualizer build the diagram.
+    from loopmanager import flow
     text = EXAMPLE.read_text(encoding="utf-8")
     arch = load_architecture(EXAMPLE)
     html = flow.page(text, title=arch.name)
