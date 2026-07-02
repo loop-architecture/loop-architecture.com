@@ -1,8 +1,8 @@
 # Loop Architecture, Specification
 
 Loop Architecture is an architecture style that makes the **agentic loop** between systems the
-first-class unit of design. A whole architecture is one YAML document with three top-level keys:
-`id`, `systems`, and `loops`.
+first-class unit of design. A whole architecture is one YAML document with `id`, `systems` and
+`loops` (plus optional `name` and `description`).
 
 ## Concepts
 
