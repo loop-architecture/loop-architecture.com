@@ -145,6 +145,7 @@ code {
 }
 .flow-tab:hover { border-color: var(--accent); color: var(--text); }
 .flow-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.flow-tab-eg { font-weight: 500; opacity: .55; }
 
 /* interactive react-flow diagram, full-bleed (breaks out of the text column) */
 .flow {
