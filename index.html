@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loop Architecture</title>
+  <meta name="description" content="Loop Architecture — an architecture style that makes the agentic loop between systems the first-class unit of design. Discover loops with Loop Storming, encode them as YAML, publish them as Claude Code routines with looparch." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xyflow/react@12/dist/style.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom": "https://esm.sh/react-dom@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+      "htm": "https://esm.sh/htm@3.1.1",
+      "@xyflow/react": "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4">
+            <path d="M16 6a10 10 0 1 1-9.5 6.9" stroke-linecap="round" />
+            <path d="M6 6.5 6.5 12.5 12.5 12" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        <span>Loop<b>Architecture</b></span>
+      </a>
+      <nav class="nav-links">
+        <a href="#loop">Anatomy</a>
+        <a href="#storming">Loop Storming</a>
+        <a href="#format">Spec</a>
+        <a href="#diagram">Diagram</a>
+        <a href="#cli">looparch</a>
+        <a href="#origin">Origin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="doc">
+    <!-- INTRO -->
+    <section class="lead">
+      <h1>Loop Architecture</h1>
+      <p>
+        An architecture style that makes the <b>agentic loop</b> between systems the first-class unit
+        of design. A loop is triggered on a schedule or event, <b>uses</b> one or more systems, runs
+        its <b>prompt</b>, and <b>writes back</b> to those systems. A <em>Loop Architecture</em> is all
+        of your loops, mapped together.
+      </p>
+      <div class="flow3">
+        <a class="flow-step" href="#storming">
+          <span class="flow-n">1</span>
+          <span class="flow-t">Discover</span>
+          <span class="flow-d">Loop Storming workshop</span>
+        </a>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <a class="flow-step" href="#format">
+          <span class="flow-n">2</span>
+          <span class="flow-t">Encode</span>
+          <span class="flow-d">as one YAML file</span>
+        </a>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <a class="flow-step" href="#cli">
+          <span class="flow-n">3</span>
+          <span class="flow-t">Publish</span>
+          <span class="flow-d">Claude Code routines via <code>looparch</code></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ANATOMY -->
+    <section id="loop">
+      <h2>Anatomy of a loop</h2>
+      <dl class="stages">
+        <div><dt>id</dt><dd>Kebab-case identifier for the loop.</dd></div>
+        <div><dt>name</dt><dd>Human-readable name.</dd></div>
+        <div><dt>trigger</dt><dd>When it runs — a cron, an event, an ISO time, or manual. One or more.</dd></div>
+        <div><dt>model</dt><dd>The model the loop runs on.</dd></div>
+        <div><dt>observe</dt><dd>The systems the loop reads from (uses).</dd></div>
+        <div><dt>act</dt><dd>The systems the loop writes back to.</dd></div>
+        <div><dt>prompt</dt><dd>What the loop does each turn.</dd></div>
+        <div><dt>tools</dt><dd>The tools the loop is allowed to use.</dd></div>
+      </dl>
+    </section>
+
+    <!-- LOOP STORMING -->
+    <section id="storming">
+      <h2>Loop Storming</h2>
+      <p>
+        Loop Storming is a collaborative workshop for discovering loops — in the spirit of Event
+        Storming. The team maps the systems, connects them into loops (what each loop uses and writes
+        back to), names them, writes their prompts, and sets triggers. The messy wall is your initial
+        map; you then refine it into formal loop YAML.
+      </p>
+      <p><a class="more" href="loop-storming.html">Read the Loop Storming guide →</a></p>
+    </section>
+
+    <!-- FORMAT -->
+    <section id="format">
+      <h2>The format</h2>
+      <p>
+        One plain YAML file with three top-level keys — <code>id</code>, <code>systems</code>, and
+        <code>loops</code>. Each loop <b>uses</b> (observe) systems and <b>writes back</b> to (act)
+        systems. A trigger is a 5-field cron, an ISO timestamp, a GitHub event, or <code>manual</code>.
+      </p>
+      <div class="code-panel">
+        <div class="code-head">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-file">entropy-data.looparch.yaml</span>
+        </div>
+        <pre class="code"><code><span class="c-key">id</span>: <span class="c-str">entropy-data</span>
+<span class="c-key">systems</span>:
+  - <span class="c-key">id</span>: <span class="c-str">dash0</span>
+    <span class="c-key">url</span>: <span class="c-str">https://dash0.com</span>            <span class="c-cmt"># favicon becomes the icon</span>
+    <span class="c-key">connector</span>: <span class="c-str">dash0</span>
+  - <span class="c-key">id</span>: <span class="c-str">code-repo</span>
+    <span class="c-key">repository</span>: <span class="c-str">https://github.com/entropy-data/app</span>
+  - <span class="c-key">id</span>: <span class="c-str">docs</span>
+    <span class="c-key">url</span>: <span class="c-str">https://docs.entropy-data.com</span>
+<span class="c-key">loops</span>:
+  - <span class="c-key">id</span>: <span class="c-str">triage-incidents</span>
+    <span class="c-key">name</span>: <span class="c-str">Triage Incidents</span>
+    <span class="c-key">trigger</span>: <span class="c-str">"*/5 * * * *"</span>            <span class="c-cmt"># cron | ISO time | github event | manual</span>
+    <span class="c-key">model</span>: <span class="c-str">claude-opus-4-8</span>          <span class="c-cmt"># the model this loop runs on</span>
+    <span class="c-key">observe</span>: [<span class="c-str">dash0</span>]                <span class="c-cmt"># systems it uses</span>
+    <span class="c-key">act</span>: [<span class="c-str">jira</span>, <span class="c-str">slack</span>]            <span class="c-cmt"># systems it writes back to</span>
+    <span class="c-key">prompt</span>: <span class="c-str">Detect incidents; open a Jira ticket and post to Slack</span>
+  - <span class="c-key">id</span>: <span class="c-str">sync-docs</span>
+    <span class="c-key">name</span>: <span class="c-str">Sync Docs</span>
+    <span class="c-key">trigger</span>:                        <span class="c-cmt"># one trigger, or several</span>
+      - <span class="c-str">"0 6 * * *"</span>
+      - <span class="c-str">pull_request.merged</span>
+    <span class="c-key">observe</span>: [<span class="c-str">code-repo</span>]
+    <span class="c-key">act</span>: [<span class="c-str">docs</span>]
+    <span class="c-key">prompt</span>: <span class="c-str">&gt;</span>                     <span class="c-cmt"># what the loop does each turn</span>
+      <span class="c-str">Diff the docs against changes merged in the last 24h and open a PR.</span>
+    <span class="c-key">tools</span>: [<span class="c-str">Read</span>, <span class="c-str">Grep</span>, <span class="c-str">Bash(gh pr *)</span>]</code></pre>
+      </div>
+      <p class="more-row">
+        <a class="more" href="spec/loop-architecture.md">Specification →</a>
+        <a class="more" href="spec/loop-architecture.schema.json">JSON schema →</a>
+        <a class="more" href="examples/entropy-data.looparch.yaml">Full example →</a>
+      </p>
+    </section>
+
+    <!-- DIAGRAM -->
+    <section id="diagram">
+      <h2>One file, one diagram</h2>
+      <p>
+        Because every loop names the systems it uses and writes back to, <code>looparch</code> renders
+        the whole architecture as a single <b>interactive</b> diagram that flows left to right —
+        sources on the left, loops in the middle, sinks on the right, a trigger icon
+        (🕐 schedule · ⚡ event) on each. Click any system or loop for details.
+      </p>
+      <div id="flow" class="flow">
+        <p class="flow-loading">Loading interactive diagram…</p>
+      </div>
+    </section>
+
+    <script type="module">
+      import React from 'react';
+      import { createRoot } from 'react-dom/client';
+      import htm from 'htm';
+      import { ReactFlow, Background, Controls, Handle, Position, MarkerType } from '@xyflow/react';
+      const html = htm.bind(React.createElement);
+      const { useState } = React;
+
+      const Handles = () => html`
+        <${Handle} type="target" position=${Position.Left} id="lt" className="rf-h" />
+        <${Handle} type="source" position=${Position.Left} id="ls" className="rf-h" />
+        <${Handle} type="target" position=${Position.Right} id="rt" className="rf-h" />
+        <${Handle} type="source" position=${Position.Right} id="rs" className="rf-h" />`;
+
+      const SystemNode = ({ data }) => html`
+        <div class="rf-system">
+          ${data.favicon
+            ? html`<img class="rf-ico" src=${data.favicon} width="20" height="20"
+                 onError=${(e) => { e.target.style.visibility = 'hidden'; }} />`
+            : html`<span class="rf-fallback">${(data.label || '?')[0].toUpperCase()}</span>`}
+          <div class="rf-sys-body">
+            <div class="rf-sys-name">${data.label}</div>
+            ${data.description ? html`<div class="rf-sys-desc">${data.description}</div>` : null}
+          </div>
+          <${Handles} />
+        </div>`;
+
+      const LoopNode = ({ data }) => html`
+        <div class="rf-loop">
+          <div class="rf-loop-head">
+            <span>Agentic Loop</span>
+            ${data.emoji ? html`<span class="rf-emoji">${data.emoji}</span>` : null}
+          </div>
+          <div class="rf-loop-name">${data.label}</div>
+          ${data.description ? html`<div class="rf-loop-desc">${data.description}</div>` : null}
+          <${Handles} />
+        </div>`;
+
+      const nodeTypes = { system: SystemNode, loop: LoopNode };
+
+      const field = (label, value) => value
+        ? html`<div class="flow-field"><div class="flow-field-label">${label}</div>
+                 <div class="flow-field-value">${value}</div></div>` : null;
+      const chips = (label, arr) => (arr && arr.length)
+        ? html`<div class="flow-field"><div class="flow-field-label">${label}</div>
+                 <div>${arr.map((x) => html`<span class="flow-chip">${x}</span>`)}</div></div>` : null;
+      const link = (url) => html`<a href=${url} target="_blank" rel="noopener">${url}</a>`;
+
+      const Panel = ({ node, onClose }) => {
+        const d = node.data;
+        const isLoop = node.type === 'loop';
+        return html`<aside class="flow-panel">
+          <button class="flow-panel-close" onClick=${onClose} aria-label="Close">×</button>
+          <div class="flow-panel-kind">${isLoop ? 'Loop' : 'System'}</div>
+          <h3>${d.label}</h3>
+          <div class="flow-panel-id">${d.id}</div>
+          ${d.description ? html`<p class="flow-panel-desc">${d.description}</p>` : null}
+          ${isLoop ? html`
+            ${field('Prompt', d.prompt)}
+            ${chips('Triggers', d.triggers)}
+            ${field('Model', d.model)}
+            ${chips('Uses', d.uses)}
+            ${chips('Writes back', d.writesBack)}
+            ${chips('Tools', d.tools)}
+          ` : html`
+            ${d.url ? field('URL', link(d.url)) : null}
+            ${d.repository ? field('Repository', link(d.repository)) : null}
+            ${field('Connector', d.connector)}
+            ${chips('Read by', d.readBy)}
+            ${chips('Written by', d.writtenBy)}
+          `}
+        </aside>`;
+      };
+
+      try {
+        const graph = await fetch('assets/entropy-data.flow.json').then((r) => r.json());
+        const edgeColor = graph.edge || '#9ca3af';
+        const edges = graph.edges.map((e) => ({
+          id: e.id, source: e.source, target: e.target,
+          sourceHandle: e.sourceHandle, targetHandle: e.targetHandle,
+          style: { stroke: edgeColor, strokeWidth: 1.5 },
+          markerEnd: { type: MarkerType.ArrowClosed, color: edgeColor, width: 15, height: 15 },
+        }));
+        const App = () => {
+          const [sel, setSel] = useState(null);
+          return html`<div class="flow-wrap">
+            <${ReactFlow} nodes=${graph.nodes} edges=${edges} nodeTypes=${nodeTypes}
+                fitView minZoom=${0.2} nodesConnectable=${false}
+                onNodeClick=${(_, n) => setSel(n)} onPaneClick=${() => setSel(null)}
+                proOptions=${{ hideAttribution: true }}>
+              <${Background} color="#e5e7eb" gap=${22} />
+              <${Controls} showInteractive=${false} />
+            <//>
+            ${sel ? html`<${Panel} node=${sel} onClose=${() => setSel(null)} />` : null}
+          </div>`;
+        };
+        document.getElementById('flow').innerHTML = '';
+        createRoot(document.getElementById('flow')).render(html`<${App} />`);
+      } catch (err) {
+        document.querySelector('.flow-loading').textContent =
+          'Could not load the interactive diagram (needs network).';
+      }
+    </script>
+
+    <!-- CLI -->
+    <section id="cli">
+      <h2>looparch</h2>
+      <p>A Python CLI (built with <a href="https://docs.astral.sh/uv/">uv</a>) to validate, visualize, and publish loops.</p>
+      <pre class="code plain"><code><span class="c-p">$</span> uv tool install looparch
+
+<span class="c-p">$</span> looparch init entropy-data              <span class="c-cmt"># scaffold an architecture</span>
+<span class="c-p">$</span> looparch validate entropy-data.looparch.yaml    <span class="c-cmt"># schema + lint</span>
+<span class="c-p">$</span> looparch show entropy-data.looparch.yaml        <span class="c-cmt"># readable summary</span>
+<span class="c-p">$</span> looparch diagram entropy-data.looparch.yaml     <span class="c-cmt"># ALL loops → one diagram (SVG)</span>
+<span class="c-p">$</span> looparch export entropy-data.looparch.yaml      <span class="c-cmt"># → React Flow JSON (interactive)</span>
+<span class="c-p">$</span> looparch publish entropy-data.looparch.yaml     <span class="c-cmt"># → Claude Code routines</span></code></pre>
+      <p class="note">
+        <code>publish</code> writes, for each loop, a slash command
+        (<code>.claude/commands/loop-&lt;id&gt;.md</code>) and a routine descriptor
+        (<code>.claude/routines/&lt;id&gt;.json</code>) with the loop's schedule/event, model, and repos.
+      </p>
+      <p><a class="more" href="looparch/README.md">CLI reference →</a></p>
+    </section>
+
+    <!-- EXAMPLES -->
+    <section id="examples">
+      <h2>The example loops</h2>
+      <p>The loops in the diagram above, from the <a href="examples/entropy-data.looparch.yaml">example architecture</a>:</p>
+      <ul class="examples-list">
+        <li><b>Triage Incidents</b> — detect incidents from observability signals; ticket + Slack. <code>dash0 → jira/slack</code></li>
+        <li><b>Fix Errors</b> — find recurring errors in the logs and open a fix PR. <code>dash0 → code-repo</code></li>
+        <li><b>Deploy Previews</b> — on every commit, deploy a preview to Azure. <code>ci-cd → app-azure</code></li>
+        <li><b>Reconcile Infra Drift</b> — reconcile Terraform state against running infra. <code>infra → app-azure</code></li>
+        <li><b>Sync Docs</b> — keep the docs in sync with the code; daily PR. <code>code-repo → docs</code></li>
+        <li><b>Translate Docs</b> — keep the German docs in sync with the English source. <code>docs → docs-de</code></li>
+        <li><b>Sync Confluence</b> — keep internal runbooks in Confluence current. <code>code-repo → confluence</code></li>
+        <li><b>Sync Landing Page</b> — keep landing-page copy consistent with the docs. <code>docs → landing-page</code></li>
+        <li><b>Answer Tickets</b> — triage Jira tickets and draft answers from the docs. <code>jira → jira</code></li>
+        <li><b>Review Compliance</b> — review ISO 27001 policies and vendor risks weekly. <code>policies → onedrive</code></li>
+      </ul>
+    </section>
+
+    <!-- ORIGIN -->
+    <section id="origin" class="origin">
+      <h2>Origin</h2>
+      <p class="origin-lede">
+        The term <b>Loop Architecture</b> was coined by
+        <a href="https://www.linkedin.com/in/arifwider/" target="_blank" rel="noopener">Arif Wider</a>
+        and
+        <a href="https://www.linkedin.com/in/simonharrer/" target="_blank" rel="noopener">Simon Harrer</a>
+        at <a href="https://www.summersoc.eu/" target="_blank" rel="noopener">SummerSOC</a> on
+        <time datetime="2026-07-01">1 July 2026</time>, on the island of Crete — the same day they
+        visited the cave where, in myth, Zeus was born.
+      </p>
+      <div class="authors">
+        <a class="author" href="https://www.linkedin.com/in/arifwider/" target="_blank" rel="noopener">
+          <span class="author-name">Arif Wider</span><span class="author-link">LinkedIn ↗</span>
+        </a>
+        <a class="author" href="https://www.linkedin.com/in/simonharrer/" target="_blank" rel="noopener">
+          <span class="author-name">Simon Harrer</span><span class="author-link">LinkedIn ↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-fine">loop-architecture.com</p>
+      <p class="footer-links">
+        <a href="https://www.entropy-data.com/imprint" target="_blank" rel="noopener">Imprint</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://www.entropy-data.com/privacy" target="_blank" rel="noopener">Privacy</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

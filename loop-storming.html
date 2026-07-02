@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loop Storming — Loop Architecture</title>
+  <meta name="description" content="Loop Storming — a short collaborative workshop for discovering the agentic loops between your systems." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4">
+            <path d="M16 6a10 10 0 1 1-9.5 6.9" stroke-linecap="round" />
+            <path d="M6 6.5 6.5 12.5 12.5 12" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        <span>Loop<b>Architecture</b></span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#format">Spec</a>
+        <a href="index.html#diagram">Diagram</a>
+        <a href="index.html">← Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="doc">
+    <section class="lead">
+      <h1>Loop Storming</h1>
+      <p>
+        A short, collaborative workshop for discovering the agentic loops between your systems —
+        in the spirit of Event Storming. Map the systems, connect them into loops, name them.
+      </p>
+    </section>
+
+    <section>
+      <h2>What you need</h2>
+      <p>A wall or a virtual canvas, the team (people who feel the pain, own the systems, do the work), and sticky notes in three colors:</p>
+      <dl class="stages">
+        <div><dt>system</dt><dd>A place a loop reads from or writes to — a repo, a store, a tool.</dd></div>
+        <div><dt>loop</dt><dd>An agent that connects systems: it <em>uses</em> some and <em>writes back</em> to others.</dd></div>
+        <div><dt>trigger</dt><dd>What turns a loop — a schedule 🕐, an event ⚡, or manual.</dd></div>
+      </dl>
+    </section>
+
+    <section>
+      <h2>The steps</h2>
+      <ol class="steps-list">
+        <li><b>Define the systems.</b> Focus on data, source code, and storage. One sticky each; note the URL or repo.</li>
+        <li><b>Brainstorm the loops.</b> Which agentic loops make sense between these systems? Look for the manual, between-systems work.</li>
+        <li><b>Draw them as edges &amp; name them.</b> Arrows for <em>uses</em> and <em>writes back</em>; a verb-first name and a one-line prompt each.</li>
+        <li><b>Add the trigger icons.</b> 🕐 schedule · ⚡ event · manual. A loop can have more than one.</li>
+        <li><b>Prioritize.</b> Impact × confidence. Start top-right.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>From wall to architecture</h2>
+      <p>Refine the wall into one <a href="spec/loop-architecture.md">Loop Architecture file</a>, then let <code>looparch</code> validate, draw, and publish it.</p>
+      <pre class="code plain"><code><span class="c-p">$</span> looparch init entropy-data
+<span class="c-p">$</span> looparch diagram entropy-data.looparch.yaml   <span class="c-cmt"># all loops in one diagram</span>
+<span class="c-p">$</span> looparch publish entropy-data.looparch.yaml   <span class="c-cmt"># → Claude Code routines</span></code></pre>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-fine"><a href="index.html">loop-architecture.com</a></p>
+      <p class="footer-links">
+        <a href="https://www.entropy-data.com/imprint" target="_blank" rel="noopener">Imprint</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://www.entropy-data.com/privacy" target="_blank" rel="noopener">Privacy</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

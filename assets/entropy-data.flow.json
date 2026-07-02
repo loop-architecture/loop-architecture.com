@@ -1,0 +1,708 @@
+{
+  "name": "Entropy Data",
+  "id": "entropy-data",
+  "accent": "#7c3aed",
+  "edge": "#9ca3af",
+  "nodes": [
+    {
+      "id": "dash0",
+      "type": "system",
+      "position": {
+        "x": 40,
+        "y": 302.42479401192566
+      },
+      "data": {
+        "label": "Dash0",
+        "id": "dash0",
+        "description": "Observability \u2014 logs, traces and metrics (demo + prod)",
+        "url": "https://dash0.com",
+        "repository": null,
+        "connector": "dash0",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=dash0.com",
+        "readBy": [
+          "Triage Incidents",
+          "Fix Errors"
+        ],
+        "writtenBy": []
+      }
+    },
+    {
+      "id": "code-repo",
+      "type": "system",
+      "position": {
+        "x": 680,
+        "y": 295.5242182939881
+      },
+      "data": {
+        "label": "App Repo",
+        "id": "code-repo",
+        "description": "Application source code",
+        "url": null,
+        "repository": "https://github.com/datamesh-manager/entropy-data",
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
+        "readBy": [
+          "Sync Docs",
+          "Sync Confluence"
+        ],
+        "writtenBy": [
+          "Fix Errors"
+        ]
+      }
+    },
+    {
+      "id": "infra",
+      "type": "system",
+      "position": {
+        "x": 40,
+        "y": 122.42479401192566
+      },
+      "data": {
+        "label": "Terraform Infra",
+        "id": "infra",
+        "description": "Infrastructure as code (Terraform)",
+        "url": null,
+        "repository": "https://github.com/datamesh-manager/entropy-data",
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
+        "readBy": [
+          "Reconcile Infra Drift"
+        ],
+        "writtenBy": []
+      }
+    },
+    {
+      "id": "app-azure",
+      "type": "system",
+      "position": {
+        "x": 680,
+        "y": 55.524218293988085
+      },
+      "data": {
+        "label": "App on Azure",
+        "id": "app-azure",
+        "description": "The running application on Azure",
+        "url": "https://azure.microsoft.com",
+        "repository": null,
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=azure.microsoft.com",
+        "readBy": [],
+        "writtenBy": [
+          "Deploy Previews",
+          "Reconcile Infra Drift"
+        ]
+      }
+    },
+    {
+      "id": "ci-cd",
+      "type": "system",
+      "position": {
+        "x": 40,
+        "y": 2.4247940119256484
+      },
+      "data": {
+        "label": "CI/CD",
+        "id": "ci-cd",
+        "description": "CI/CD Runs",
+        "url": "https://github.com/features/actions",
+        "repository": null,
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
+        "readBy": [
+          "Deploy Previews"
+        ],
+        "writtenBy": []
+      }
+    },
+    {
+      "id": "jira",
+      "type": "system",
+      "position": {
+        "x": 680,
+        "y": 175.5242182939881
+      },
+      "data": {
+        "label": "Jira",
+        "id": "jira",
+        "description": "Service desk and tickets",
+        "url": "https://www.atlassian.com",
+        "repository": null,
+        "connector": "jira",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=www.atlassian.com",
+        "readBy": [
+          "Answer Tickets"
+        ],
+        "writtenBy": [
+          "Triage Incidents",
+          "Answer Tickets"
+        ]
+      }
+    },
+    {
+      "id": "confluence",
+      "type": "system",
+      "position": {
+        "x": 1320,
+        "y": 269.1501696202136
+      },
+      "data": {
+        "label": "Confluence",
+        "id": "confluence",
+        "description": "Internal docs and admin runbooks",
+        "url": "https://www.atlassian.com/software/confluence",
+        "repository": null,
+        "connector": "confluence",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=www.atlassian.com",
+        "readBy": [],
+        "writtenBy": [
+          "Sync Confluence"
+        ]
+      }
+    },
+    {
+      "id": "docs",
+      "type": "system",
+      "position": {
+        "x": 1320,
+        "y": 398.81418877921436
+      },
+      "data": {
+        "label": "Docs (EN)",
+        "id": "docs",
+        "description": "Product documentation",
+        "url": "https://docs.entropy-data.com",
+        "repository": null,
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=docs.entropy-data.com",
+        "readBy": [
+          "Translate Docs",
+          "Sync Landing Page"
+        ],
+        "writtenBy": [
+          "Sync Docs"
+        ]
+      }
+    },
+    {
+      "id": "docs-de",
+      "type": "system",
+      "position": {
+        "x": 1960,
+        "y": 341.23019356896464
+      },
+      "data": {
+        "label": "Docs (DE)",
+        "id": "docs-de",
+        "description": "German translation of the docs",
+        "url": "https://docs.entropy-data.com",
+        "repository": null,
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=docs.entropy-data.com",
+        "readBy": [],
+        "writtenBy": [
+          "Translate Docs"
+        ]
+      }
+    },
+    {
+      "id": "landing-page",
+      "type": "system",
+      "position": {
+        "x": 1960,
+        "y": 461.23019356896464
+      },
+      "data": {
+        "label": "Landing Page",
+        "id": "landing-page",
+        "description": "Marketing landing page",
+        "url": "https://www.entropy-data.com",
+        "repository": null,
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=www.entropy-data.com",
+        "readBy": [],
+        "writtenBy": [
+          "Sync Landing Page"
+        ]
+      }
+    },
+    {
+      "id": "onedrive",
+      "type": "system",
+      "position": {
+        "x": 680,
+        "y": 639.2886448392813
+      },
+      "data": {
+        "label": "OneDrive",
+        "id": "onedrive",
+        "description": "Policies and vendor documents",
+        "url": "https://onedrive.live.com",
+        "repository": null,
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=onedrive.live.com",
+        "readBy": [],
+        "writtenBy": [
+          "Review Compliance"
+        ]
+      }
+    },
+    {
+      "id": "policies",
+      "type": "system",
+      "position": {
+        "x": 40,
+        "y": 639.2886448392813
+      },
+      "data": {
+        "label": "Kertos",
+        "id": "policies",
+        "description": "ISO 27001 policies and vendor risks",
+        "url": "https://kertos.com",
+        "repository": null,
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=kertos.com",
+        "readBy": [
+          "Review Compliance"
+        ],
+        "writtenBy": []
+      }
+    },
+    {
+      "id": "slack",
+      "type": "system",
+      "position": {
+        "x": 680,
+        "y": 415.5242182939881
+      },
+      "data": {
+        "label": "Slack",
+        "id": "slack",
+        "description": "Team chat",
+        "url": "https://slack.com",
+        "repository": null,
+        "connector": "slack",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=slack.com",
+        "readBy": [],
+        "writtenBy": [
+          "Triage Incidents"
+        ]
+      }
+    },
+    {
+      "id": "triage-incidents",
+      "type": "loop",
+      "position": {
+        "x": 360,
+        "y": 360.0
+      },
+      "data": {
+        "label": "Triage Incidents",
+        "id": "triage-incidents",
+        "description": "Detects and triages production incidents.",
+        "emoji": "\ud83d\udd50",
+        "triggers": [
+          "*/5 * * * *"
+        ],
+        "prompt": "Watch the logs, traces and metrics for error-rate spikes and failed checks. When an incident is occurring, open a Jira ticket and post a summary to Slack.",
+        "model": "claude-opus-4-8",
+        "tools": [],
+        "uses": [
+          "Dash0"
+        ],
+        "writesBack": [
+          "Jira",
+          "Slack"
+        ]
+      }
+    },
+    {
+      "id": "fix-errors",
+      "type": "loop",
+      "position": {
+        "x": 360,
+        "y": 240.0
+      },
+      "data": {
+        "label": "Fix Errors",
+        "id": "fix-errors",
+        "description": "Fixes recurring errors found in the logs.",
+        "emoji": "\ud83d\udd50",
+        "triggers": [
+          "*/30 * * * *"
+        ],
+        "prompt": "Find recurring errors in the logs, locate the cause in the code, and open a pull request that fixes it, referencing the originating trace.",
+        "model": null,
+        "tools": [],
+        "uses": [
+          "Dash0"
+        ],
+        "writesBack": [
+          "App Repo"
+        ]
+      }
+    },
+    {
+      "id": "deploy-previews",
+      "type": "loop",
+      "position": {
+        "x": 360,
+        "y": 0.0
+      },
+      "data": {
+        "label": "Deploy Previews",
+        "id": "deploy-previews",
+        "description": "Ships a preview deploy for every commit.",
+        "emoji": "\u26a1",
+        "triggers": [
+          "push"
+        ],
+        "prompt": "On each pushed commit, once CI passes, deploy a preview of the app to Azure and report the preview URL.",
+        "model": null,
+        "tools": [],
+        "uses": [
+          "CI/CD"
+        ],
+        "writesBack": [
+          "App on Azure"
+        ]
+      }
+    },
+    {
+      "id": "reconcile-infra",
+      "type": "loop",
+      "position": {
+        "x": 360,
+        "y": 120.0
+      },
+      "data": {
+        "label": "Reconcile Infra Drift",
+        "id": "reconcile-infra",
+        "description": "Keeps Azure in line with Terraform.",
+        "emoji": "\ud83d\udd50",
+        "triggers": [
+          "0 * * * *"
+        ],
+        "prompt": "Compare the Terraform state against the running Azure infrastructure and open a pull request to reconcile any drift.",
+        "model": null,
+        "tools": [],
+        "uses": [
+          "Terraform Infra"
+        ],
+        "writesBack": [
+          "App on Azure"
+        ]
+      }
+    },
+    {
+      "id": "sync-docs",
+      "type": "loop",
+      "position": {
+        "x": 1000,
+        "y": 389.1501696202136
+      },
+      "data": {
+        "label": "Sync Docs",
+        "id": "sync-docs",
+        "description": "Keeps the docs in step with the code.",
+        "emoji": "\ud83d\udd50\u26a1",
+        "triggers": [
+          "0 6 * * *",
+          "pull_request.merged"
+        ],
+        "prompt": "Diff the docs against the changes merged in the last 24 hours, update the pages that drifted, and open a pull request.",
+        "model": "claude-opus-4-8",
+        "tools": [
+          "Read",
+          "Grep",
+          "Bash(git *)",
+          "Bash(gh pr *)"
+        ],
+        "uses": [
+          "App Repo"
+        ],
+        "writesBack": [
+          "Docs (EN)"
+        ]
+      }
+    },
+    {
+      "id": "translate-docs",
+      "type": "loop",
+      "position": {
+        "x": 1640,
+        "y": 341.23019356896464
+      },
+      "data": {
+        "label": "Translate Docs",
+        "id": "translate-docs",
+        "description": "Keeps the German docs current.",
+        "emoji": "\ud83d\udd50",
+        "triggers": [
+          "0 7 * * *"
+        ],
+        "prompt": "For every English page changed since the German version was last updated, update the matching German page and open a pull request.",
+        "model": null,
+        "tools": [],
+        "uses": [
+          "Docs (EN)"
+        ],
+        "writesBack": [
+          "Docs (DE)"
+        ]
+      }
+    },
+    {
+      "id": "sync-confluence",
+      "type": "loop",
+      "position": {
+        "x": 1000,
+        "y": 269.1501696202136
+      },
+      "data": {
+        "label": "Sync Confluence",
+        "id": "sync-confluence",
+        "description": "Keeps internal runbooks up to date.",
+        "emoji": "\ud83d\udd50",
+        "triggers": [
+          "0 8 * * *"
+        ],
+        "prompt": "Keep the internal admin/runbook pages in Confluence in sync with the code and configuration.",
+        "model": null,
+        "tools": [],
+        "uses": [
+          "App Repo"
+        ],
+        "writesBack": [
+          "Confluence"
+        ]
+      }
+    },
+    {
+      "id": "sync-landing-page",
+      "type": "loop",
+      "position": {
+        "x": 1640,
+        "y": 461.23019356896464
+      },
+      "data": {
+        "label": "Sync Landing Page",
+        "id": "sync-landing-page",
+        "description": "Keeps the landing page on message.",
+        "emoji": "\ud83d\udd50",
+        "triggers": [
+          "0 9 * * *"
+        ],
+        "prompt": "Keep the feature descriptions on the landing page consistent with the docs.",
+        "model": null,
+        "tools": [],
+        "uses": [
+          "Docs (EN)"
+        ],
+        "writesBack": [
+          "Landing Page"
+        ]
+      }
+    },
+    {
+      "id": "answer-tickets",
+      "type": "loop",
+      "position": {
+        "x": 1000,
+        "y": 149.15016962021355
+      },
+      "data": {
+        "label": "Answer Tickets",
+        "id": "answer-tickets",
+        "description": "Drafts answers to service-desk tickets.",
+        "emoji": "\ud83d\udd50",
+        "triggers": [
+          "*/10 * * * *"
+        ],
+        "prompt": "Triage new service-desk tickets, draft an answer from the docs, and reply for a human to review.",
+        "model": null,
+        "tools": [],
+        "uses": [
+          "Jira"
+        ],
+        "writesBack": [
+          "Jira"
+        ]
+      }
+    },
+    {
+      "id": "review-compliance",
+      "type": "loop",
+      "position": {
+        "x": 360,
+        "y": 639.2886448392813
+      },
+      "data": {
+        "label": "Review Compliance",
+        "id": "review-compliance",
+        "description": "Reviews ISO 27001 policies weekly.",
+        "emoji": "\ud83d\udd50",
+        "triggers": [
+          "0 6 * * 1"
+        ],
+        "prompt": "Review ISO 27001 policies and vendor risks weekly, and draft updates to the documents in OneDrive for sign-off.",
+        "model": null,
+        "tools": [],
+        "uses": [
+          "Kertos"
+        ],
+        "writesBack": [
+          "OneDrive"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "use:dash0->triage-incidents",
+      "source": "dash0",
+      "target": "triage-incidents",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:triage-incidents->jira",
+      "source": "triage-incidents",
+      "target": "jira",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:triage-incidents->slack",
+      "source": "triage-incidents",
+      "target": "slack",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:dash0->fix-errors",
+      "source": "dash0",
+      "target": "fix-errors",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:fix-errors->code-repo",
+      "source": "fix-errors",
+      "target": "code-repo",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:ci-cd->deploy-previews",
+      "source": "ci-cd",
+      "target": "deploy-previews",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:deploy-previews->app-azure",
+      "source": "deploy-previews",
+      "target": "app-azure",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:infra->reconcile-infra",
+      "source": "infra",
+      "target": "reconcile-infra",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:reconcile-infra->app-azure",
+      "source": "reconcile-infra",
+      "target": "app-azure",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:code-repo->sync-docs",
+      "source": "code-repo",
+      "target": "sync-docs",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:sync-docs->docs",
+      "source": "sync-docs",
+      "target": "docs",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:docs->translate-docs",
+      "source": "docs",
+      "target": "translate-docs",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:translate-docs->docs-de",
+      "source": "translate-docs",
+      "target": "docs-de",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:code-repo->sync-confluence",
+      "source": "code-repo",
+      "target": "sync-confluence",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:sync-confluence->confluence",
+      "source": "sync-confluence",
+      "target": "confluence",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:docs->sync-landing-page",
+      "source": "docs",
+      "target": "sync-landing-page",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:sync-landing-page->landing-page",
+      "source": "sync-landing-page",
+      "target": "landing-page",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:jira->answer-tickets",
+      "source": "jira",
+      "target": "answer-tickets",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:answer-tickets->jira",
+      "source": "answer-tickets",
+      "target": "jira",
+      "sourceHandle": "ls",
+      "targetHandle": "rt"
+    },
+    {
+      "id": "use:policies->review-compliance",
+      "source": "policies",
+      "target": "review-compliance",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:review-compliance->onedrive",
+      "source": "review-compliance",
+      "target": "onedrive",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    }
+  ]
+}

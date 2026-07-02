@@ -1,0 +1,16 @@
+# Python / uv
+__pycache__/
+*.py[cod]
+.venv/
+looparch/.venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+uv.lock
+
+# Quicklook thumbnails (assets/*.png and assets/*.svg ARE committed — the site uses them)
+*.svg.png
+
+# OS
+.DS_Store

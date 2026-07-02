@@ -1,0 +1,34 @@
+[project]
+name = "looparch"
+version = "0.1.0"
+description = "Validate, visualize and publish Loop Architecture (looparch/v1) loops as Claude Code routines."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Loop Architecture" }]
+keywords = ["loop-architecture", "agentic", "claude-code", "yaml", "routines"]
+dependencies = [
+    "pyyaml>=6.0",
+    "jsonschema>=4.20",
+]
+
+[project.urls]
+Homepage = "https://loop-architecture.com"
+Specification = "https://loop-architecture.com/spec/loop-architecture.md"
+
+[project.scripts]
+looparch = "looparch.cli:main"
+
+[project.optional-dependencies]
+png = ["cairosvg>=2.7"]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/looparch"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/looparch/loop-architecture.schema.json" = "looparch/loop-architecture.schema.json"
