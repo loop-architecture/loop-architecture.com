@@ -9,7 +9,7 @@
       "type": "system",
       "position": {
         "x": 40,
-        "y": 120.0
+        "y": 60.0
       },
       "data": {
         "label": "Routine Runs",
@@ -27,32 +27,11 @@
       }
     },
     {
-      "id": "quality",
-      "type": "system",
-      "position": {
-        "x": 40,
-        "y": 0.0
-      },
-      "data": {
-        "label": "Result Quality",
-        "id": "quality",
-        "description": "Quality signals and evals for loop outcomes",
-        "url": "https://dash0.com",
-        "repository": null,
-        "connector": "dash0",
-        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=dash0.com",
-        "readBy": [
-          "Improve Loops"
-        ],
-        "writtenBy": []
-      }
-    },
-    {
       "id": "loop-architecture",
       "type": "system",
       "position": {
         "x": 680,
-        "y": 87.5
+        "y": 60.0
       },
       "data": {
         "label": "Loop Architecture",
@@ -74,7 +53,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 27.499999999999996
+        "y": 0.0
       },
       "data": {
         "label": "Improve Loops",
@@ -84,7 +63,7 @@
         "triggers": [
           "0 6 * * 1"
         ],
-        "prompt": "Review the last week of routine runs and their result quality. Where a loop underperforms or its prompt has drifted from good outcomes, improve the loop's prompt or trigger in the Loop Architecture and open a pull request for a human to review.",
+        "prompt": "Review the last week of routine runs and their outcomes. Where a loop underperforms or its prompt has drifted from good outcomes, improve the loop's prompt or trigger in the Loop Architecture and open a pull request for a human to review.",
         "model": "claude-opus-4-8",
         "tools": [
           "Read",
@@ -93,8 +72,7 @@
           "Bash(gh pr *)"
         ],
         "uses": [
-          "Routine Runs",
-          "Result Quality"
+          "Routine Runs"
         ],
         "writesBack": [
           "Loop Architecture"
@@ -106,7 +84,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 147.49999999999997
+        "y": 120.0
       },
       "data": {
         "label": "Retire Loops",
@@ -137,14 +115,6 @@
     {
       "id": "runs->improve-loops:0",
       "source": "runs",
-      "target": "improve-loops",
-      "sourceHandle": "rs",
-      "targetHandle": "lt",
-      "end": true
-    },
-    {
-      "id": "quality->improve-loops:0",
-      "source": "quality",
       "target": "improve-loops",
       "sourceHandle": "rs",
       "targetHandle": "lt",

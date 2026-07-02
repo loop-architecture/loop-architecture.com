@@ -10,11 +10,6 @@ systems:
     description: Claude Code routine run logs and their outcomes
     url: https://claude.ai
     connector: claude-code
-  - id: quality
-    name: Result Quality
-    description: Quality signals and evals for loop outcomes
-    url: https://dash0.com
-    connector: dash0
   - id: loop-architecture
     name: Loop Architecture
     description: The Loop Architecture YAML, prompts and triggers
@@ -26,10 +21,10 @@ loops:
     description: Improves loops from how their past runs performed.
     trigger: "0 6 * * 1"
     model: claude-opus-4-8
-    observe: [runs, quality]
+    observe: [runs]
     act: [loop-architecture]
     prompt: >
-      Review the last week of routine runs and their result quality. Where a loop
+      Review the last week of routine runs and their outcomes. Where a loop
       underperforms or its prompt has drifted from good outcomes, improve the loop's
       prompt or trigger in the Loop Architecture and open a pull request for a human
       to review.
