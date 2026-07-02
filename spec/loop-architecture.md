@@ -9,7 +9,7 @@ first-class unit of design. A whole architecture is one YAML document with three
 A **loop** is a continuous cycle where an agent:
 
 1. **uses** (observe) one or more systems,
-2. runs its **prompt**, and
+2. follows its **instructions**, and
 3. **writes back** (act) to one or more systems.
 
 A **Loop Architecture** is the full set of systems and loops, from which a single architecture
@@ -22,6 +22,7 @@ diagram is generated.
 ```yaml
 id: your-org          # required, kebab-case
 name: Your Org         # optional (defaults to id)
+description: ...       # optional, a sentence about this Loop Architecture
 systems: [ ... ]           # required, >= 1
 loops:   [ ... ]           # required, >= 1
 ```
@@ -64,7 +65,7 @@ loops:
     model: claude-opus-4-8     # optional, the model this loop runs on
     observe: [code-repo]       # required, system ids it reads
     act: [docs-repo]           # required, system ids it writes back to
-    prompt: >                  # required, what the loop does each turn
+    instructions: >            # required, what the loop does each turn
       Diff the docs against changes merged in the last 24 hours and open a PR.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]   # optional → allowed-tools
 ```
@@ -76,7 +77,7 @@ loops:
 | `trigger`| no       | One trigger or a list. Defaults to `manual`.                      |
 | `observe`| yes      | System ids the loop reads from.                                  |
 | `act`    | yes      | System ids the loop writes back to.                              |
-| `prompt` | yes      | What the loop does each turn.                                    |
+| `instructions` | yes | What the loop does each turn.                                  |
 | `model`  | no       | The model the loop runs on.                                      |
 | `tools`  | no       | Tools the loop may use → the routine's `allowed-tools`.         |
 

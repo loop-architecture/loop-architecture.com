@@ -130,7 +130,7 @@ def build(descriptors: list[tuple[dict, str | None]], arch_id: str = "imported")
             loop["model"] = desc["model"]
         loop["observe"] = observe or ["unknown"]
         loop["act"] = act or ["unknown"]
-        loop["prompt"] = parsed["prompt"] or desc.get("prompt", "").strip()
+        loop["instructions"] = parsed["prompt"] or desc.get("prompt", "").strip()
         loops.append(loop)
 
     return {

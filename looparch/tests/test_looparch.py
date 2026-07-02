@@ -74,7 +74,7 @@ def test_schema_requires_top_level_id(tmp_path: Path) -> None:
 def test_lint_flags_unknown_system() -> None:
     arch = Architecture(raw={
         "id": "x", "systems": [{"id": "a", "description": "A"}],
-        "loops": [{"id": "l", "observe": ["ghost"], "act": ["a"], "prompt": "p"}],
+        "loops": [{"id": "l", "observe": ["ghost"], "act": ["a"], "instructions": "p"}],
     })
     assert any("ghost" in str(i) for i in lint(arch))
 
@@ -120,7 +120,7 @@ def test_routine_prompt_has_core_sections() -> None:
 def test_loop_prompt_included_in_routine() -> None:
     arch = load_architecture(EXAMPLE_DOCS)
     loop = arch.loop("update-docs")
-    assert loop.prompt  # the example defines a custom prompt
+    assert loop.instructions  # the example defines custom instructions
     prompt = routine_prompt(arch, loop)
     assert "## What to do" in prompt
     assert "drifted" in prompt

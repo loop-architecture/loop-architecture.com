@@ -3,6 +3,7 @@
 # requests for a human on the loop to spot-check.
 id: self-learning
 name: Self-Learning
+description: Loops that improve the Loop Architecture from how its own routine runs performed.
 
 systems:
   - id: runs
@@ -12,7 +13,7 @@ systems:
     connector: claude-code
   - id: loop-architecture
     name: Loop Architecture
-    description: The Loop Architecture YAML, prompts and triggers
+    description: The Loop Architecture YAML, instructions and triggers
     repository: https://github.com/your-org/loops
 
 loops:
@@ -23,10 +24,10 @@ loops:
     model: claude-opus-4-8
     observe: [runs]
     act: [loop-architecture]
-    prompt: >
+    instructions: >
       Review the last week of routine runs and their outcomes. Where a loop
-      underperforms or its prompt has drifted from good outcomes, improve the loop's
-      prompt or trigger in the Loop Architecture and open a pull request for a human
+      underperforms or its instructions have drifted from good outcomes, improve the loop's
+      instructions or trigger in the Loop Architecture and open a pull request for a human
       to review.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
 
@@ -36,7 +37,7 @@ loops:
     trigger: "0 6 1 * *"
     observe: [runs]
     act: [loop-architecture]
-    prompt: >
+    instructions: >
       If a loop has produced no useful change across many runs, propose retiring or
       re-scoping it in the Loop Architecture with a pull request that explains why.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]

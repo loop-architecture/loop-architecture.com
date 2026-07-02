@@ -121,8 +121,8 @@ class Loop:
         return list(self.raw.get("act", []) or [])
 
     @property
-    def prompt(self) -> str:
-        return (self.raw.get("prompt") or "").strip()
+    def instructions(self) -> str:
+        return (self.raw.get("instructions") or "").strip()
 
     @property
     def model(self) -> str | None:
@@ -145,6 +145,10 @@ class Architecture:
     @property
     def name(self) -> str:
         return self.raw.get("name") or (self.id.replace("-", " ").title() if self.id else "Loop Architecture")
+
+    @property
+    def description(self) -> str:
+        return (self.raw.get("description") or "").strip()
 
     @property
     def systems(self) -> list[System]:

@@ -34,7 +34,7 @@ export function Panel({ node, onClose }) {
       {d.description ? <p className="flow-panel-desc">{d.description}</p> : null}
       {isLoop ? (
         <>
-          {field('Prompt', d.prompt)}
+          {field('Instructions', d.instructions)}
           {chips('Triggers', d.triggers)}
           {field('Model', d.model)}
           {chips('Uses', d.uses)}

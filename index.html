@@ -50,16 +50,16 @@
   <main id="top" class="doc">
     <!-- INTRO -->
     <section class="lead">
-      <h1>Agentic Loop Architecture</h1>
+      <h1>Loop Architecture</h1>
       <p>
         An architecture style that makes the <b>agentic loop</b> between systems the first-class unit
-        of design. A loop is triggered on a schedule or event, <b>uses</b> one or more systems, runs
-        its <b>prompt</b>, and <b>writes back</b> to those systems. A <em>Loop Architecture</em> is all
+        of design. A loop is triggered on a schedule or event, <b>uses</b> one or more systems, follows
+        its <b>instructions</b>, and <b>writes back</b> to those systems. A <em>Loop Architecture</em> is all
         of your loops, mapped together.
       </p>
       <p class="lead-eg">
-        For example: a loop that keeps the <b>changelog in sync</b> with merged pull requests, or one
-        that <b>translates the docs to German</b> whenever the English pages change.
+        For example: a loop that keeps the changelog in sync with merged pull requests, or one
+        that translates the docs to German whenever the English pages change.
       </p>
       <a class="hero-diagram-link" href="#diagram" aria-label="See the interactive examples">
         <img class="hero-diagram" src="assets/hero.png"
@@ -69,7 +69,7 @@
 
     <!-- PRINCIPLES -->
     <section id="principles">
-      <h2>Five principles</h2>
+      <h2>Four principles</h2>
       <ol class="principles">
         <li>
           <span class="principle-n">1</span>
@@ -81,8 +81,8 @@
         <li>
           <span class="principle-n">2</span>
           <div>
-            <b>Loops run continuously.</b>
-            <p>A loop is not a one-off. It keeps turning on its trigger, using systems and writing back again and again.</p>
+            <b>Continuous and autonomous.</b>
+            <p>A loop is not a one-off. It keeps turning on its trigger, using systems and writing back on its own, again and again.</p>
           </div>
         </li>
         <li>
@@ -97,13 +97,6 @@
           <div>
             <b>Human on the loop.</b>
             <p>A human supervises the whole, not every run. They spot-check with samples and focus on the results and their quality, not on reviewing each turn.</p>
-          </div>
-        </li>
-        <li>
-          <span class="principle-n">5</span>
-          <div>
-            <b>One file, real routines.</b>
-            <p>The whole architecture is one reviewable YAML that publishes to runnable Claude Code routines.</p>
           </div>
         </li>
       </ol>
@@ -141,7 +134,7 @@
       <p>
         Loop Storming is a collaborative workshop for discovering loops, in the spirit of Event
         Storming. The team maps the systems, connects them into loops (what each loop uses and writes
-        back to), names them, writes their prompts, and sets triggers. The messy wall is your initial
+        back to), names them, writes their instructions, and sets triggers. The messy wall is your initial
         map; you then refine it into a formal Loop Architecture YAML.
       </p>
       <a class="storm-photo-link" href="loop-storming.html" aria-label="Read the Loop Storming guide">
@@ -199,7 +192,7 @@
     <span class="c-key">model</span>: <span class="c-str">claude-opus-4-8</span>          <span class="c-cmt"># the model this loop runs on</span>
     <span class="c-key">observe</span>: [<span class="c-str">dash0</span>]                <span class="c-cmt"># systems it uses</span>
     <span class="c-key">act</span>: [<span class="c-str">jira</span>, <span class="c-str">slack</span>]            <span class="c-cmt"># systems it writes back to</span>
-    <span class="c-key">prompt</span>: <span class="c-str">Detect incidents; open a Jira ticket and post to Slack</span>
+    <span class="c-key">instructions</span>: <span class="c-str">Detect incidents; open a Jira ticket and post to Slack</span>
   - <span class="c-key">id</span>: <span class="c-str">sync-docs</span>
     <span class="c-key">name</span>: <span class="c-str">Sync Docs</span>
     <span class="c-key">trigger</span>:                        <span class="c-cmt"># one trigger, or several</span>
@@ -207,7 +200,7 @@
       - <span class="c-str">pull_request.merged</span>
     <span class="c-key">observe</span>: [<span class="c-str">code-repo</span>]
     <span class="c-key">act</span>: [<span class="c-str">docs</span>]
-    <span class="c-key">prompt</span>: <span class="c-str">&gt;</span>                     <span class="c-cmt"># what the loop does each turn</span>
+    <span class="c-key">instructions</span>: <span class="c-str">&gt;</span>                     <span class="c-cmt"># what the loop does each turn</span>
       <span class="c-str">Diff the docs against changes merged in the last 24h and open a PR.</span>
     <span class="c-key">tools</span>: [<span class="c-str">Read</span>, <span class="c-str">Grep</span>, <span class="c-str">Bash(gh pr *)</span>]</code></pre>
       </div>
@@ -265,12 +258,12 @@ viz.show(<span class="c-str">'your-org.flow.json'</span>);   <span class="c-cmt"
         <dt>What is Loop Architecture?</dt>
         <dd>Loop Architecture is an architecture style that makes the agentic loop between systems the
           first-class unit of design. A loop is triggered on a schedule or event, uses one or more
-          systems, runs its prompt, and writes back to those systems. A Loop Architecture is all of
+          systems, follows its instructions, and writes back to those systems. A Loop Architecture is all of
           your loops, mapped together in one diagram.</dd>
 
         <dt>What is an agentic loop?</dt>
         <dd>An agentic loop is a continuous cycle where an agent reads from (uses) one or more systems,
-          runs a prompt toward a goal, and writes back to systems, again and again on its trigger. It
+          follows its instructions toward a goal, and writes back to systems, again and again on its trigger. It
           runs continuously and is self-learning.</dd>
 
         <dt>What is Loop Storming?</dt>
@@ -343,7 +336,7 @@ viz.show(<span class="c-str">'your-org.flow.json'</span>);   <span class="c-cmt"
       {
         "@type": "DefinedTerm",
         "name": "Loop Architecture",
-        "description": "An architecture style that makes the agentic loop between systems the first-class unit of design. A loop is triggered on a schedule or event, uses one or more systems, runs its prompt, and writes back to those systems. A Loop Architecture is all of your loops, mapped together.",
+        "description": "An architecture style that makes the agentic loop between systems the first-class unit of design. A loop is triggered on a schedule or event, uses one or more systems, follows its instructions, and writes back to those systems. A Loop Architecture is all of your loops, mapped together.",
         "url": "https://www.loop-architecture.com/",
         "inDefinedTermSet": "https://www.loop-architecture.com/"
       },
@@ -364,14 +357,14 @@ viz.show(<span class="c-str">'your-org.flow.json'</span>);   <span class="c-cmt"
           { "@type": "Person", "name": "Simon Harrer", "url": "https://www.linkedin.com/in/simonharrer/" }
         ],
         "datePublished": "2026-07-01",
-        "about": "Agentic Loop Architecture",
+        "about": "Loop Architecture",
         "url": "https://www.loop-architecture.com/"
       },
       {
         "@type": "FAQPage",
         "mainEntity": [
-          { "@type": "Question", "name": "What is Loop Architecture?", "acceptedAnswer": { "@type": "Answer", "text": "Loop Architecture is an architecture style that makes the agentic loop between systems the first-class unit of design. A loop is triggered on a schedule or event, uses one or more systems, runs its prompt, and writes back to those systems. A Loop Architecture is all of your loops, mapped together." } },
-          { "@type": "Question", "name": "What is an agentic loop?", "acceptedAnswer": { "@type": "Answer", "text": "An agentic loop is a continuous cycle where an agent reads from (uses) one or more systems, runs a prompt toward a goal, and writes back to systems, again and again on its trigger. It runs continuously and is self-learning." } },
+          { "@type": "Question", "name": "What is Loop Architecture?", "acceptedAnswer": { "@type": "Answer", "text": "Loop Architecture is an architecture style that makes the agentic loop between systems the first-class unit of design. A loop is triggered on a schedule or event, uses one or more systems, follows its instructions, and writes back to those systems. A Loop Architecture is all of your loops, mapped together." } },
+          { "@type": "Question", "name": "What is an agentic loop?", "acceptedAnswer": { "@type": "Answer", "text": "An agentic loop is a continuous cycle where an agent reads from (uses) one or more systems, follows its instructions toward a goal, and writes back to systems, again and again on its trigger. It runs continuously and is self-learning." } },
           { "@type": "Question", "name": "What is Loop Storming?", "acceptedAnswer": { "@type": "Answer", "text": "Loop Storming is a collaborative workshop for discovering the agentic loops between your systems, in the spirit of Event Storming. You map the systems, connect them into loops, name them, and set triggers." } },
           { "@type": "Question", "name": "How do I publish a loop to Claude Code?", "acceptedAnswer": { "@type": "Answer", "text": "Encode your loops in one Loop Architecture YAML file and run looparch publish. Each loop becomes a Claude Code routine: a slash command plus a schedule or event trigger." } },
           { "@type": "Question", "name": "What is looparch?", "acceptedAnswer": { "@type": "Answer", "text": "looparch is a Python CLI, built with uv, that validates, visualizes and publishes a Loop Architecture, and can import existing Claude Code routines back into YAML." } },

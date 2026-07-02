@@ -28,7 +28,7 @@ loops:
     trigger: "0 6 * * *"          # 5-field cron | ISO timestamp | github event | manual
     observe: [code-repo]          # systems it reads
     act: [docs-repo]              # systems it writes back to
-    prompt: >                     # what the loop should do each turn
+    instructions: >               # what the loop should do each turn
       Diff the docs against changes merged in the last 24 hours. Update only the
       pages that drifted, preserving tone and structure, then open a pull request.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
@@ -42,7 +42,7 @@ def routine_prompt(arch: Architecture, loop: Loop) -> str:
         lines += [loop.description, ""]
     lines += [f"You are running the **{loop.name}** agentic loop.", ""]
 
-    lines += ["## What to do", loop.prompt or "(no prompt)", ""]
+    lines += ["## What to do", loop.instructions or "(no instructions)", ""]
 
     def describe(sid: str) -> str:
         s = arch.system(sid)

@@ -151,7 +151,7 @@
         "triggers": [
           "*/5 * * * *"
         ],
-        "prompt": "Watch the logs, traces and metrics for error-rate spikes and failed checks. When an incident is occurring, open a Jira ticket and post a summary to Slack.",
+        "instructions": "Watch the logs, traces and metrics for error-rate spikes and failed checks. When an incident is occurring, open a Jira ticket and post a summary to Slack.",
         "model": "claude-opus-4-8",
         "tools": [],
         "uses": [
@@ -178,7 +178,7 @@
         "triggers": [
           "*/30 * * * *"
         ],
-        "prompt": "Find recurring errors in the logs, locate the cause in the code, and open a pull request that fixes it, referencing the originating trace.",
+        "instructions": "Find recurring errors in the logs, locate the cause in the code, and open a pull request that fixes it, referencing the originating trace.",
         "model": null,
         "tools": [],
         "uses": [
@@ -204,7 +204,7 @@
         "triggers": [
           "*/15 * * * *"
         ],
-        "prompt": "For each Jira issue that is ready for an agent, implement a fix and open a pull request.",
+        "instructions": "For each Jira issue that is ready for an agent, implement a fix and open a pull request.",
         "model": "claude-opus-4-8",
         "tools": [
           "Read",
@@ -235,7 +235,7 @@
         "triggers": [
           "0 5 * * *"
         ],
-        "prompt": "Bring the app repo in line with the policies in Kertos and open a pull request that implements any missing compliance controls, citing the policy.",
+        "instructions": "Bring the app repo in line with the policies in Kertos and open a pull request that implements any missing compliance controls, citing the policy.",
         "model": "claude-opus-4-8",
         "tools": [
           "Read",
@@ -266,7 +266,7 @@
         "triggers": [
           "0 5 * * 1"
         ],
-        "prompt": "Update the evidence in OneDrive so it stays in line with the policies in Kertos.",
+        "instructions": "Update the evidence in OneDrive so it stays in line with the policies in Kertos.",
         "model": null,
         "tools": [],
         "uses": [
@@ -276,6 +276,24 @@
           "OneDrive"
         ]
       }
+    },
+    {
+      "id": "__d2",
+      "type": "dummy",
+      "position": {
+        "x": 790.0,
+        "y": 518.0
+      },
+      "data": {}
+    },
+    {
+      "id": "__d0",
+      "type": "dummy",
+      "position": {
+        "x": 790.0,
+        "y": 278.0
+      },
+      "data": {}
     },
     {
       "id": "__d3",
@@ -292,24 +310,6 @@
       "position": {
         "x": 1110.0,
         "y": 314.36363636363166
-      },
-      "data": {}
-    },
-    {
-      "id": "__d0",
-      "type": "dummy",
-      "position": {
-        "x": 790.0,
-        "y": 278.0
-      },
-      "data": {}
-    },
-    {
-      "id": "__d2",
-      "type": "dummy",
-      "position": {
-        "x": 790.0,
-        "y": 518.0
       },
       "data": {}
     }

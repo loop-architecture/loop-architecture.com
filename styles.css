@@ -158,8 +158,8 @@ code {
    full-bleed so the editor breaks out of the text column. */
 .editor-host {
   position: relative; left: 50%; transform: translateX(-50%);
-  width: 90vw; max-width: 90vw;
-  height: 82vh; min-height: 620px; margin-top: 16px;
+  width: 92vw; max-width: 92vw;
+  height: 86vh; min-height: 680px; margin-top: 16px;
 }
 
 /* steps list (loop storming) */
@@ -167,7 +167,8 @@ code {
 .steps-list li { margin-bottom: 10px; }
 .steps-list b { color: var(--text); }
 .storm-photo-link {
-  display: block; margin: 4px 0 18px; padding: 10px;
+  display: inline-block; margin: 4px 0 18px; padding: 8px;
+  max-width: 340px; width: 100%;
   border: 1px solid var(--border); border-radius: 12px; background: var(--bg-alt);
 }
 .storm-photo {

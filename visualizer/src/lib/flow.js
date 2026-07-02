@@ -54,7 +54,7 @@ export function build(arch, { favicons = true } = {}) {
       data: {
         label: lp.name, id: lp.id, description: lp.description,
         emoji: types.map((t) => TRIGGER_EMOJI[t] || '').join(''),
-        triggers: lp.triggers, prompt: lp.prompt, model: lp.model, tools: lp.tools,
+        triggers: lp.triggers, instructions: lp.instructions, model: lp.model, tools: lp.tools,
         uses: lp.observe.map(sysName), writesBack: lp.act.map(sysName),
       },
     })

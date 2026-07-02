@@ -1,6 +1,7 @@
 # A whole Loop Architecture: many systems and many loops in one file.
 id: your-org
 name: DevOps
+description: Ops and compliance loops around the app, covering incidents, errors, Jira and Kertos.
 
 # Systems the loops read from (use) and write back to (act).
 # Each system has an id, plus an optional name / description / url / repository / connector.
@@ -42,7 +43,7 @@ loops:
     model: claude-opus-4-8
     observe: [dash0]
     act: [jira, slack]
-    prompt: >
+    instructions: >
       Watch the logs, traces and metrics for error-rate spikes and failed checks.
       When an incident is occurring, open a Jira ticket and post a summary to Slack.
 
@@ -52,7 +53,7 @@ loops:
     trigger: "*/30 * * * *"
     observe: [dash0]
     act: [code-repo]
-    prompt: >
+    instructions: >
       Find recurring errors in the logs, locate the cause in the code, and open a
       pull request that fixes it, referencing the originating trace.
 
@@ -63,7 +64,7 @@ loops:
     model: claude-opus-4-8
     observe: [jira]
     act: [code-repo]
-    prompt: >
+    instructions: >
       For each Jira issue that is ready for an agent, implement a fix and open a pull
       request.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
@@ -75,7 +76,7 @@ loops:
     model: claude-opus-4-8
     observe: [policies]
     act: [code-repo]
-    prompt: >
+    instructions: >
       Bring the app repo in line with the policies in Kertos and open a pull request
       that implements any missing compliance controls, citing the policy.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
@@ -86,5 +87,5 @@ loops:
     trigger: "0 5 * * 1"
     observe: [policies]
     act: [onedrive]
-    prompt: >
+    instructions: >
       Update the evidence in OneDrive so it stays in line with the policies in Kertos.

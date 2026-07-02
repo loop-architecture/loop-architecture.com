@@ -129,7 +129,7 @@
           "0 6 * * *",
           "pull_request.merged"
         ],
-        "prompt": "Diff the docs against the changes merged since the last run. Update the pages that drifted and open a pull request.",
+        "instructions": "Diff the docs against the changes merged since the last run. Update the pages that drifted and open a pull request.",
         "model": "claude-opus-4-8",
         "tools": [
           "Read",
@@ -160,7 +160,7 @@
         "triggers": [
           "pull_request.merged"
         ],
-        "prompt": "For each merged pull request, add a concise, user-facing entry to the changelog and open a pull request.",
+        "instructions": "For each merged pull request, add a concise, user-facing entry to the changelog and open a pull request.",
         "model": "claude-opus-4-8",
         "tools": [
           "Read",
@@ -191,7 +191,7 @@
         "triggers": [
           "0 7 * * *"
         ],
-        "prompt": "For every English page changed since the German version was last updated, update the matching German page and open a pull request.",
+        "instructions": "For every English page changed since the German version was last updated, update the matching German page and open a pull request.",
         "model": "claude-opus-4-8",
         "tools": [],
         "uses": [
@@ -217,7 +217,7 @@
         "triggers": [
           "0 9 * * *"
         ],
-        "prompt": "Keep the feature descriptions on the landing page consistent with the docs.",
+        "instructions": "Keep the feature descriptions on the landing page consistent with the docs.",
         "model": null,
         "tools": [],
         "uses": [

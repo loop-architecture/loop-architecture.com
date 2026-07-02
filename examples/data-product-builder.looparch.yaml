@@ -1,6 +1,7 @@
 # Build a data product from its skills and data contract, kept compliant with policies.
 id: data-product-builder
 name: Data Product Builder
+description: Build a data product from its skills and contract, kept compliant with policies.
 
 systems:
   - id: policies
@@ -32,7 +33,7 @@ loops:
     model: claude-opus-4-8
     observe: [policies]
     act: [skills]
-    prompt: >
+    instructions: >
       Keep the skills compliant with the global policies in Entropy Data. Open a pull
       request that fixes any skill which violates a policy, citing the policy.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
@@ -46,7 +47,7 @@ loops:
     model: claude-opus-4-8
     observe: [skills, data-contract]
     act: [data-product]
-    prompt: >
+    instructions: >
       Implement the data product from its skills and its published data contract in
       Entropy Data. Open a pull request for anything that is missing or has drifted.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]

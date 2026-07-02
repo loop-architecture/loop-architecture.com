@@ -58,7 +58,7 @@ export function parseLoop(value) {
     typedTriggers: triggers.map((t) => ({ type: triggerType(t), value: t })),
     observe: Array.isArray(v.observe) ? v.observe.slice() : [],
     act: Array.isArray(v.act) ? v.act.slice() : [],
-    prompt: (v.prompt || '').trim(),
+    instructions: (v.instructions || '').trim(),
     model: v.model || null,
     tools: Array.isArray(v.tools) ? v.tools.slice() : [],
   }
@@ -71,6 +71,7 @@ export function architectureFromRaw(raw) {
   return {
     id,
     name: data.name || (id ? title(id) : 'Loop Architecture'),
+    description: (data.description || '').trim(),
     systems: (data.systems || []).map(parseSystem),
     loops: (data.loops || []).map(parseLoop),
   }

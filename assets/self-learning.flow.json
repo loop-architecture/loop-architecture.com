@@ -36,7 +36,7 @@
       "data": {
         "label": "Loop Architecture",
         "id": "loop-architecture",
-        "description": "The Loop Architecture YAML, prompts and triggers",
+        "description": "The Loop Architecture YAML, instructions and triggers",
         "url": null,
         "repository": "https://github.com/your-org/loops",
         "connector": null,
@@ -63,7 +63,7 @@
         "triggers": [
           "0 6 * * 1"
         ],
-        "prompt": "Review the last week of routine runs and their outcomes. Where a loop underperforms or its prompt has drifted from good outcomes, improve the loop's prompt or trigger in the Loop Architecture and open a pull request for a human to review.",
+        "instructions": "Review the last week of routine runs and their outcomes. Where a loop underperforms or its instructions have drifted from good outcomes, improve the loop's instructions or trigger in the Loop Architecture and open a pull request for a human to review.",
         "model": "claude-opus-4-8",
         "tools": [
           "Read",
@@ -94,7 +94,7 @@
         "triggers": [
           "0 6 1 * *"
         ],
-        "prompt": "If a loop has produced no useful change across many runs, propose retiring or re-scoping it in the Loop Architecture with a pull request that explains why.",
+        "instructions": "If a loop has produced no useful change across many runs, propose retiring or re-scoping it in the Loop Architecture with a pull request that explains why.",
         "model": null,
         "tools": [
           "Read",

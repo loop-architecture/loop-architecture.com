@@ -1,6 +1,7 @@
 # A docs pipeline: keep the docs, the changelog, and the German docs up to date.
 id: docs
 name: Docs
+description: Keep the docs, changelog, German translation and landing page in step with the code.
 
 systems:
   - id: code-repo
@@ -34,7 +35,7 @@ loops:
     model: claude-opus-4-8
     observe: [code-repo]
     act: [docs]
-    prompt: >
+    instructions: >
       Diff the docs against the changes merged since the last run. Update the pages
       that drifted and open a pull request.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
@@ -46,7 +47,7 @@ loops:
     model: claude-opus-4-8
     observe: [code-repo]
     act: [changelog]
-    prompt: >
+    instructions: >
       For each merged pull request, add a concise, user-facing entry to the changelog
       and open a pull request.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
@@ -58,7 +59,7 @@ loops:
     model: claude-opus-4-8
     observe: [docs]
     act: [docs-de]
-    prompt: >
+    instructions: >
       For every English page changed since the German version was last updated,
       update the matching German page and open a pull request.
 
@@ -68,5 +69,5 @@ loops:
     trigger: "0 9 * * *"
     observe: [docs]
     act: [landing-page]
-    prompt: >
+    instructions: >
       Keep the feature descriptions on the landing page consistent with the docs.

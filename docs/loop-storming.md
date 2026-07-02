@@ -13,7 +13,7 @@ systems it **writes back** to.
 - **Surface the invisible work.** The manual chasing, reconciling, and escalating that happens
   *between* systems is rarely written down. Loop Storming makes it visible so it can be designed.
 - **Shared language.** Engineers, ops, product, and domain experts leave with one map and one
-  vocabulary, systems, loops, triggers, prompts.
+  vocabulary, systems, loops, triggers, instructions.
 - **A prioritized backlog.** You leave with a ranked list of loops worth building, not a vague sense
   that "we should automate some things."
 
@@ -24,7 +24,7 @@ systems it **writes back** to.
 
 - People who **feel the pain** (on-call, support, ops), they know the manual work.
 - People who **own the systems** (the services, repos, tools, dashboards).
-- People who **do the work today** (leads, domain experts), their judgement becomes the loop's prompt.
+- People who **do the work today** (leads, domain experts), their judgement becomes the loop's instructions.
 - A **facilitator** to keep the wall moving.
 
 Keep it to 5 to 9 people per wall. Split into multiple walls if larger.
@@ -57,7 +57,7 @@ Draw each loop as edges between the systems it connects:
 - **writes back →** from the loop, into every system it acts on.
 
 Give each loop a short, **verb-first name** ("Sync Docs", "Triage Incidents", "Reconcile Infra") and a
-sentence or two of **prompt**, what the agent actually does each turn. A loop always uses at least one
+sentence or two of **instructions**, what the agent actually does each turn. A loop always uses at least one
 system and writes back to at least one; a system used *and* written back to is fine.
 
 ### 4. Add the trigger icons (10 min)
@@ -76,7 +76,7 @@ safely it can run today). Start building from the top-right: high impact, high c
 
 The wall is your **initial** loop map, deliberately messy. Afterwards you *refine* it into one
 [Loop Architecture document](../spec/loop-architecture.md): give each system its URL/repo/connector,
-sharpen each loop's trigger and prompt, name the exact systems it uses and writes back to, and pick a
+sharpen each loop's trigger and instructions, name the exact systems it uses and writes back to, and pick a
 model and tools where it matters. `looparch` then validates it, draws the whole architecture as one
 diagram, and publishes each loop as a Claude Code routine.
 
@@ -93,6 +93,6 @@ looparch publish your-org.looparch.yaml   # turn each loop into a Claude Code ro
   naturally, each loop is just a few arrows between them.
 - **One loop, one purpose.** If a loop uses five unrelated systems for five unrelated reasons, it is
   really several loops. Split it.
-- **The prompt is the design.** A loop with a vague prompt ("keep things nice") won't survive contact
-  with reality. Write the prompt as if briefing a capable teammate.
+- **The instructions are the design.** A loop with a vague set of instructions ("keep things nice") won't survive contact
+  with reality. Write the instructions as if briefing a capable teammate.
 - **Timebox ruthlessly.** A first Loop Storming should fit in a half-day. Depth comes in refinement.

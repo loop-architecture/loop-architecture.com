@@ -12230,7 +12230,7 @@ function Ub({ node: e, onClose: t }) {
     /* @__PURE__ */ L.jsx("div", { className: "flow-panel-id", children: n.id }),
     n.description ? /* @__PURE__ */ L.jsx("p", { className: "flow-panel-desc", children: n.description }) : null,
     r ? /* @__PURE__ */ L.jsxs(L.Fragment, { children: [
-      Ti("Prompt", n.prompt),
+      Ti("Instructions", n.instructions),
       mr("Triggers", n.triggers),
       Ti("Model", n.model),
       mr("Uses", n.uses),
@@ -17354,7 +17354,7 @@ function mI(e) {
     typedTriggers: r.map((i) => ({ type: hI(i), value: i })),
     observe: Array.isArray(t.observe) ? t.observe.slice() : [],
     act: Array.isArray(t.act) ? t.act.slice() : [],
-    prompt: (t.prompt || "").trim(),
+    instructions: (t.instructions || "").trim(),
     model: t.model || null,
     tools: Array.isArray(t.tools) ? t.tools.slice() : []
   };
@@ -17364,6 +17364,7 @@ function yI(e) {
   return {
     id: n,
     name: t.name || (n ? Rv(n) : "Loop Architecture"),
+    description: (t.description || "").trim(),
     systems: (t.systems || []).map(gI),
     loops: (t.loops || []).map(mI)
   };
@@ -17612,7 +17613,7 @@ function Xo(e, { favicons: t = !0 } = {}) {
         description: h.description,
         emoji: m.map((g) => AI[g] || "").join(""),
         triggers: h.triggers,
-        prompt: h.prompt,
+        instructions: h.instructions,
         model: h.model,
         tools: h.tools,
         uses: h.observe.map(l),

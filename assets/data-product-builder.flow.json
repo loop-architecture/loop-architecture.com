@@ -106,7 +106,7 @@
           "push",
           "0 6 * * *"
         ],
-        "prompt": "Keep the skills compliant with the global policies in Entropy Data. Open a pull request that fixes any skill which violates a policy, citing the policy.",
+        "instructions": "Keep the skills compliant with the global policies in Entropy Data. Open a pull request that fixes any skill which violates a policy, citing the policy.",
         "model": "claude-opus-4-8",
         "tools": [
           "Read",
@@ -138,7 +138,7 @@
           "push",
           "0 7 * * *"
         ],
-        "prompt": "Implement the data product from its skills and its published data contract in Entropy Data. Open a pull request for anything that is missing or has drifted.",
+        "instructions": "Implement the data product from its skills and its published data contract in Entropy Data. Open a pull request for anything that is missing or has drifted.",
         "model": "claude-opus-4-8",
         "tools": [
           "Read",

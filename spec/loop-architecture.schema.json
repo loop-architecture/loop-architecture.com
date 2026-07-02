@@ -9,6 +9,7 @@
   "properties": {
     "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "Identifier for this architecture." },
     "name": { "type": "string", "description": "Human-readable name (defaults to id)." },
+    "description": { "type": "string", "description": "Optional description of this Loop Architecture." },
     "systems": {
       "type": "array",
       "description": "The systems loops read from and write back to.",
@@ -33,7 +34,7 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["id", "observe", "act", "prompt"],
+        "required": ["id", "observe", "act", "instructions"],
         "additionalProperties": false,
         "properties": {
           "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
@@ -59,7 +60,7 @@
             "items": { "type": "string" },
             "description": "System ids the loop writes back to."
           },
-          "prompt": { "type": "string", "description": "The instructions the loop runs, what it should do each turn. Included verbatim in the published routine prompt." },
+          "instructions": { "type": "string", "description": "The instructions the loop follows, what it should do each turn. Included verbatim in the published routine prompt." },
           "model": { "type": "string" },
           "tools": { "type": "array", "items": { "type": "string" } }
         }

@@ -75,7 +75,7 @@ def build(arch: Architecture, favicons: bool = True) -> dict:
             "data": {
                 "label": lp.name, "id": lp.id, "description": lp.description,
                 "emoji": "".join(TRIGGER_EMOJI.get(t, "") for t in types),
-                "triggers": lp.triggers, "prompt": lp.prompt, "model": lp.model,
+                "triggers": lp.triggers, "instructions": lp.instructions, "model": lp.model,
                 "tools": lp.tools,
                 "uses": [sys_name(s) for s in lp.observe],
                 "writesBack": [sys_name(s) for s in lp.act],
