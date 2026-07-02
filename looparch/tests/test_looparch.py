@@ -32,7 +32,7 @@ def test_example_architecture_is_valid() -> None:
     arch = load_architecture(EXAMPLE)
     errors = [i for i in check(arch) if i.level == "error"]
     assert not errors, errors
-    assert len(arch.loops) == 11
+    assert len(arch.loops) == 10
     assert len(arch.systems) == 10
 
 
@@ -74,7 +74,7 @@ def test_lint_flags_unknown_system() -> None:
 def test_publish_all_loops(tmp_path: Path) -> None:
     arch = load_architecture(EXAMPLE)
     results = publish(arch, root=tmp_path)
-    assert len(results) == 11
+    assert len(results) == 10
     docs = next(r for r in results if r.loop_id == "sync-docs")
     assert docs.schedule == "0 6 * * *"
     body = docs.command_path.read_text()
@@ -127,8 +127,8 @@ def test_layout_is_left_to_right() -> None:
     acts = {lp.id: lp.act for lp in arch.loops}
     plan = layout.solve(order, loop_ids, observes, acts)
 
-    # Every node is placed exactly once.
-    placed = [n for col in plan.columns for n in col]
+    # Every real node is placed exactly once (dummies are routing waypoints).
+    placed = [n for col in plan.columns for n in col if n not in plan.dummies]
     assert sorted(placed) == sorted(order + loop_ids)
 
     # The graph reads left-to-right: forward edges dominate right-to-left ones.
@@ -164,7 +164,8 @@ def test_flow_export_shape() -> None:
     from looparch import flow
     arch = load_architecture(EXAMPLE)
     graph = flow.build(arch, favicons=True)
-    assert len(graph["nodes"]) == len(arch.systems) + len(arch.loops)
+    real = [n for n in graph["nodes"] if n["type"] != "dummy"]
+    assert len(real) == len(arch.systems) + len(arch.loops)
     # Every edge references existing nodes and carries handle ids.
     ids = {n["id"] for n in graph["nodes"]}
     for e in graph["edges"]:
@@ -183,7 +184,7 @@ def test_architecture_diagram_svg_offline() -> None:
         assert lp.name in svg
     for s in arch.systems:
         assert s.name in svg
-    assert "11 loops · 10 systems" in svg
+    assert "10 loops · 10 systems" in svg
     # No sensor/actuator wording in the diagram, and no dashed edges.
     assert "sensor" not in svg and "actuator" not in svg
     assert "stroke-dasharray" not in svg

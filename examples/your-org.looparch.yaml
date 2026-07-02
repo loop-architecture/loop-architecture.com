@@ -126,16 +126,6 @@ loops:
       For each new service-desk ticket, draft an answer from the docs and reply for
       a human to review.
 
-  - id: review-compliance
-    name: Review Compliance
-    description: Reviews ISO 27001 policies weekly.
-    trigger: "0 6 * * 1"
-    observe: [policies]
-    act: [onedrive]
-    prompt: >
-      Review ISO 27001 policies and vendor risks weekly, and draft updates to the
-      documents in OneDrive for sign-off.
-
   - id: fix-jira-issues
     name: Fix Jira Issues
     description: Automatically fixes ready Jira issues.

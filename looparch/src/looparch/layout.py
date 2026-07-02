@@ -24,6 +24,8 @@ class Layout:
     row_of: dict[str, int]        # node id → row within its column
     y_of: dict[str, float]        # node id → vertical coordinate (in row units)
     crossings: int
+    edge_paths: dict[tuple[str, str], list[str]]  # (source, target) → node ids to route through
+    dummies: set[str]             # ids of routing waypoint (dummy) nodes
 
 
 def _isotonic(vals: list[float]) -> list[float]:
@@ -237,26 +239,50 @@ def solve(
     sys_set = set(system_ids)
 
     adj: dict[str, list[str]] = {n: [] for n in nodes}
-    undirected: list[tuple[str, str]] = []
+    dir_edges: list[tuple[str, str]] = []       # actual direction (source → target)
     for lid in loop_ids:
         for sid in loop_observes.get(lid, []):
             if sid in sys_set:
                 adj[sid].append(lid)        # system → loop
-                undirected.append((sid, lid))
+                dir_edges.append((sid, lid))
         for sid in loop_acts.get(lid, []):
             if sid in sys_set:
                 adj[lid].append(sid)        # loop → system
-                undirected.append((lid, sid))
+                dir_edges.append((lid, sid))
 
     forward = _break_cycles(nodes, adj)
     layer = _layers(nodes, forward)
-
     n_cols = max(layer.values(), default=0) + 1
-    columns: list[list[str]] = [[] for _ in range(n_cols)]
-    for n in sorted(nodes):
-        columns[layer[n]].append(n)
 
-    neighbors: dict[str, list[str]] = {n: [] for n in nodes}
+    # Insert dummy waypoints so every edge segment spans one column; long edges then
+    # route through empty rows of the intermediate columns instead of over boxes.
+    col_members: list[list[str]] = [[] for _ in range(n_cols)]
+    for n in sorted(nodes):
+        col_members[layer[n]].append(n)
+
+    edge_paths: dict[tuple[str, str], list[str]] = {}
+    dummies: set[str] = set()
+    undirected: list[tuple[str, str]] = []
+    dcount = 0
+    for u, v in dir_edges:
+        cu, cv = layer[u], layer[v]
+        path = [u]
+        if cu != cv:
+            step = 1 if cv > cu else -1
+            for c in range(cu + step, cv, step):
+                d = f"__d{dcount}"; dcount += 1
+                dummies.add(d)
+                col_members[c].append(d)
+                path.append(d)
+        path.append(v)
+        edge_paths[(u, v)] = path
+        for a, b in zip(path, path[1:]):
+            undirected.append((a, b))
+
+    columns: list[list[str]] = col_members
+    all_nodes = [n for col in columns for n in col]
+
+    neighbors: dict[str, list[str]] = {n: [] for n in all_nodes}
     for u, v in undirected:
         neighbors[u].append(v)
         neighbors[v].append(u)
@@ -264,7 +290,7 @@ def solve(
     def col_of(cols: list[list[str]]) -> dict[str, int]:
         return {n: c for c, col in enumerate(cols) for n in col}
 
-    deg = {n: len(neighbors[n]) for n in nodes}
+    deg = {n: len(neighbors[n]) for n in all_nodes}
 
     # Several deterministic starting orders, to escape local minima.
     def variant(key) -> list[list[str]]:
@@ -297,4 +323,6 @@ def solve(
         row_of={n: i for col in columns for i, n in enumerate(col)},
         y_of=y_of,
         crossings=best_cross,
+        edge_paths=edge_paths,
+        dummies=dummies,
     )

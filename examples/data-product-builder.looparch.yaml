@@ -1,0 +1,52 @@
+# Build a data product from its skills and data contract, kept compliant with policies.
+id: data-product-builder
+name: Data Product Builder
+
+systems:
+  - id: policies
+    name: Global Policies
+    description: Global data governance policies in Entropy Data
+    url: https://entropy-data.com
+    connector: entropy-data
+  - id: data-contract
+    name: Data Contract
+    description: Published data product and data contract YAML in Entropy Data
+    url: https://entropy-data.com
+    connector: entropy-data
+  - id: skills
+    name: Skills Repo
+    description: GitHub repository with Claude Code skills
+    repository: https://github.com/your-org/skills
+  - id: data-product
+    name: Data Product Repo
+    description: GitHub repository for a data product
+    repository: https://github.com/your-org/data-product
+
+loops:
+  - id: govern-skills
+    name: Govern Skills
+    description: Keeps the skills compliant with global policies.
+    trigger:
+      - push
+      - "0 6 * * *"
+    model: claude-opus-4-8
+    observe: [policies]
+    act: [skills]
+    prompt: >
+      Keep the skills compliant with the global policies in Entropy Data. Open a pull
+      request that fixes any skill which violates a policy, citing the policy.
+    tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
+
+  - id: implement-data-product
+    name: Implement Data Product
+    description: Implements the data product from its skills and contract.
+    trigger:
+      - push
+      - "0 7 * * *"
+    model: claude-opus-4-8
+    observe: [skills, data-contract]
+    act: [data-product]
+    prompt: >
+      Implement the data product from its skills and its published data contract in
+      Entropy Data. Open a pull request for anything that is missing or has drifted.
+    tools: [Read, Grep, Bash(git *), Bash(gh pr *)]

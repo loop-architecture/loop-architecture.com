@@ -183,46 +183,52 @@
   ],
   "edges": [
     {
-      "id": "use:code-repo->update-docs",
+      "id": "code-repo->update-docs:0",
       "source": "code-repo",
       "target": "update-docs",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:update-docs->docs",
+      "id": "update-docs->docs:0",
       "source": "update-docs",
       "target": "docs",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "use:code-repo->update-changelog",
+      "id": "code-repo->update-changelog:0",
       "source": "code-repo",
       "target": "update-changelog",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:update-changelog->changelog",
+      "id": "update-changelog->changelog:0",
       "source": "update-changelog",
       "target": "changelog",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "use:docs->translate-docs",
+      "id": "docs->translate-docs:0",
       "source": "docs",
       "target": "translate-docs",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:translate-docs->docs-de",
+      "id": "translate-docs->docs-de:0",
       "source": "translate-docs",
       "target": "docs-de",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     }
   ]
 }

@@ -76,25 +76,25 @@ def build(arch: Architecture, favicons: bool = True) -> dict:
             },
         })
 
-    def handles(src: str, dst: str) -> tuple[str, str]:
-        # Forward (left→right): out of source's right, into target's left.
-        # Back edge: out of source's left, into target's right.
-        if plan.col_of[src] <= plan.col_of[dst]:
+    # Invisible waypoint nodes so long edges route around boxes (through empty rows).
+    for d in plan.dummies:
+        nodes.append({"id": d, "type": "dummy", "position": pos(d), "data": {}})
+
+    def handles(a: str, b: str) -> tuple[str, str]:
+        # Forward (left→right): out of a's right, into b's left. Back edge mirrors.
+        if plan.col_of[a] <= plan.col_of[b]:
             return "rs", "lt"
         return "ls", "rt"
 
     edges: list[dict] = []
-    for lp in loops:
-        for sid in lp.observe:
-            if sid in sys_ids:
-                sh, th = handles(sid, lp.id)
-                edges.append({"id": f"use:{sid}->{lp.id}", "source": sid, "target": lp.id,
-                              "sourceHandle": sh, "targetHandle": th})
-        for sid in lp.act:
-            if sid in sys_ids:
-                sh, th = handles(lp.id, sid)
-                edges.append({"id": f"act:{lp.id}->{sid}", "source": lp.id, "target": sid,
-                              "sourceHandle": sh, "targetHandle": th})
+    for (src, dst), path in plan.edge_paths.items():
+        for i, (a, b) in enumerate(zip(path, path[1:])):
+            sh, th = handles(a, b)
+            edges.append({
+                "id": f"{src}->{dst}:{i}", "source": a, "target": b,
+                "sourceHandle": sh, "targetHandle": th,
+                "end": b == path[-1],   # arrowhead only on the final segment
+            })
 
     return {
         "name": arch.name, "id": arch.id, "accent": ACCENT, "edge": EDGE,

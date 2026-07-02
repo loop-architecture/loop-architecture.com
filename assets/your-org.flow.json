@@ -9,7 +9,7 @@
       "type": "system",
       "position": {
         "x": 40,
-        "y": 62.42222132129818
+        "y": 138.28830229305032
       },
       "data": {
         "label": "Dash0",
@@ -31,7 +31,7 @@
       "type": "system",
       "position": {
         "x": 1320,
-        "y": 109.5665796512196
+        "y": 167.9790633263951
       },
       "data": {
         "label": "App Repo",
@@ -57,7 +57,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 42.48344533346647
+        "y": 277.77743000012475
       },
       "data": {
         "label": "Jira",
@@ -81,7 +81,7 @@
       "type": "system",
       "position": {
         "x": 1960,
-        "y": 52.87614126860577
+        "y": 210.41922264642758
       },
       "data": {
         "label": "Confluence",
@@ -102,7 +102,7 @@
       "type": "system",
       "position": {
         "x": 1960,
-        "y": 174.6507692125008
+        "y": 90.41922264642757
       },
       "data": {
         "label": "Docs (EN)",
@@ -127,7 +127,7 @@
       "type": "system",
       "position": {
         "x": 2600,
-        "y": 172.8200627819834
+        "y": 0.0
       },
       "data": {
         "label": "Docs (DE)",
@@ -148,7 +148,7 @@
       "type": "system",
       "position": {
         "x": 2600,
-        "y": 292.82006278198344
+        "y": 120.0
       },
       "data": {
         "label": "Landing Page",
@@ -169,7 +169,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 420.0
+        "y": 517.7774300001248
       },
       "data": {
         "label": "OneDrive",
@@ -181,7 +181,6 @@
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=onedrive.live.com",
         "readBy": [],
         "writtenBy": [
-          "Review Compliance",
           "Update Evidence"
         ]
       }
@@ -191,7 +190,7 @@
       "type": "system",
       "position": {
         "x": 40,
-        "y": 362.4222213212982
+        "y": 455.1823441696961
       },
       "data": {
         "label": "Kertos",
@@ -202,7 +201,6 @@
         "connector": null,
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=kertos.com",
         "readBy": [
-          "Review Compliance",
           "Implement Compliance",
           "Update Evidence"
         ],
@@ -214,7 +212,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 162.48344533346648
+        "y": 157.77743000012475
       },
       "data": {
         "label": "Slack",
@@ -235,7 +233,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 120.0
+        "y": 199.15385377792825
       },
       "data": {
         "label": "Triage Incidents",
@@ -262,7 +260,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 0.0
+        "y": 79.15385377792826
       },
       "data": {
         "label": "Fix Errors",
@@ -288,7 +286,7 @@
       "type": "loop",
       "position": {
         "x": 1640,
-        "y": 172.87614126860578
+        "y": 98.77915816711321
       },
       "data": {
         "label": "Sync Docs",
@@ -320,7 +318,7 @@
       "type": "loop",
       "position": {
         "x": 2280,
-        "y": 172.8200627819834
+        "y": 0.0
       },
       "data": {
         "label": "Translate Docs",
@@ -346,7 +344,7 @@
       "type": "loop",
       "position": {
         "x": 1640,
-        "y": 52.87614126860577
+        "y": 218.7791581671132
       },
       "data": {
         "label": "Sync Confluence",
@@ -372,7 +370,7 @@
       "type": "loop",
       "position": {
         "x": 2280,
-        "y": 292.82006278198344
+        "y": 120.0
       },
       "data": {
         "label": "Sync Landing Page",
@@ -398,7 +396,7 @@
       "type": "loop",
       "position": {
         "x": 2280,
-        "y": 52.82006278198342
+        "y": 240.0
       },
       "data": {
         "label": "Answer Tickets",
@@ -420,37 +418,11 @@
       }
     },
     {
-      "id": "review-compliance",
-      "type": "loop",
-      "position": {
-        "x": 360,
-        "y": 360.0
-      },
-      "data": {
-        "label": "Review Compliance",
-        "id": "review-compliance",
-        "description": "Reviews ISO 27001 policies weekly.",
-        "emoji": "\ud83d\udd50",
-        "triggers": [
-          "0 6 * * 1"
-        ],
-        "prompt": "Review ISO 27001 policies and vendor risks weekly, and draft updates to the documents in OneDrive for sign-off.",
-        "model": null,
-        "tools": [],
-        "uses": [
-          "Kertos"
-        ],
-        "writesBack": [
-          "OneDrive"
-        ]
-      }
-    },
-    {
       "id": "fix-jira-issues",
       "type": "loop",
       "position": {
         "x": 1000,
-        "y": 77.23612923292747
+        "y": 174.67468037124843
       },
       "data": {
         "label": "Fix Jira Issues",
@@ -481,7 +453,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 240.0
+        "y": 396.0486530755542
       },
       "data": {
         "label": "Implement Compliance",
@@ -512,7 +484,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 480.0
+        "y": 516.0486530755543
       },
       "data": {
         "label": "Update Evidence",
@@ -532,169 +504,312 @@
           "OneDrive"
         ]
       }
+    },
+    {
+      "id": "__d3",
+      "type": "dummy",
+      "position": {
+        "x": 1640,
+        "y": 357.6635536929204
+      },
+      "data": {}
+    },
+    {
+      "id": "__d1",
+      "type": "dummy",
+      "position": {
+        "x": 1000,
+        "y": 54.67468037124842
+      },
+      "data": {}
+    },
+    {
+      "id": "__d2",
+      "type": "dummy",
+      "position": {
+        "x": 1960,
+        "y": 330.4192226464276
+      },
+      "data": {}
+    },
+    {
+      "id": "__d5",
+      "type": "dummy",
+      "position": {
+        "x": 1000,
+        "y": 414.6746803712484
+      },
+      "data": {}
+    },
+    {
+      "id": "__d6",
+      "type": "dummy",
+      "position": {
+        "x": 680,
+        "y": 397.77743000012475
+      },
+      "data": {}
+    },
+    {
+      "id": "__d7",
+      "type": "dummy",
+      "position": {
+        "x": 1000,
+        "y": 294.6746803712484
+      },
+      "data": {}
+    },
+    {
+      "id": "__d4",
+      "type": "dummy",
+      "position": {
+        "x": 1320,
+        "y": 385.74785437800944
+      },
+      "data": {}
+    },
+    {
+      "id": "__d0",
+      "type": "dummy",
+      "position": {
+        "x": 680,
+        "y": 37.77743000012477
+      },
+      "data": {}
     }
   ],
   "edges": [
     {
-      "id": "use:dash0->triage-incidents",
+      "id": "dash0->triage-incidents:0",
       "source": "dash0",
       "target": "triage-incidents",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:triage-incidents->jira",
+      "id": "triage-incidents->jira:0",
       "source": "triage-incidents",
       "target": "jira",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:triage-incidents->slack",
+      "id": "triage-incidents->slack:0",
       "source": "triage-incidents",
       "target": "slack",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "use:dash0->fix-errors",
+      "id": "dash0->fix-errors:0",
       "source": "dash0",
       "target": "fix-errors",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:fix-errors->code-repo",
+      "id": "fix-errors->code-repo:0",
       "source": "fix-errors",
+      "target": "__d0",
+      "sourceHandle": "rs",
+      "targetHandle": "lt",
+      "end": false
+    },
+    {
+      "id": "fix-errors->code-repo:1",
+      "source": "__d0",
+      "target": "__d1",
+      "sourceHandle": "rs",
+      "targetHandle": "lt",
+      "end": false
+    },
+    {
+      "id": "fix-errors->code-repo:2",
+      "source": "__d1",
       "target": "code-repo",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "use:code-repo->sync-docs",
+      "id": "code-repo->sync-docs:0",
       "source": "code-repo",
       "target": "sync-docs",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:sync-docs->docs",
+      "id": "sync-docs->docs:0",
       "source": "sync-docs",
       "target": "docs",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "use:docs->translate-docs",
+      "id": "docs->translate-docs:0",
       "source": "docs",
       "target": "translate-docs",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:translate-docs->docs-de",
+      "id": "translate-docs->docs-de:0",
       "source": "translate-docs",
       "target": "docs-de",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "use:code-repo->sync-confluence",
+      "id": "code-repo->sync-confluence:0",
       "source": "code-repo",
       "target": "sync-confluence",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:sync-confluence->confluence",
+      "id": "sync-confluence->confluence:0",
       "source": "sync-confluence",
       "target": "confluence",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "use:docs->sync-landing-page",
+      "id": "docs->sync-landing-page:0",
       "source": "docs",
       "target": "sync-landing-page",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:sync-landing-page->landing-page",
+      "id": "sync-landing-page->landing-page:0",
       "source": "sync-landing-page",
       "target": "landing-page",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "use:docs->answer-tickets",
+      "id": "docs->answer-tickets:0",
       "source": "docs",
       "target": "answer-tickets",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:answer-tickets->jira",
+      "id": "answer-tickets->jira:0",
       "source": "answer-tickets",
+      "target": "__d2",
+      "sourceHandle": "ls",
+      "targetHandle": "rt",
+      "end": false
+    },
+    {
+      "id": "answer-tickets->jira:1",
+      "source": "__d2",
+      "target": "__d3",
+      "sourceHandle": "ls",
+      "targetHandle": "rt",
+      "end": false
+    },
+    {
+      "id": "answer-tickets->jira:2",
+      "source": "__d3",
+      "target": "__d4",
+      "sourceHandle": "ls",
+      "targetHandle": "rt",
+      "end": false
+    },
+    {
+      "id": "answer-tickets->jira:3",
+      "source": "__d4",
+      "target": "__d5",
+      "sourceHandle": "ls",
+      "targetHandle": "rt",
+      "end": false
+    },
+    {
+      "id": "answer-tickets->jira:4",
+      "source": "__d5",
       "target": "jira",
       "sourceHandle": "ls",
-      "targetHandle": "rt"
+      "targetHandle": "rt",
+      "end": true
     },
     {
-      "id": "use:policies->review-compliance",
-      "source": "policies",
-      "target": "review-compliance",
-      "sourceHandle": "rs",
-      "targetHandle": "lt"
-    },
-    {
-      "id": "act:review-compliance->onedrive",
-      "source": "review-compliance",
-      "target": "onedrive",
-      "sourceHandle": "rs",
-      "targetHandle": "lt"
-    },
-    {
-      "id": "use:jira->fix-jira-issues",
+      "id": "jira->fix-jira-issues:0",
       "source": "jira",
       "target": "fix-jira-issues",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:fix-jira-issues->code-repo",
+      "id": "fix-jira-issues->code-repo:0",
       "source": "fix-jira-issues",
       "target": "code-repo",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "use:policies->implement-compliance",
+      "id": "policies->implement-compliance:0",
       "source": "policies",
       "target": "implement-compliance",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:implement-compliance->code-repo",
+      "id": "implement-compliance->code-repo:0",
       "source": "implement-compliance",
+      "target": "__d6",
+      "sourceHandle": "rs",
+      "targetHandle": "lt",
+      "end": false
+    },
+    {
+      "id": "implement-compliance->code-repo:1",
+      "source": "__d6",
+      "target": "__d7",
+      "sourceHandle": "rs",
+      "targetHandle": "lt",
+      "end": false
+    },
+    {
+      "id": "implement-compliance->code-repo:2",
+      "source": "__d7",
       "target": "code-repo",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "use:policies->update-evidence",
+      "id": "policies->update-evidence:0",
       "source": "policies",
       "target": "update-evidence",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     },
     {
-      "id": "act:update-evidence->onedrive",
+      "id": "update-evidence->onedrive:0",
       "source": "update-evidence",
       "target": "onedrive",
       "sourceHandle": "rs",
-      "targetHandle": "lt"
+      "targetHandle": "lt",
+      "end": true
     }
   ]
 }

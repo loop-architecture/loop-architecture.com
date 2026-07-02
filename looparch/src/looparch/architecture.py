@@ -140,23 +140,28 @@ def to_svg(arch: Architecture, favicons: bool = True) -> str:
         cy = MARGIN_TOP + plan.y_of[nid] * ROW + ROW / 2
         pos[nid] = (cx, cy)
 
-    def edge_between(src: str, dst: str) -> str:
-        sx, sy = pos[src]
-        dx, dy = pos[dst]
-        sw = LOOP_W if src in loop_ids else SYS_W
-        dw = LOOP_W if dst in loop_ids else SYS_W
-        if plan.col_of[src] <= plan.col_of[dst]:      # forward: source right → target left
-            return _edge(sx + sw / 2, sy, dx - dw / 2, dy, EDGE)
-        return _edge(sx - sw / 2, sy, dx + dw / 2, dy, EDGE)  # back: source left → target right
+    def route(path: list[str]) -> str:
+        # Route through waypoints (dummy centers) so long edges avoid boxes.
+        fwd = plan.col_of[path[0]] <= plan.col_of[path[-1]]
+        pts: list[tuple[float, float]] = []
+        for i, nid in enumerate(path):
+            cx, cy = pos[nid]
+            if i == 0:
+                w = LOOP_W if nid in loop_ids else SYS_W
+                pts.append((cx + w / 2 if fwd else cx - w / 2, cy))
+            elif i == len(path) - 1:
+                w = LOOP_W if nid in loop_ids else SYS_W
+                pts.append((cx - w / 2 if fwd else cx + w / 2, cy))
+            else:
+                pts.append((cx, cy))
+        d = f"M {pts[0][0]:.0f} {pts[0][1]:.0f}"
+        for (x1, y1), (x2, y2) in zip(pts, pts[1:]):
+            mx = (x1 + x2) / 2
+            d += f" C {mx:.0f} {y1:.0f} {mx:.0f} {y2:.0f} {x2:.0f} {y2:.0f}"
+        return (f'<path d="{d}" fill="none" stroke="{EDGE}" stroke-width="2" '
+                f'opacity="0.9" marker-end="url(#arrowin)"/>')
 
-    edges: list[str] = []
-    for lp in loops:
-        for sid in lp.observe:
-            if sid in pos:
-                edges.append(edge_between(sid, lp.id))
-        for sid in lp.act:
-            if sid in pos:
-                edges.append(edge_between(lp.id, sid))
+    edges: list[str] = [route(path) for path in plan.edge_paths.values()]
 
     def loop_trig(lp) -> str:
         seen: list[str] = []
