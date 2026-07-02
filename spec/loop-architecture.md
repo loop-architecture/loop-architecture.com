@@ -1,4 +1,4 @@
-# Loop Architecture — Specification
+# Loop Architecture, Specification
 
 Loop Architecture is an architecture style that makes the **agentic loop** between systems the
 first-class unit of design. A whole architecture is one YAML document with three top-level keys:
@@ -12,16 +12,16 @@ A **loop** is a continuous cycle where an agent:
 2. runs its **prompt**, and
 3. **writes back** (act) to one or more systems.
 
-A **Loop Architecture** is the full set of systems and loops — from which a single architecture
+A **Loop Architecture** is the full set of systems and loops, from which a single architecture
 diagram is generated.
 
-**Loop Storming** is the discovery method — see [loop-storming.md](../docs/loop-storming.md).
+**Loop Storming** is the discovery method, see [loop-storming.md](../docs/loop-storming.md).
 
 ## Top level
 
 ```yaml
-id: entropy-data          # required, kebab-case
-name: Entropy Data         # optional (defaults to id)
+id: your-org          # required, kebab-case
+name: Your Org         # optional (defaults to id)
 systems: [ ... ]           # required, >= 1
 loops:   [ ... ]           # required, >= 1
 ```
@@ -58,13 +58,13 @@ An array of loops. Each `observe`s (uses) systems and `act`s (writes back to) sy
 loops:
   - id: sync-docs
     name: Sync Docs            # optional (defaults to id)
-    trigger:                   # one trigger, or a list — see below (default: manual)
+    trigger:                   # one trigger, or a list, see below (default: manual)
       - "0 6 * * *"
       - pull_request.merged
-    model: claude-opus-4-8     # optional — the model this loop runs on
+    model: claude-opus-4-8     # optional, the model this loop runs on
     observe: [code-repo]       # required, system ids it reads
     act: [docs-repo]           # required, system ids it writes back to
-    prompt: >                  # required — what the loop does each turn
+    prompt: >                  # required, what the loop does each turn
       Diff the docs against changes merged in the last 24 hours and open a PR.
     tools: [Read, Grep, Bash(git *), Bash(gh pr *)]   # optional → allowed-tools
 ```
@@ -82,7 +82,7 @@ loops:
 
 ### `trigger`
 
-A single string **or a list of strings** — a loop can have more than one trigger. Each value's type
+A single string **or a list of strings**, a loop can have more than one trigger. Each value's type
 mirrors [Claude Code routines](https://code.claude.com/docs/en/routines):
 
 | Value                       | Type       | Meaning                          |
@@ -97,7 +97,7 @@ mirrors [Claude Code routines](https://code.claude.com/docs/en/routines):
 The canonical schema is [`loop-architecture.schema.json`](./loop-architecture.schema.json).
 
 ```bash
-looparch validate entropy-data.looparch.yaml
+looparch validate your-org.looparch.yaml
 ```
 
 `looparch lint` additionally checks: every `observe`/`act` references a declared system; schedules are

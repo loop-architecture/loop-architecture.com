@@ -120,7 +120,7 @@ code {
 .c-cmt { color: var(--faint); font-style: italic; }
 .c-p { color: var(--accent); }
 
-/* interactive react-flow diagram — full-bleed (breaks out of the text column) */
+/* interactive react-flow diagram, full-bleed (breaks out of the text column) */
 .flow {
   position: relative; left: 50%; transform: translateX(-50%);
   width: 100vw; max-width: 100vw;

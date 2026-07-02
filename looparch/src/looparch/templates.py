@@ -7,7 +7,7 @@ from .model import Architecture, Loop
 
 def scaffold(arch_id: str) -> str:
     """Return a starter Loop Architecture document."""
-    return f"""# {arch_id.replace('-', ' ').title()} — Loop Architecture
+    return f"""# {arch_id.replace('-', ' ').title()}: Loop Architecture
 id: {arch_id}
 name: {arch_id.replace('-', ' ').title()}
 
@@ -16,10 +16,10 @@ name: {arch_id.replace('-', ' ').title()}
 systems:
   - id: code-repo
     description: Application source code
-    repository: https://github.com/acme/app
+    repository: https://github.com/your-org/app
   - id: docs-repo
     description: Documentation site
-    url: https://docs.acme.com
+    url: https://docs.your-org.com
 
 # Loops. Each loop uses (observe) systems and writes back to (act) systems.
 loops:
@@ -49,7 +49,7 @@ def routine_prompt(arch: Architecture, loop: Loop) -> str:
         if not s:
             return f"**{sid}** (undeclared)"
         bits = [b for b in [s.description, s.url or s.repository] if b]
-        return f"**{sid}**" + (f" — {' · '.join(bits)}" if bits else "")
+        return f"**{sid}**" + (f": {' · '.join(bits)}" if bits else "")
 
     lines += ["## Systems you use (read from)"]
     lines += [f"- {describe(sid)}" for sid in loop.observe] or ["- (nothing)"]

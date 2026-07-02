@@ -1,6 +1,6 @@
 {
-  "name": "Entropy Data",
-  "id": "entropy-data",
+  "name": "Your Org",
+  "id": "your-org",
   "accent": "#7c3aed",
   "edge": "#9ca3af",
   "nodes": [
@@ -14,7 +14,7 @@
       "data": {
         "label": "Dash0",
         "id": "dash0",
-        "description": "Observability \u2014 logs, traces and metrics (demo + prod)",
+        "description": "Observability with logs, traces and metrics (demo + prod)",
         "url": "https://dash0.com",
         "repository": null,
         "connector": "dash0",
@@ -38,7 +38,7 @@
         "id": "code-repo",
         "description": "Application source code",
         "url": null,
-        "repository": "https://github.com/datamesh-manager/entropy-data",
+        "repository": "https://github.com/your-org/app",
         "connector": null,
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
         "readBy": [
@@ -62,7 +62,7 @@
         "id": "infra",
         "description": "Infrastructure as code (Terraform)",
         "url": null,
-        "repository": "https://github.com/datamesh-manager/entropy-data",
+        "repository": "https://github.com/your-org/infra",
         "connector": null,
         "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
         "readBy": [
@@ -170,10 +170,10 @@
         "label": "Docs (EN)",
         "id": "docs",
         "description": "Product documentation",
-        "url": "https://docs.entropy-data.com",
+        "url": "https://docs.your-org.com",
         "repository": null,
         "connector": null,
-        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=docs.entropy-data.com",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=docs.your-org.com",
         "readBy": [
           "Translate Docs",
           "Sync Landing Page"
@@ -194,10 +194,10 @@
         "label": "Docs (DE)",
         "id": "docs-de",
         "description": "German translation of the docs",
-        "url": "https://docs.entropy-data.com",
+        "url": "https://docs.your-org.com/de",
         "repository": null,
         "connector": null,
-        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=docs.entropy-data.com",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=docs.your-org.com",
         "readBy": [],
         "writtenBy": [
           "Translate Docs"
@@ -215,10 +215,10 @@
         "label": "Landing Page",
         "id": "landing-page",
         "description": "Marketing landing page",
-        "url": "https://www.entropy-data.com",
+        "url": "https://www.your-org.com",
         "repository": null,
         "connector": null,
-        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=www.entropy-data.com",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=www.your-org.com",
         "readBy": [],
         "writtenBy": [
           "Sync Landing Page"

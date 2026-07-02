@@ -13,7 +13,7 @@ from looparch.templates import routine_prompt, scaffold
 from looparch.validate import check, lint, validate_schema
 
 EXAMPLES = Path(__file__).resolve().parents[2] / "examples"
-EXAMPLE = EXAMPLES / "entropy-data.looparch.yaml"
+EXAMPLE = EXAMPLES / "your-org.looparch.yaml"
 
 
 def _write(tmp_path: Path, text: str) -> Path:
@@ -84,7 +84,7 @@ def test_publish_all_loops(tmp_path: Path) -> None:
     # docs-sync has two triggers: a cron and a merged-PR event.
     assert any(t.get("schedule") == "0 6 * * *" for t in desc["triggers"])
     assert any(t.get("githubTrigger", {}).get("event") == "pull_request.merged" for t in desc["triggers"])
-    assert "https://github.com/datamesh-manager/entropy-data" in desc["repositories"]
+    assert "https://github.com/your-org/app" in desc["repositories"]
 
 
 def test_publish_event_trigger(tmp_path: Path) -> None:

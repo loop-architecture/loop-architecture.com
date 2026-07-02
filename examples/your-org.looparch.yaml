@@ -1,6 +1,6 @@
 # A whole Loop Architecture: many systems and many loops in one file.
-id: entropy-data
-name: Entropy Data
+id: your-org
+name: Your Org
 
 # Systems the loops read from (use) and write back to (act).
 # Each system has an id, plus an optional name / description / url / repository / connector.
@@ -8,17 +8,17 @@ name: Entropy Data
 systems:
   - id: dash0
     name: Dash0
-    description: Observability — logs, traces and metrics (demo + prod)
+    description: Observability with logs, traces and metrics (demo + prod)
     url: https://dash0.com
     connector: dash0
   - id: code-repo
     name: App Repo
     description: Application source code
-    repository: https://github.com/datamesh-manager/entropy-data
+    repository: https://github.com/your-org/app
   - id: infra
     name: Terraform Infra
     description: Infrastructure as code (Terraform)
-    repository: https://github.com/datamesh-manager/entropy-data
+    repository: https://github.com/your-org/infra
   - id: app-azure
     name: App on Azure
     description: The running application on Azure
@@ -40,15 +40,15 @@ systems:
   - id: docs
     name: Docs (EN)
     description: Product documentation
-    url: https://docs.entropy-data.com
+    url: https://docs.your-org.com
   - id: docs-de
     name: Docs (DE)
     description: German translation of the docs
-    url: https://docs.entropy-data.com
+    url: https://docs.your-org.com/de
   - id: landing-page
     name: Landing Page
     description: Marketing landing page
-    url: https://www.entropy-data.com
+    url: https://www.your-org.com
   - id: onedrive
     name: OneDrive
     description: Policies and vendor documents

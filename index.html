@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Loop Architecture</title>
-  <meta name="description" content="Loop Architecture — an architecture style that makes the agentic loop between systems the first-class unit of design. Discover loops with Loop Storming, encode them as YAML, publish them as Claude Code routines with looparch." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="description" content="Loop Architecture, an architecture style that makes the agentic loop between systems the first-class unit of design. Discover loops with Loop Storming, encode them as YAML, publish them as Claude Code routines with looparch." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -48,7 +49,7 @@
   <main id="top" class="doc">
     <!-- INTRO -->
     <section class="lead">
-      <h1>Loop Architecture</h1>
+      <h1>Agentic Loop Architecture</h1>
       <p>
         An architecture style that makes the <b>agentic loop</b> between systems the first-class unit
         of design. A loop is triggered on a schedule or event, <b>uses</b> one or more systems, runs
@@ -82,7 +83,7 @@
       <dl class="stages">
         <div><dt>id</dt><dd>Kebab-case identifier for the loop.</dd></div>
         <div><dt>name</dt><dd>Human-readable name.</dd></div>
-        <div><dt>trigger</dt><dd>When it runs — a cron, an event, an ISO time, or manual. One or more.</dd></div>
+        <div><dt>trigger</dt><dd>When it runs, a cron, an event, an ISO time, or manual. One or more.</dd></div>
         <div><dt>model</dt><dd>The model the loop runs on.</dd></div>
         <div><dt>observe</dt><dd>The systems the loop reads from (uses).</dd></div>
         <div><dt>act</dt><dd>The systems the loop writes back to.</dd></div>
@@ -95,10 +96,10 @@
     <section id="storming">
       <h2>Loop Storming</h2>
       <p>
-        Loop Storming is a collaborative workshop for discovering loops — in the spirit of Event
+        Loop Storming is a collaborative workshop for discovering loops, in the spirit of Event
         Storming. The team maps the systems, connects them into loops (what each loop uses and writes
         back to), names them, writes their prompts, and sets triggers. The messy wall is your initial
-        map; you then refine it into formal loop YAML.
+        map; you then refine it into a formal Loop Architecture YAML.
       </p>
       <p><a class="more" href="loop-storming.html">Read the Loop Storming guide →</a></p>
     </section>
@@ -107,24 +108,24 @@
     <section id="format">
       <h2>The format</h2>
       <p>
-        One plain YAML file with three top-level keys — <code>id</code>, <code>systems</code>, and
+        One plain YAML file with three top-level keys, <code>id</code>, <code>systems</code>, and
         <code>loops</code>. Each loop <b>uses</b> (observe) systems and <b>writes back</b> to (act)
         systems. A trigger is a 5-field cron, an ISO timestamp, a GitHub event, or <code>manual</code>.
       </p>
       <div class="code-panel">
         <div class="code-head">
           <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-          <span class="code-file">entropy-data.looparch.yaml</span>
+          <span class="code-file">your-org.looparch.yaml</span>
         </div>
-        <pre class="code"><code><span class="c-key">id</span>: <span class="c-str">entropy-data</span>
+        <pre class="code"><code><span class="c-key">id</span>: <span class="c-str">your-org</span>
 <span class="c-key">systems</span>:
   - <span class="c-key">id</span>: <span class="c-str">dash0</span>
     <span class="c-key">url</span>: <span class="c-str">https://dash0.com</span>            <span class="c-cmt"># favicon becomes the icon</span>
     <span class="c-key">connector</span>: <span class="c-str">dash0</span>
   - <span class="c-key">id</span>: <span class="c-str">code-repo</span>
-    <span class="c-key">repository</span>: <span class="c-str">https://github.com/entropy-data/app</span>
+    <span class="c-key">repository</span>: <span class="c-str">https://github.com/your-org/app</span>
   - <span class="c-key">id</span>: <span class="c-str">docs</span>
-    <span class="c-key">url</span>: <span class="c-str">https://docs.entropy-data.com</span>
+    <span class="c-key">url</span>: <span class="c-str">https://docs.your-org.com</span>
 <span class="c-key">loops</span>:
   - <span class="c-key">id</span>: <span class="c-str">triage-incidents</span>
     <span class="c-key">name</span>: <span class="c-str">Triage Incidents</span>
@@ -147,7 +148,7 @@
       <p class="more-row">
         <a class="more" href="spec/loop-architecture.md">Specification →</a>
         <a class="more" href="spec/loop-architecture.schema.json">JSON schema →</a>
-        <a class="more" href="examples/entropy-data.looparch.yaml">Full example →</a>
+        <a class="more" href="examples/your-org.looparch.yaml">Full example →</a>
       </p>
     </section>
 
@@ -156,8 +157,7 @@
       <h2>One file, one diagram</h2>
       <p>
         Because every loop names the systems it uses and writes back to, <code>looparch</code> renders
-        the whole architecture as a single <b>interactive</b> diagram that flows left to right —
-        sources on the left, loops in the middle, sinks on the right, a trigger icon
+        the whole architecture as a single <b>interactive</b> diagram that flows left to right, sources on the left, loops in the middle, sinks on the right, a trigger icon
         (🕐 schedule · ⚡ event) on each. Click any system or loop for details.
       </p>
       <div id="flow" class="flow">
@@ -240,7 +240,7 @@
       };
 
       try {
-        const graph = await fetch('assets/entropy-data.flow.json').then((r) => r.json());
+        const graph = await fetch('assets/your-org.flow.json').then((r) => r.json());
         const edgeColor = graph.edge || '#9ca3af';
         const edges = graph.edges.map((e) => ({
           id: e.id, source: e.source, target: e.target,
@@ -275,12 +275,12 @@
       <p>A Python CLI (built with <a href="https://docs.astral.sh/uv/">uv</a>) to validate, visualize, and publish loops.</p>
       <pre class="code plain"><code><span class="c-p">$</span> uv tool install looparch
 
-<span class="c-p">$</span> looparch init entropy-data              <span class="c-cmt"># scaffold an architecture</span>
-<span class="c-p">$</span> looparch validate entropy-data.looparch.yaml    <span class="c-cmt"># schema + lint</span>
-<span class="c-p">$</span> looparch show entropy-data.looparch.yaml        <span class="c-cmt"># readable summary</span>
-<span class="c-p">$</span> looparch diagram entropy-data.looparch.yaml     <span class="c-cmt"># ALL loops → one diagram (SVG)</span>
-<span class="c-p">$</span> looparch export entropy-data.looparch.yaml      <span class="c-cmt"># → React Flow JSON (interactive)</span>
-<span class="c-p">$</span> looparch publish entropy-data.looparch.yaml     <span class="c-cmt"># → Claude Code routines</span>
+<span class="c-p">$</span> looparch init your-org              <span class="c-cmt"># scaffold an architecture</span>
+<span class="c-p">$</span> looparch validate your-org.looparch.yaml    <span class="c-cmt"># schema + lint</span>
+<span class="c-p">$</span> looparch show your-org.looparch.yaml        <span class="c-cmt"># readable summary</span>
+<span class="c-p">$</span> looparch diagram your-org.looparch.yaml     <span class="c-cmt"># ALL loops → one diagram (SVG)</span>
+<span class="c-p">$</span> looparch export your-org.looparch.yaml      <span class="c-cmt"># → React Flow JSON (interactive)</span>
+<span class="c-p">$</span> looparch publish your-org.looparch.yaml     <span class="c-cmt"># → Claude Code routines</span>
 <span class="c-p">$</span> looparch import ./my-project                    <span class="c-cmt"># ← existing routines back to YAML</span></code></pre>
       <p class="note">
         <code>publish</code> writes, for each loop, a slash command
@@ -293,18 +293,18 @@
     <!-- EXAMPLES -->
     <section id="examples">
       <h2>The example loops</h2>
-      <p>The loops in the diagram above, from the <a href="examples/entropy-data.looparch.yaml">example architecture</a>:</p>
+      <p>The loops in the diagram above, from the <a href="examples/your-org.looparch.yaml">example architecture</a>:</p>
       <ul class="examples-list">
-        <li><b>Triage Incidents</b> — detect incidents from observability signals; ticket + Slack. <code>dash0 → jira/slack</code></li>
-        <li><b>Fix Errors</b> — find recurring errors in the logs and open a fix PR. <code>dash0 → code-repo</code></li>
-        <li><b>Deploy Previews</b> — on every commit, deploy a preview to Azure. <code>ci-cd → app-azure</code></li>
-        <li><b>Reconcile Infra Drift</b> — reconcile Terraform state against running infra. <code>infra → app-azure</code></li>
-        <li><b>Sync Docs</b> — keep the docs in sync with the code; daily PR. <code>code-repo → docs</code></li>
-        <li><b>Translate Docs</b> — keep the German docs in sync with the English source. <code>docs → docs-de</code></li>
-        <li><b>Sync Confluence</b> — keep internal runbooks in Confluence current. <code>code-repo → confluence</code></li>
-        <li><b>Sync Landing Page</b> — keep landing-page copy consistent with the docs. <code>docs → landing-page</code></li>
-        <li><b>Answer Tickets</b> — triage Jira tickets and draft answers from the docs. <code>jira → jira</code></li>
-        <li><b>Review Compliance</b> — review ISO 27001 policies and vendor risks weekly. <code>policies → onedrive</code></li>
+        <li><b>Triage Incidents</b>, detect incidents from observability signals; ticket + Slack. <code>dash0 → jira/slack</code></li>
+        <li><b>Fix Errors</b>, find recurring errors in the logs and open a fix PR. <code>dash0 → code-repo</code></li>
+        <li><b>Deploy Previews</b>, on every commit, deploy a preview to Azure. <code>ci-cd → app-azure</code></li>
+        <li><b>Reconcile Infra Drift</b>, reconcile Terraform state against running infra. <code>infra → app-azure</code></li>
+        <li><b>Sync Docs</b>, keep the docs in sync with the code; daily PR. <code>code-repo → docs</code></li>
+        <li><b>Translate Docs</b>, keep the German docs in sync with the English source. <code>docs → docs-de</code></li>
+        <li><b>Sync Confluence</b>, keep internal runbooks in Confluence current. <code>code-repo → confluence</code></li>
+        <li><b>Sync Landing Page</b>, keep landing-page copy consistent with the docs. <code>docs → landing-page</code></li>
+        <li><b>Answer Tickets</b>, triage Jira tickets and draft answers from the docs. <code>jira → jira</code></li>
+        <li><b>Review Compliance</b>, review ISO 27001 policies and vendor risks weekly. <code>policies → onedrive</code></li>
       </ul>
     </section>
 
@@ -317,7 +317,7 @@
         and
         <a href="https://www.linkedin.com/in/simonharrer/" target="_blank" rel="noopener">Simon Harrer</a>
         at <a href="https://www.summersoc.eu/" target="_blank" rel="noopener">SummerSOC</a> on
-        <time datetime="2026-07-01">1 July 2026</time>, on the island of Crete — the same day they
+        <time datetime="2026-07-01">1 July 2026</time>, on the island of Crete, the same day they
         visited the cave where, in myth, Zeus was born.
       </p>
       <div class="authors">

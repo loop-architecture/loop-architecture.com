@@ -16,7 +16,7 @@ import re
 from pathlib import Path
 
 _SECTION = re.compile(r"^##\s+(.*)$")
-_BULLET_ID = re.compile(r"^-\s+\*\*([a-z0-9][a-z0-9-]*)\*\*(?:\s+—\s+(.*))?$")
+_BULLET_ID = re.compile(r"^-\s+\*\*([a-z0-9][a-z0-9-]*)\*\*(?::\s+(.*))?$")
 
 
 def _slug(text: str) -> str:

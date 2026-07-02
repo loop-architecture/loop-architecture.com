@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Loop Storming — Loop Architecture</title>
-  <meta name="description" content="Loop Storming — a short collaborative workshop for discovering the agentic loops between your systems." />
+  <title>Loop Storming, Loop Architecture</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="description" content="Loop Storming, a short collaborative workshop for discovering the agentic loops between your systems." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -32,10 +33,9 @@
 
   <main class="doc">
     <section class="lead">
-      <h1>Loop Storming</h1>
+      <h1>Agentic Loop Storming</h1>
       <p>
-        A short, collaborative workshop for discovering the agentic loops between your systems —
-        in the spirit of Event Storming. Map the systems, connect them into loops, name them.
+        A short, collaborative workshop for discovering the agentic loops between your systems, in the spirit of Event Storming. Map the systems, connect them into loops, name them.
       </p>
     </section>
 
@@ -43,9 +43,9 @@
       <h2>What you need</h2>
       <p>A wall or a virtual canvas, the team (people who feel the pain, own the systems, do the work), and sticky notes in three colors:</p>
       <dl class="stages">
-        <div><dt>system</dt><dd>A place a loop reads from or writes to — a repo, a store, a tool.</dd></div>
+        <div><dt>system</dt><dd>A place a loop reads from or writes to, a repo, a store, a tool.</dd></div>
         <div><dt>loop</dt><dd>An agent that connects systems: it <em>uses</em> some and <em>writes back</em> to others.</dd></div>
-        <div><dt>trigger</dt><dd>What turns a loop — a schedule 🕐, an event ⚡, or manual.</dd></div>
+        <div><dt>trigger</dt><dd>What turns a loop, a schedule 🕐, an event ⚡, or manual.</dd></div>
       </dl>
     </section>
 
@@ -59,16 +59,16 @@
         <li><b>Prioritize.</b> Impact × confidence. Start top-right.</li>
       </ol>
       <dl class="stages" style="margin-top:16px">
-        <div><dt>🕐 schedule</dt><dd>Runs on a cadence — a cron like <code>0 6 * * *</code>.</dd></div>
-        <div><dt>⚡ event</dt><dd>Runs on an event — e.g. <code>pull_request.merged</code>, <code>push</code>.</dd></div>
-        <div><dt>📅 once</dt><dd>Runs a single time — an ISO timestamp.</dd></div>
+        <div><dt>🕐 schedule</dt><dd>Runs on a cadence, a cron like <code>0 6 * * *</code>.</dd></div>
+        <div><dt>⚡ event</dt><dd>Runs on an event, e.g. <code>pull_request.merged</code>, <code>push</code>.</dd></div>
+        <div><dt>📅 once</dt><dd>Runs a single time, an ISO timestamp.</dd></div>
         <div><dt>👆 manual</dt><dd>Runs on demand.</dd></div>
       </dl>
     </section>
 
     <section>
       <h2>Example: a pen &amp; paper wall</h2>
-      <p>A real Loop Storming session — the systems and loop edges that became this site's
+      <p>A real Loop Storming session, the systems and loop edges that became this site's
         <a href="index.html#diagram">example architecture</a>, drawn by hand:</p>
       <a href="assets/loop-storming-example.png" target="_blank" rel="noopener">
         <img class="storm-photo" src="assets/loop-storming-example.png"
@@ -79,9 +79,9 @@
     <section>
       <h2>From wall to architecture</h2>
       <p>Refine the wall into one <a href="spec/loop-architecture.md">Loop Architecture file</a>, then let <code>looparch</code> validate, draw, and publish it.</p>
-      <pre class="code plain"><code><span class="c-p">$</span> looparch init entropy-data
-<span class="c-p">$</span> looparch diagram entropy-data.looparch.yaml   <span class="c-cmt"># all loops in one diagram</span>
-<span class="c-p">$</span> looparch publish entropy-data.looparch.yaml   <span class="c-cmt"># → Claude Code routines</span></code></pre>
+      <pre class="code plain"><code><span class="c-p">$</span> looparch init your-org
+<span class="c-p">$</span> looparch diagram your-org.looparch.yaml   <span class="c-cmt"># all loops in one diagram</span>
+<span class="c-p">$</span> looparch publish your-org.looparch.yaml   <span class="c-cmt"># → Claude Code routines</span></code></pre>
     </section>
   </main>
 

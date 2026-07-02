@@ -1,10 +1,10 @@
 # looparch
 
-`looparch` is the CLI for [Loop Architecture](https://loop-architecture.com) — an architecture style
+`looparch` is the CLI for [Loop Architecture](https://loop-architecture.com), an architecture style
 that makes the **agentic loop** between systems the first-class unit of design.
 
-It validates, visualizes, and publishes a **Loop Architecture** — one YAML document that defines many
-systems and many loops — and turns each loop into a runnable **Claude Code routine**.
+It validates, visualizes, and publishes a **Loop Architecture**, one YAML document that defines many
+systems and many loops, and turns each loop into a runnable **Claude Code routine**.
 
 ## Install
 
@@ -19,11 +19,11 @@ Or run without installing: `uvx looparch --help`.
 ## Quick start
 
 ```bash
-looparch init entropy-data                       # scaffold <id>.looparch.yaml
-looparch validate entropy-data.looparch.yaml     # schema + lint
-looparch show entropy-data.looparch.yaml         # readable summary
-looparch diagram entropy-data.looparch.yaml      # ALL loops + systems → one SVG
-looparch publish entropy-data.looparch.yaml      # every loop → a Claude Code routine
+looparch init your-org                       # scaffold <id>.looparch.yaml
+looparch validate your-org.looparch.yaml     # schema + lint
+looparch show your-org.looparch.yaml         # readable summary
+looparch diagram your-org.looparch.yaml      # ALL loops + systems → one SVG
+looparch publish your-org.looparch.yaml      # every loop → a Claude Code routine
 ```
 
 ## Commands
@@ -40,7 +40,7 @@ looparch publish entropy-data.looparch.yaml      # every loop → a Claude Code 
 | `looparch import <path>`                  | Reconstruct a Loop Architecture YAML from existing Claude Code routines. |
 
 `diagram` writes `.svg` by default; pass `-o out.png` for PNG (needs the `png` extra). It fetches each
-system's favicon (from its `url`/`repository`) as its icon — pass `--no-favicons` to skip the network.
+system's favicon (from its `url`/`repository`) as its icon, pass `--no-favicons` to skip the network.
 
 ## What `publish` produces
 
@@ -59,7 +59,7 @@ skill using the emitted cron/event.
 
 See the [specification](https://loop-architecture.com/spec/loop-architecture.md) and the
 [JSON schema](https://loop-architecture.com/spec/loop-architecture.schema.json). A full example lives
-in [`examples/entropy-data.looparch.yaml`](../examples/entropy-data.looparch.yaml).
+in [`examples/your-org.looparch.yaml`](../examples/your-org.looparch.yaml).
 
 ## Development
 
