@@ -191,15 +191,10 @@
         systems, the agentic loops, and the edges between them. Drop it into any page, or open it from
         the CLI with <code>looparch view</code>.
       </p>
-      <pre class="code plain"><code><span class="c-cmt">// the bundle includes React + React Flow; just load it and its CSS</span>
-<span class="c-key">import</span> { mountEditor, createController } <span class="c-key">from</span> <span class="c-str">'./visualizer/dist/visualizer.js'</span>;
-
-<span class="c-cmt">// editable: YAML editor + live diagram</span>
-mountEditor(document.getElementById(<span class="c-str">'editor'</span>), { examples: [ ... ] });
-
-<span class="c-cmt">// or read-only: the visualizer parses the YAML itself</span>
-createController(document.getElementById(<span class="c-str">'flow'</span>)).show(<span class="c-str">'your-org.looparch.yaml'</span>);</code></pre>
-      <p><a class="more" href="editor.html">Open the editor →</a></p>
+      <p class="more-row">
+        <a class="more" href="https://github.com/loop-architecture/loop-architecture.com/tree/main/visualizer" target="_blank" rel="noopener">Visualizer component →</a>
+        <a class="more" href="editor.html">Open the editor →</a>
+      </p>
 
       <h3>looparch CLI</h3>
       <p>A Python CLI (built with <a href="https://docs.astral.sh/uv/">uv</a>) to validate, visualize and sync loops.</p>
