@@ -7,6 +7,7 @@ requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "Loop Architecture" }]
 keywords = ["loop-architecture", "agentic", "claude-code", "yaml", "routines"]
+classifiers = ["Development Status :: 3 - Alpha"]
 dependencies = [
     "pyyaml>=6.0",
     "jsonschema>=4.20",

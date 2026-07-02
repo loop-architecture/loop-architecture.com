@@ -1,5 +1,8 @@
 # looparch
 
+> **Preview.** `looparch` is an early preview: the YAML format and the commands may still change, and
+> it targets Claude Code routines, itself a research preview.
+
 `looparch` is the CLI for [Loop Architecture](https://loop-architecture.com), an architecture style
 that makes the **agentic loop** between systems the first-class unit of design.
 
