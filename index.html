@@ -297,6 +297,14 @@ createController(document.getElementById(<span class="c-str">'flow'</span>)).sho
           follows its instructions toward a goal, and writes back to systems, again and again on its trigger. It
           runs continuously and is self-learning.</dd>
 
+        <dt>Where is the loop, I don't see a cycle in the diagram?</dt>
+        <dd>Each agentic-loop block <em>is</em> the loop. It is triggered, uses systems, follows its
+          instructions, writes back, and then turns again on its next trigger, evaluating itself each
+          time. The loop lives inside the block, so there is no separate feedback arrow to draw. Loop
+          Architecture is about these continuous, self-paced loops that run on a schedule or event, not
+          goal-based loops that stop at a condition, nor turn-based back-and-forth loops, which are more
+          human-driven.</dd>
+
         <dt>What is Loop Storming?</dt>
         <dd>Loop Storming is a collaborative workshop for discovering the agentic loops between your
           systems, in the spirit of Event Storming. You map the systems (focusing on data, source
@@ -376,6 +384,7 @@ createController(document.getElementById(<span class="c-str">'flow'</span>)).sho
         "mainEntity": [
           { "@type": "Question", "name": "What is Loop Architecture?", "acceptedAnswer": { "@type": "Answer", "text": "Loop Architecture is an architecture style that makes the agentic loop between systems the first-class unit of design. A loop is triggered on a schedule or event, uses one or more systems, follows its instructions, and writes back to those systems. A Loop Architecture is all of your loops, mapped together." } },
           { "@type": "Question", "name": "What is an agentic loop?", "acceptedAnswer": { "@type": "Answer", "text": "An agentic loop is a continuous cycle where an agent reads from (uses) one or more systems, follows its instructions toward a goal, and writes back to systems, again and again on its trigger. It runs continuously and is self-learning." } },
+          { "@type": "Question", "name": "Where is the loop in the diagram?", "acceptedAnswer": { "@type": "Answer", "text": "Each agentic-loop block is the loop. It is triggered, uses systems, follows its instructions, writes back, and then turns again on its next trigger, evaluating itself each time. The loop lives inside the block, so there is no separate feedback arrow. Loop Architecture is about these continuous, self-paced loops that run on a schedule or event, not goal-based loops that stop at a condition, nor turn-based back-and-forth loops, which are more human-driven." } },
           { "@type": "Question", "name": "What is Loop Storming?", "acceptedAnswer": { "@type": "Answer", "text": "Loop Storming is a collaborative workshop for discovering the agentic loops between your systems, in the spirit of Event Storming. You map the systems, connect them into loops, name them, and set triggers." } },
           { "@type": "Question", "name": "How do I sync a loop to Claude Code?", "acceptedAnswer": { "@type": "Answer", "text": "Encode your loops in one Loop Architecture YAML file and run looparch sync. Each loop becomes a Claude Code routine: a slash command plus a schedule or event trigger." } },
           { "@type": "Question", "name": "What is looparch?", "acceptedAnswer": { "@type": "Answer", "text": "looparch is a Python CLI, built with uv, that validates, visualizes and syncs a Loop Architecture to Claude Code routines, and reads them back with --from-claude." } },
