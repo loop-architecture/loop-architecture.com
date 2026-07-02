@@ -1,0 +1,59 @@
+# A docs pipeline: keep the docs, the changelog, and the German docs up to date.
+id: docs
+name: Docs
+
+systems:
+  - id: code-repo
+    name: App Repo
+    description: Application source code
+    repository: https://github.com/your-org/app
+  - id: docs
+    name: Docs (EN)
+    description: Product documentation
+    url: https://docs.your-org.com
+  - id: changelog
+    name: Changelog
+    description: The project changelog
+    repository: https://github.com/your-org/app
+  - id: docs-de
+    name: Docs (DE)
+    description: German translation of the docs
+    url: https://docs.your-org.com/de
+
+loops:
+  - id: update-docs
+    name: Update Docs
+    description: Keeps the docs in step with the code.
+    trigger:
+      - "0 6 * * *"
+      - pull_request.merged
+    model: claude-opus-4-8
+    observe: [code-repo]
+    act: [docs]
+    prompt: >
+      Diff the docs against the changes merged since the last run. Update the pages
+      that drifted and open a pull request.
+    tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
+
+  - id: update-changelog
+    name: Update Changelog
+    description: Keeps the changelog current with merged work.
+    trigger: pull_request.merged
+    model: claude-opus-4-8
+    observe: [code-repo]
+    act: [changelog]
+    prompt: >
+      For each merged pull request, add a concise, user-facing entry to the changelog
+      and open a pull request.
+    tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
+
+  - id: translate-docs
+    name: Translate Docs
+    description: Keeps the German docs current.
+    trigger: "0 7 * * *"
+    model: claude-opus-4-8
+    observe: [docs]
+    act: [docs-de]
+    prompt: >
+      For every English page changed since the German version was last updated,
+      update the matching German page and open a pull request.

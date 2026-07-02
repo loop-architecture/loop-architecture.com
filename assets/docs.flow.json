@@ -1,0 +1,228 @@
+{
+  "name": "Docs",
+  "id": "docs",
+  "accent": "#7c3aed",
+  "edge": "#9ca3af",
+  "nodes": [
+    {
+      "id": "code-repo",
+      "type": "system",
+      "position": {
+        "x": 40,
+        "y": 60.00000000005457
+      },
+      "data": {
+        "label": "App Repo",
+        "id": "code-repo",
+        "description": "Application source code",
+        "url": null,
+        "repository": "https://github.com/your-org/app",
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
+        "readBy": [
+          "Update Docs",
+          "Update Changelog"
+        ],
+        "writtenBy": []
+      }
+    },
+    {
+      "id": "docs",
+      "type": "system",
+      "position": {
+        "x": 680,
+        "y": 120.0
+      },
+      "data": {
+        "label": "Docs (EN)",
+        "id": "docs",
+        "description": "Product documentation",
+        "url": "https://docs.your-org.com",
+        "repository": null,
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=docs.your-org.com",
+        "readBy": [
+          "Translate Docs"
+        ],
+        "writtenBy": [
+          "Update Docs"
+        ]
+      }
+    },
+    {
+      "id": "changelog",
+      "type": "system",
+      "position": {
+        "x": 680,
+        "y": 0.0
+      },
+      "data": {
+        "label": "Changelog",
+        "id": "changelog",
+        "description": "The project changelog",
+        "url": null,
+        "repository": "https://github.com/your-org/app",
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
+        "readBy": [],
+        "writtenBy": [
+          "Update Changelog"
+        ]
+      }
+    },
+    {
+      "id": "docs-de",
+      "type": "system",
+      "position": {
+        "x": 1320,
+        "y": 119.99999999995907
+      },
+      "data": {
+        "label": "Docs (DE)",
+        "id": "docs-de",
+        "description": "German translation of the docs",
+        "url": "https://docs.your-org.com/de",
+        "repository": null,
+        "connector": null,
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=docs.your-org.com",
+        "readBy": [],
+        "writtenBy": [
+          "Translate Docs"
+        ]
+      }
+    },
+    {
+      "id": "update-docs",
+      "type": "loop",
+      "position": {
+        "x": 360,
+        "y": 120.00000000002728
+      },
+      "data": {
+        "label": "Update Docs",
+        "id": "update-docs",
+        "description": "Keeps the docs in step with the code.",
+        "emoji": "\ud83d\udd50\u26a1",
+        "triggers": [
+          "0 6 * * *",
+          "pull_request.merged"
+        ],
+        "prompt": "Diff the docs against the changes merged since the last run. Update the pages that drifted and open a pull request.",
+        "model": "claude-opus-4-8",
+        "tools": [
+          "Read",
+          "Grep",
+          "Bash(git *)",
+          "Bash(gh pr *)"
+        ],
+        "uses": [
+          "App Repo"
+        ],
+        "writesBack": [
+          "Docs (EN)"
+        ]
+      }
+    },
+    {
+      "id": "update-changelog",
+      "type": "loop",
+      "position": {
+        "x": 360,
+        "y": 2.7284841053187847e-11
+      },
+      "data": {
+        "label": "Update Changelog",
+        "id": "update-changelog",
+        "description": "Keeps the changelog current with merged work.",
+        "emoji": "\u26a1",
+        "triggers": [
+          "pull_request.merged"
+        ],
+        "prompt": "For each merged pull request, add a concise, user-facing entry to the changelog and open a pull request.",
+        "model": "claude-opus-4-8",
+        "tools": [
+          "Read",
+          "Grep",
+          "Bash(git *)",
+          "Bash(gh pr *)"
+        ],
+        "uses": [
+          "App Repo"
+        ],
+        "writesBack": [
+          "Changelog"
+        ]
+      }
+    },
+    {
+      "id": "translate-docs",
+      "type": "loop",
+      "position": {
+        "x": 1000,
+        "y": 119.99999999995907
+      },
+      "data": {
+        "label": "Translate Docs",
+        "id": "translate-docs",
+        "description": "Keeps the German docs current.",
+        "emoji": "\ud83d\udd50",
+        "triggers": [
+          "0 7 * * *"
+        ],
+        "prompt": "For every English page changed since the German version was last updated, update the matching German page and open a pull request.",
+        "model": "claude-opus-4-8",
+        "tools": [],
+        "uses": [
+          "Docs (EN)"
+        ],
+        "writesBack": [
+          "Docs (DE)"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "use:code-repo->update-docs",
+      "source": "code-repo",
+      "target": "update-docs",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:update-docs->docs",
+      "source": "update-docs",
+      "target": "docs",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:code-repo->update-changelog",
+      "source": "code-repo",
+      "target": "update-changelog",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:update-changelog->changelog",
+      "source": "update-changelog",
+      "target": "changelog",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "use:docs->translate-docs",
+      "source": "docs",
+      "target": "translate-docs",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    },
+    {
+      "id": "act:translate-docs->docs-de",
+      "source": "translate-docs",
+      "target": "docs-de",
+      "sourceHandle": "rs",
+      "targetHandle": "lt"
+    }
+  ]
+}
