@@ -218,14 +218,17 @@ createController(document.getElementById(<span class="c-str">'flow'</span>)).sho
       <p><a class="more" href="looparch/README.md">CLI reference →</a></p>
     </section>
 
-    <!-- LOOP STORMING -->
+    <!-- GETTING STARTED -->
     <section id="storming">
-      <h2>Loop Storming</h2>
+      <h2>Getting Started</h2>
+      <p>Two ways in, depending on whether your loops exist yet.</p>
+
+      <h3>Start fresh, from a Loop Storming</h3>
       <p>
         Loop Storming is a collaborative workshop for discovering loops, in the spirit of Event
-        Storming. The team maps the systems, connects them into loops (what each loop uses and writes
-        back to), names them, writes their instructions, and sets triggers. The messy wall is your initial
-        map; you then refine it into a formal Loop Architecture YAML.
+        Storming. The team maps the systems, connects them into loops (what each uses and writes back
+        to), names them, writes their instructions, and sets triggers. Encode the wall as one Loop
+        Architecture YAML, then sync it to Claude Code routines.
       </p>
       <a class="storm-photo-link" href="loop-storming.html" aria-label="Read the Loop Storming guide">
         <img class="storm-photo" src="assets/loop-storming-example.png"
@@ -247,10 +250,36 @@ createController(document.getElementById(<span class="c-str">'flow'</span>)).sho
         <div class="flow-step">
           <span class="flow-n">3</span>
           <span class="flow-t">Sync</span>
-          <span class="flow-d">Claude Code routines via <code>looparch</code></span>
+          <span class="flow-d">to Claude Code routines via <code>looparch</code></span>
         </div>
       </div>
       <p><a class="more" href="loop-storming.html">Read the Loop Storming guide →</a></p>
+
+      <h3>Or start from what you already run</h3>
+      <p>
+        Already have Claude Code routines? Pull them into one Loop Architecture with
+        <code>looparch sync --from-claude</code>, see the whole picture as a diagram, then refine and
+        improve the loops from there, and sync back.
+      </p>
+      <div class="flow3">
+        <div class="flow-step">
+          <span class="flow-n">1</span>
+          <span class="flow-t">Import</span>
+          <span class="flow-d"><code>looparch sync --from-claude</code></span>
+        </div>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <div class="flow-step">
+          <span class="flow-n">2</span>
+          <span class="flow-t">Refine</span>
+          <span class="flow-d">the generated YAML</span>
+        </div>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <div class="flow-step">
+          <span class="flow-n">3</span>
+          <span class="flow-t">Improve</span>
+          <span class="flow-d">evolve the loops, then sync back</span>
+        </div>
+      </div>
     </section>
 
     <!-- FAQ -->
