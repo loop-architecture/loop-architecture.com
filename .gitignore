@@ -4,9 +4,12 @@ __pycache__/
 .venv/
 looparch/.venv/
 *.egg-info/
-dist/
-build/
+looparch/dist/
+looparch/build/
 .pytest_cache/
+
+# Node (visualizer build tooling); visualizer/dist IS committed so the static site can load it
+node_modules/
 uv.lock
 
 # Quicklook thumbnails (assets/*.png and assets/*.svg ARE committed — the site uses them)

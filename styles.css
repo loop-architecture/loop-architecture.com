@@ -153,16 +153,25 @@ code {
 .flow-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 .flow-tab-eg { font-weight: 500; opacity: .55; }
 
-/* The interactive react-flow diagram (.flow) is styled in visualizer/visualizer.css
-   so the visualizer module is self-contained and reusable. */
+/* The interactive diagram + editor (.flow / .looparch-editor) are styled in the
+   visualizer bundle (visualizer/dist/visualizer.css). This just sizes the host,
+   full-bleed so the editor breaks out of the text column. */
+.editor-host {
+  position: relative; left: 50%; transform: translateX(-50%);
+  width: 90vw; max-width: 90vw;
+  height: 82vh; min-height: 620px; margin-top: 16px;
+}
 
 /* steps list (loop storming) */
 .steps-list { margin: 0; padding-left: 20px; color: var(--muted); }
 .steps-list li { margin-bottom: 10px; }
 .steps-list b { color: var(--text); }
+.storm-photo-link {
+  display: block; margin: 4px 0 18px; padding: 10px;
+  border: 1px solid var(--border); border-radius: 12px; background: var(--bg-alt);
+}
 .storm-photo {
-  display: block; width: 100%; height: auto; margin-top: 6px;
-  border: 1px solid var(--border); border-radius: 12px;
+  display: block; width: 100%; height: auto; border-radius: 8px;
 }
 
 /* examples */
@@ -178,6 +187,11 @@ code {
 .faq dd code { font-size: .85em; }
 
 /* origin */
+.origin-figure { margin: 8px 0 0; }
+.origin-photo {
+  display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border);
+}
+.origin-figure figcaption { margin-top: 8px; font-size: 13px; color: var(--faint); }
 .origin-lede { font-size: 16px; color: var(--text) !important; }
 .origin-lede time { color: var(--muted); }
 .authors { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
@@ -189,6 +203,9 @@ code {
 /* footer */
 .footer { border-top: 1px solid var(--border); }
 .footer-inner { max-width: var(--maxw); margin: 0 auto; padding: 24px; }
+.footer-brand { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; margin-bottom: 12px; }
+.footer-by { color: var(--faint); font-size: 13px; }
+.footer-brand img { display: block; height: 24px; width: auto; }
 .footer-fine { color: var(--faint); font-size: 13px; margin: 0; }
 .footer-links { margin: 6px 0 0; font-size: 13px; display: flex; gap: 8px; align-items: center; }
 .footer-links span { color: var(--faint); }

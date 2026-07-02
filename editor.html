@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editor, Loop Architecture</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="description" content="Edit a Loop Architecture YAML and see the interactive diagram update live." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="visualizer/dist/visualizer.css" />
+  <style>
+    .editor-page { max-width: 100%; padding: 0; }
+    .editor-page .lead { padding: 24px 24px 12px; }
+    .editor-full { height: calc(100vh - 210px); min-height: 520px; margin: 0 24px 24px; }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4">
+            <path d="M16 6a10 10 0 1 1-9.5 6.9" stroke-linecap="round" />
+            <path d="M6 6.5 6.5 12.5 12.5 12" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        <span>Loop<b>Architecture</b></span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#format">Spec</a>
+        <a href="index.html#diagram">Examples</a>
+        <a href="index.html">← Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="doc editor-page">
+    <section class="lead">
+      <h1>Editor</h1>
+      <p>
+        Edit the Loop Architecture YAML on the left; the diagram on the right updates live. Pick an
+        example to start, then change systems, loops, triggers and prompts.
+      </p>
+    </section>
+    <div id="editor" class="editor-full">
+      <p class="flow-loading">Loading editor…</p>
+    </div>
+  </main>
+
+  <script type="module">
+    import { mountEditor } from './visualizer/dist/visualizer.js';
+    mountEditor(document.getElementById('editor'), {
+      examples: [
+        { label: 'Docs', url: 'examples/docs.looparch.yaml' },
+        { label: 'DevOps', url: 'examples/your-org.looparch.yaml' },
+        { label: 'Data Product Builder', url: 'examples/data-product-builder.looparch.yaml' },
+        { label: 'Self-Learning', url: 'examples/self-learning.looparch.yaml' },
+      ],
+    });
+  </script>
+</body>
+</html>

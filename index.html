@@ -22,20 +22,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xyflow/react@12/dist/style.css" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="visualizer/visualizer.css" />
-  <script type="importmap">
-  {
-    "imports": {
-      "react": "https://esm.sh/react@18.3.1",
-      "react-dom": "https://esm.sh/react-dom@18.3.1",
-      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-      "htm": "https://esm.sh/htm@3.1.1",
-      "@xyflow/react": "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1"
-    }
-  }
-  </script>
+  <link rel="stylesheet" href="visualizer/dist/visualizer.css" />
 </head>
 <body>
   <header class="nav">
@@ -81,7 +69,7 @@
 
     <!-- PRINCIPLES -->
     <section id="principles">
-      <h2>Four principles</h2>
+      <h2>Five principles</h2>
       <ol class="principles">
         <li>
           <span class="principle-n">1</span>
@@ -107,6 +95,13 @@
         <li>
           <span class="principle-n">4</span>
           <div>
+            <b>Human on the loop.</b>
+            <p>A human supervises the whole, not every run. They spot-check with samples and focus on the results and their quality, not on reviewing each turn.</p>
+          </div>
+        </li>
+        <li>
+          <span class="principle-n">5</span>
+          <div>
             <b>One file, real routines.</b>
             <p>The whole architecture is one reviewable YAML that publishes to runnable Claude Code routines.</p>
           </div>
@@ -118,31 +113,26 @@
     <section id="diagram">
       <h2>Examples</h2>
       <p>
-        A Loop Architecture drawn as one interactive diagram: the systems, and the agentic loops
-        between them. Pick an example and click any system or loop for details.
+        A Loop Architecture is one YAML file. Edit it on the left and the diagram on the right updates
+        live: the systems, the agentic loops, and the edges between them. Pick an example, or click any
+        system or loop for details.
       </p>
-      <div class="flow-tabs" role="tablist">
-        <button class="flow-tab active" data-src="assets/docs.flow.json"><span class="flow-tab-eg">Example:</span> Docs</button>
-        <button class="flow-tab" data-src="assets/your-org.flow.json"><span class="flow-tab-eg">Example:</span> DevOps</button>
-        <button class="flow-tab" data-src="assets/data-product-builder.flow.json"><span class="flow-tab-eg">Example:</span> Data Product Builder</button>
+      <div id="examples-editor" class="editor-host">
+        <p class="flow-loading">Loading editor…</p>
       </div>
-      <div id="flow" class="flow">
-        <p class="flow-loading">Loading interactive diagram…</p>
-      </div>
+      <p class="more-row"><a class="more" href="editor.html">Open the full-screen editor →</a></p>
     </section>
 
     <script type="module">
-      import { createController } from './visualizer/visualizer.js';
-
-      const viz = createController(document.getElementById('flow'));
-      document.querySelectorAll('.flow-tab').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.flow-tab').forEach((b) => b.classList.remove('active'));
-          btn.classList.add('active');
-          viz.show(btn.dataset.src);
-        });
+      import { mountEditor } from './visualizer/dist/visualizer.js';
+      mountEditor(document.getElementById('examples-editor'), {
+        examples: [
+          { label: 'Docs', url: 'examples/docs.looparch.yaml' },
+          { label: 'DevOps', url: 'examples/your-org.looparch.yaml' },
+          { label: 'Data Product Builder', url: 'examples/data-product-builder.looparch.yaml' },
+          { label: 'Self-Learning', url: 'examples/self-learning.looparch.yaml' },
+        ],
       });
-      viz.show(document.querySelector('.flow-tab.active').dataset.src);
     </script>
 
     <!-- LOOP STORMING -->
@@ -154,6 +144,10 @@
         back to), names them, writes their prompts, and sets triggers. The messy wall is your initial
         map; you then refine it into a formal Loop Architecture YAML.
       </p>
+      <a class="storm-photo-link" href="loop-storming.html" aria-label="Read the Loop Storming guide">
+        <img class="storm-photo" src="assets/loop-storming-example.png"
+             alt="A pen-and-paper Loop Storming wall: systems, agentic loops drawn between them, and trigger symbols." />
+      </a>
       <div class="flow3">
         <div class="flow-step">
           <span class="flow-n">1</span>
@@ -323,11 +317,16 @@ viz.show(<span class="c-str">'your-org.flow.json'</span>);   <span class="c-cmt"
           <span class="author-name">Simon Harrer</span><span class="author-link">LinkedIn ↗</span>
         </a>
       </div>
+      <p><a class="more" href="origin.html">Read the origin story →</a></p>
     </section>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
+      <a class="footer-brand" href="https://www.entropy-data.com" target="_blank" rel="noopener" aria-label="Entropy Data">
+        <span class="footer-by">Made by</span>
+        <img src="https://www.entropy-data.com/media/entropy-data-logo.svg" alt="Entropy Data" height="24" />
+      </a>
       <p class="footer-fine">loop-architecture.com</p>
       <p class="footer-links">
         <a href="https://www.entropy-data.com/imprint" target="_blank" rel="noopener">Imprint</a>

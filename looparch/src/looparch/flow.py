@@ -120,8 +120,9 @@ def render(arch: Architecture, out_path: str | Path, favicons: bool = True) -> P
     return out
 
 
-# Where `looparch view` loads the shared visualizer module + styles from.
-VISUALIZER_BASE = "https://www.loop-architecture.com/visualizer"
+# Where `looparch view` loads the shared visualizer bundle (React + React Flow are
+# bundled in, so the page needs no import map).
+VISUALIZER_BASE = "https://www.loop-architecture.com/visualizer/dist"
 
 _PAGE = """<!DOCTYPE html>
 <html lang="en">
@@ -129,19 +130,7 @@ _PAGE = """<!DOCTYPE html>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{title} - Loop Architecture</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xyflow/react@12/dist/style.css" />
 <link rel="stylesheet" href="{base}/visualizer.css" />
-<script type="importmap">
-{{
-  "imports": {{
-    "react": "https://esm.sh/react@18.3.1",
-    "react-dom": "https://esm.sh/react-dom@18.3.1",
-    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-    "htm": "https://esm.sh/htm@3.1.1",
-    "@xyflow/react": "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1"
-  }}
-}}
-</script>
 <style>
   html, body {{ margin: 0; min-height: 100%; background: #fff; font-family: Inter, system-ui, sans-serif; }}
   /* fill the viewport; .flow (from visualizer.css) provides border, palette and layout */

@@ -1,0 +1,47 @@
+# A self-learning Loop Architecture: loops read their own Claude Code routine runs
+# and result quality, and improve the Loop Architecture itself, opening pull
+# requests for a human on the loop to spot-check.
+id: self-learning
+name: Self-Learning
+
+systems:
+  - id: runs
+    name: Routine Runs
+    description: Claude Code routine run logs and their outcomes
+    url: https://claude.ai
+    connector: claude-code
+  - id: quality
+    name: Result Quality
+    description: Quality signals and evals for loop outcomes
+    url: https://dash0.com
+    connector: dash0
+  - id: loop-architecture
+    name: Loop Architecture
+    description: The Loop Architecture YAML, prompts and triggers
+    repository: https://github.com/your-org/loops
+
+loops:
+  - id: improve-loops
+    name: Improve Loops
+    description: Improves loops from how their past runs performed.
+    trigger: "0 6 * * 1"
+    model: claude-opus-4-8
+    observe: [runs, quality]
+    act: [loop-architecture]
+    prompt: >
+      Review the last week of routine runs and their result quality. Where a loop
+      underperforms or its prompt has drifted from good outcomes, improve the loop's
+      prompt or trigger in the Loop Architecture and open a pull request for a human
+      to review.
+    tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
+
+  - id: retire-loops
+    name: Retire Loops
+    description: Proposes retiring loops that no longer earn their keep.
+    trigger: "0 6 1 * *"
+    observe: [runs]
+    act: [loop-architecture]
+    prompt: >
+      If a loop has produced no useful change across many runs, propose retiring or
+      re-scoping it in the Loop Architecture with a pull request that explains why.
+    tools: [Read, Grep, Bash(git *), Bash(gh pr *)]
