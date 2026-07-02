@@ -1,8 +1,8 @@
 """Import existing Claude Code routines back into a Loop Architecture YAML.
 
 Reads a project's `.claude/routines/*.json` descriptors (and the matching
-`.claude/commands/loop-*.md` prompts, when present) — the artifacts `looparch
-publish` produces — and reconstructs the `id` / `systems` / `loops` document.
+`.claude/commands/loop-*.md` prompts, when present), the artifacts `looparch
+publish` produces, and reconstructs the `id` / `systems` / `loops` document.
 
 The routine descriptor carries the trigger, model, repositories and connectors;
 the command prompt carries the systems the loop uses / writes back to and their
@@ -118,7 +118,7 @@ def build(descriptors: list[tuple[dict, str | None]], arch_id: str = "imported")
         observe = parsed["observe"] or [s.get("id") for s in [] ]
         act = parsed["act"]
         if not observe and not act:
-            # No prompt to recover direction from — put every known system on both sides.
+            # No prompt to recover direction from, put every known system on both sides.
             fallback = list(parsed["systems"].keys())
             observe, act = fallback, fallback
 

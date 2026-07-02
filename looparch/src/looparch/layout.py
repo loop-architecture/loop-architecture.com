@@ -2,8 +2,7 @@
 
 The graph is directed: a system feeds a loop it is *observed* by (system → loop),
 and a loop feeds a system it *acts* on (loop → system). Following these edges
-produces cascades — e.g. `code-repo → sync-docs → docs → translate-docs → docs-de`
-— which we want to read left-to-right.
+produces cascades, e.g. `code-repo → sync-docs → docs → translate-docs → docs-de`, which we want to read left-to-right.
 
 We (1) break cycles with a DFS (the removed edges become the few right-to-left
 arrows), (2) assign each node a column by longest path (so every kept edge points
@@ -145,7 +144,7 @@ def _crossings(columns: list[list[str]], undirected: list[tuple[str, str]],
 
 def _transpose(columns: list[list[str]], undirected: list[tuple[str, str]]) -> list[list[str]]:
     """Greedily swap adjacent nodes within a column whenever it lowers total
-    crossings. Repeats until no swap helps — directly minimising crossings."""
+    crossings. Repeats until no swap helps, directly minimising crossings."""
     def col_of(cols: list[list[str]]) -> dict[str, int]:
         return {n: c for c, col in enumerate(cols) for n in col}
 

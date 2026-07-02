@@ -56,10 +56,10 @@ def _report(arch: Architecture, do_lint: bool) -> int:
     for i in warnings:
         print(warn(str(i)))
     if errors:
-        print(err(f"✗ invalid — {len(errors)} error(s), {len(warnings)} warning(s)"))
+        print(err(f"✗ invalid, {len(errors)} error(s), {len(warnings)} warning(s)"))
         return 1
     tail = f" ({len(warnings)} warning(s))" if warnings else ""
-    print(ok(f'✓ valid — "{arch.name}": {len(arch.loops)} loops, {len(arch.systems)} systems{tail}'))
+    print(ok(f'✓ valid, "{arch.name}": {len(arch.loops)} loops, {len(arch.systems)} systems{tail}'))
     return 0
 
 
@@ -160,7 +160,7 @@ def cmd_publish(args: argparse.Namespace) -> int:
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="looparch",
-        description="Loop Architecture — validate, visualize and publish agentic loops.",
+        description="Loop Architecture, validate, visualize and publish agentic loops.",
     )
     p.add_argument("--version", action="version", version=f"looparch {__version__}")
     sub = p.add_subparsers(dest="command", required=True)

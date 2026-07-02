@@ -1,4 +1,4 @@
-"""looparch — Loop Architecture tooling.
+"""looparch, Loop Architecture tooling.
 
 Validate, lint, visualize and publish `looparch/v1` loops.
 """

@@ -1,4 +1,4 @@
-"""Render a whole Loop Architecture — all systems and loops — as one SVG diagram.
+"""Render a whole Loop Architecture, all systems and loops, as one SVG diagram.
 
 Systems are boxes (with their favicon as an icon); each loop is a colored hub.
 An `observe` edge runs from a system into the loop (the loop *uses* the system);
