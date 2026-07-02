@@ -55,9 +55,25 @@
         <li><b>Define the systems.</b> Focus on data, source code, and storage. One sticky each; note the URL or repo.</li>
         <li><b>Brainstorm the loops.</b> Which agentic loops make sense between these systems? Look for the manual, between-systems work.</li>
         <li><b>Draw them as edges &amp; name them.</b> Arrows for <em>uses</em> and <em>writes back</em>; a verb-first name and a one-line prompt each.</li>
-        <li><b>Add the trigger icons.</b> 🕐 schedule · ⚡ event · manual. A loop can have more than one.</li>
+        <li><b>Add the trigger icons.</b> Mark <em>when</em> each loop turns with an emoji (below). A loop can have more than one.</li>
         <li><b>Prioritize.</b> Impact × confidence. Start top-right.</li>
       </ol>
+      <dl class="stages" style="margin-top:16px">
+        <div><dt>🕐 schedule</dt><dd>Runs on a cadence — a cron like <code>0 6 * * *</code>.</dd></div>
+        <div><dt>⚡ event</dt><dd>Runs on an event — e.g. <code>pull_request.merged</code>, <code>push</code>.</dd></div>
+        <div><dt>📅 once</dt><dd>Runs a single time — an ISO timestamp.</dd></div>
+        <div><dt>👆 manual</dt><dd>Runs on demand.</dd></div>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Example: a pen &amp; paper wall</h2>
+      <p>A real Loop Storming session — the systems and loop edges that became this site's
+        <a href="index.html#diagram">example architecture</a>, drawn by hand:</p>
+      <a href="assets/loop-storming-example.png" target="_blank" rel="noopener">
+        <img class="storm-photo" src="assets/loop-storming-example.png"
+             alt="A hand-drawn Loop Storming wall: systems (CI/CD, Logs/Traces/Metrics, Docs, Jira, Confluence, App/Azure, Terraform, ISO 27001, OneDrive, Slack) connected by loop edges." />
+      </a>
     </section>
 
     <section>
