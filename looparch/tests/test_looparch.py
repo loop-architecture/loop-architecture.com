@@ -145,6 +145,22 @@ def test_layout_is_left_to_right() -> None:
     assert plan.crossings >= 0
 
 
+def test_import_round_trip(tmp_path: Path) -> None:
+    from looparch import importer
+    arch = load_architecture(EXAMPLE)
+    publish(arch, root=tmp_path)  # writes .claude/commands + .claude/routines
+    descriptors = importer.load_descriptors(tmp_path)
+    assert len(descriptors) == len(arch.loops)
+    data = importer.build(descriptors, arch_id="round-trip")
+    rebuilt = Architecture(raw=data)
+    # No schema errors, and the loops + their observe/act come back.
+    assert not [i for i in check(rebuilt) if i.level == "error"]
+    assert {lp.id for lp in rebuilt.loops} == {lp.id for lp in arch.loops}
+    docs = rebuilt.loop("sync-docs")
+    assert docs.observe == ["code-repo"] and docs.act == ["docs"]
+    assert "pull_request.merged" in docs.triggers
+
+
 def test_flow_export_shape() -> None:
     from looparch import flow
     arch = load_architecture(EXAMPLE)

@@ -6,7 +6,9 @@ import argparse
 import sys
 from pathlib import Path
 
-from . import __version__, architecture, flow
+import yaml
+
+from . import __version__, architecture, flow, importer
 from .model import Architecture, LoopError, load_architecture
 from .publish import publish
 from .templates import scaffold
@@ -107,6 +109,24 @@ def cmd_diagram(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_import(args: argparse.Namespace) -> int:
+    descriptors = importer.load_descriptors(args.path)
+    if not descriptors:
+        print(err(f"✗ no routine descriptors found under {args.path}"), file=sys.stderr)
+        return 1
+    arch_id = args.id or (Path(args.path).resolve().name if Path(args.path).is_dir() else "imported")
+    arch_id = "".join(c if c.isalnum() else "-" for c in arch_id.lower()).strip("-") or "imported"
+    data = importer.build(descriptors, arch_id=arch_id)
+    text = yaml.safe_dump(data, sort_keys=False, allow_unicode=True, default_flow_style=False, width=100)
+    if args.output:
+        Path(args.output).write_text(text, encoding="utf-8")
+        print(ok(f"✓ wrote {args.output}  ({len(data['loops'])} loops, {len(data['systems'])} systems)"))
+        print(dim("  review observe/act and triggers, then: looparch validate"))
+    else:
+        print(text, end="")
+    return 0
+
+
 def cmd_export(args: argparse.Namespace) -> int:
     arch = _load(args.file)
     out = Path(args.output or f"{arch.id or 'loop-architecture'}.flow.json")
@@ -169,6 +189,12 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("-o", "--output", help="output image (.svg or .png; default: <id>.svg)")
     s.add_argument("--no-favicons", action="store_true", help="skip fetching system favicons")
     s.set_defaults(func=cmd_diagram)
+
+    s = sub.add_parser("import", help="import existing Claude Code routines into a Loop Architecture YAML")
+    s.add_argument("path", help="project root, a .claude/routines dir, or a routine .json")
+    s.add_argument("-o", "--output", help="output YAML (default: stdout)")
+    s.add_argument("--id", help="architecture id (default: from the directory name)")
+    s.set_defaults(func=cmd_import)
 
     s = sub.add_parser("export", help="export React Flow JSON for the interactive diagram")
     s.add_argument("file")

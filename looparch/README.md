@@ -37,6 +37,7 @@ looparch publish entropy-data.looparch.yaml      # every loop → a Claude Code 
 | `looparch diagram <file>`                 | Render **all** loops + systems as one architecture diagram (SVG/PNG). |
 | `looparch export <file>`                  | Export React Flow JSON for the **interactive** web diagram.       |
 | `looparch publish <file> [loop-id]`       | Publish all loops (or one) as Claude Code routines.              |
+| `looparch import <path>`                  | Reconstruct a Loop Architecture YAML from existing Claude Code routines. |
 
 `diagram` writes `.svg` by default; pass `-o out.png` for PNG (needs the `png` extra). It fetches each
 system's favicon (from its `url`/`repository`) as its icon — pass `--no-favicons` to skip the network.

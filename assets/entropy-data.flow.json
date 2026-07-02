@@ -9,7 +9,7 @@
       "type": "system",
       "position": {
         "x": 40,
-        "y": 302.42479401192566
+        "y": 525.9901185280044
       },
       "data": {
         "label": "Dash0",
@@ -31,7 +31,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 295.5242182939881
+        "y": 646.3698213291594
       },
       "data": {
         "label": "App Repo",
@@ -55,7 +55,7 @@
       "type": "system",
       "position": {
         "x": 40,
-        "y": 122.42479401192566
+        "y": 120.0
       },
       "data": {
         "label": "Terraform Infra",
@@ -76,7 +76,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 55.524218293988085
+        "y": 60.0
       },
       "data": {
         "label": "App on Azure",
@@ -98,7 +98,7 @@
       "type": "system",
       "position": {
         "x": 40,
-        "y": 2.4247940119256484
+        "y": 0.0
       },
       "data": {
         "label": "CI/CD",
@@ -119,7 +119,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 175.5242182939881
+        "y": 526.3698213291594
       },
       "data": {
         "label": "Jira",
@@ -143,7 +143,7 @@
       "type": "system",
       "position": {
         "x": 1320,
-        "y": 269.1501696202136
+        "y": 603.458324546966
       },
       "data": {
         "label": "Confluence",
@@ -164,7 +164,7 @@
       "type": "system",
       "position": {
         "x": 1320,
-        "y": 398.81418877921436
+        "y": 723.458324546966
       },
       "data": {
         "label": "Docs (EN)",
@@ -188,7 +188,7 @@
       "type": "system",
       "position": {
         "x": 1960,
-        "y": 341.23019356896464
+        "y": 657.0025700511359
       },
       "data": {
         "label": "Docs (DE)",
@@ -209,7 +209,7 @@
       "type": "system",
       "position": {
         "x": 1960,
-        "y": 461.23019356896464
+        "y": 777.0025700511359
       },
       "data": {
         "label": "Landing Page",
@@ -230,7 +230,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 639.2886448392813
+        "y": 766.3698213291594
       },
       "data": {
         "label": "OneDrive",
@@ -251,7 +251,7 @@
       "type": "system",
       "position": {
         "x": 40,
-        "y": 639.2886448392813
+        "y": 747.0027906677549
       },
       "data": {
         "label": "Kertos",
@@ -272,7 +272,7 @@
       "type": "system",
       "position": {
         "x": 680,
-        "y": 415.5242182939881
+        "y": 406.3698213291594
       },
       "data": {
         "label": "Slack",
@@ -293,7 +293,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 360.0
+        "y": 472.4457947891076
       },
       "data": {
         "label": "Triage Incidents",
@@ -320,7 +320,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 240.0
+        "y": 592.4457947891076
       },
       "data": {
         "label": "Fix Errors",
@@ -398,7 +398,7 @@
       "type": "loop",
       "position": {
         "x": 1000,
-        "y": 389.1501696202136
+        "y": 729.914079042796
       },
       "data": {
         "label": "Sync Docs",
@@ -430,7 +430,7 @@
       "type": "loop",
       "position": {
         "x": 1640,
-        "y": 341.23019356896464
+        "y": 657.0025700511359
       },
       "data": {
         "label": "Translate Docs",
@@ -456,7 +456,7 @@
       "type": "loop",
       "position": {
         "x": 1000,
-        "y": 269.1501696202136
+        "y": 609.914079042796
       },
       "data": {
         "label": "Sync Confluence",
@@ -482,7 +482,7 @@
       "type": "loop",
       "position": {
         "x": 1640,
-        "y": 461.23019356896464
+        "y": 777.0025700511359
       },
       "data": {
         "label": "Sync Landing Page",
@@ -508,7 +508,7 @@
       "type": "loop",
       "position": {
         "x": 1000,
-        "y": 149.15016962021355
+        "y": 489.91407904279595
       },
       "data": {
         "label": "Answer Tickets",
@@ -534,7 +534,7 @@
       "type": "loop",
       "position": {
         "x": 360,
-        "y": 639.2886448392813
+        "y": 753.4584628216825
       },
       "data": {
         "label": "Review Compliance",

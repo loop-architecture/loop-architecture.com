@@ -280,7 +280,8 @@
 <span class="c-p">$</span> looparch show entropy-data.looparch.yaml        <span class="c-cmt"># readable summary</span>
 <span class="c-p">$</span> looparch diagram entropy-data.looparch.yaml     <span class="c-cmt"># ALL loops → one diagram (SVG)</span>
 <span class="c-p">$</span> looparch export entropy-data.looparch.yaml      <span class="c-cmt"># → React Flow JSON (interactive)</span>
-<span class="c-p">$</span> looparch publish entropy-data.looparch.yaml     <span class="c-cmt"># → Claude Code routines</span></code></pre>
+<span class="c-p">$</span> looparch publish entropy-data.looparch.yaml     <span class="c-cmt"># → Claude Code routines</span>
+<span class="c-p">$</span> looparch import ./my-project                    <span class="c-cmt"># ← existing routines back to YAML</span></code></pre>
       <p class="note">
         <code>publish</code> writes, for each loop, a slash command
         (<code>.claude/commands/loop-&lt;id&gt;.md</code>) and a routine descriptor

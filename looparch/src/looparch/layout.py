@@ -166,6 +166,68 @@ def _transpose(columns: list[list[str]], undirected: list[tuple[str, str]]) -> l
     return cols
 
 
+def _reposition(columns: list[list[str]], undirected: list[tuple[str, str]]) -> list[list[str]]:
+    """Move each node to the best position in its column (a larger neighbourhood than
+    adjacent swaps), repeating until stable."""
+    def col_of(cols: list[list[str]]) -> dict[str, int]:
+        return {n: c for c, col in enumerate(cols) for n in col}
+
+    cols = [list(c) for c in columns]
+    improved = True
+    while improved:
+        improved = False
+        cur = _crossings(cols, undirected, col_of(cols))
+        if cur == 0:
+            break
+        for c in range(len(cols)):
+            for n in list(cols[c]):
+                cols[c].remove(n)
+                best_pos, best_cr = 0, None
+                for pos in range(len(cols[c]) + 1):
+                    cols[c].insert(pos, n)
+                    cr = _crossings(cols, undirected, col_of(cols))
+                    if best_cr is None or cr < best_cr:
+                        best_cr, best_pos = cr, pos
+                    cols[c].pop(pos)
+                cols[c].insert(best_pos, n)
+                if best_cr is not None and best_cr < cur:
+                    cur, improved = best_cr, True
+    return cols
+
+
+def _optimize(
+    init: list[list[str]], undirected: list[tuple[str, str]],
+    neighbors: dict[str, list[str]],
+) -> tuple[list[list[str]], int]:
+    """Barycenter + transpose + reposition from a given starting order."""
+    def col_of(cols: list[list[str]]) -> dict[str, int]:
+        return {n: c for c, col in enumerate(cols) for n in col}
+
+    columns = [list(c) for c in init]
+    n_cols = len(columns)
+    best = [list(c) for c in columns]
+    best_cross = _crossings(best, undirected, col_of(best))
+
+    for p in range(PASSES):
+        rng = range(1, n_cols) if p % 2 == 0 else range(n_cols - 2, -1, -1)
+        rows = {n: i for col in columns for i, n in enumerate(col)}
+        for c in rng:
+            def bary(n: str) -> float:
+                ns = neighbors[n]
+                return sum(rows[x] for x in ns) / len(ns) if ns else rows[n]
+            columns[c] = sorted(columns[c], key=bary)
+            for i, n in enumerate(columns[c]):
+                rows[n] = i
+        columns = _transpose(columns, undirected)
+        columns = _reposition(columns, undirected)
+        cross = _crossings(columns, undirected, col_of(columns))
+        if cross < best_cross:
+            best_cross, best = cross, [list(c) for c in columns]
+        if best_cross == 0:
+            break
+    return best, best_cross
+
+
 def solve(
     system_ids: list[str],
     loop_ids: list[str],
@@ -203,25 +265,26 @@ def solve(
     def col_of(cols: list[list[str]]) -> dict[str, int]:
         return {n: c for c, col in enumerate(cols) for n in col}
 
-    best = [list(c) for c in columns]
-    best_cross = _crossings(best, undirected, col_of(best))
+    deg = {n: len(neighbors[n]) for n in nodes}
 
-    for p in range(PASSES):
-        rng = range(1, n_cols) if p % 2 == 0 else range(n_cols - 2, -1, -1)
-        rows = {n: i for col in columns for i, n in enumerate(col)}
-        for c in rng:
-            def bary(n: str) -> float:
-                ns = neighbors[n]
-                return sum(rows[x] for x in ns) / len(ns) if ns else rows[n]
-            columns[c] = sorted(columns[c], key=bary)
-            for i, n in enumerate(columns[c]):
-                rows[n] = i
-        # Transpose step: swap adjacent nodes to directly cut crossings.
-        columns = _transpose(columns, undirected)
-        cross = _crossings(columns, undirected, col_of(columns))
-        if cross < best_cross:
-            best_cross = cross
-            best = [list(c) for c in columns]
+    # Several deterministic starting orders, to escape local minima.
+    def variant(key) -> list[list[str]]:
+        return [sorted(col, key=key) for col in columns]
+
+    starts = [
+        [list(c) for c in columns],                       # by id
+        variant(lambda n: -deg[n]),                       # high-degree first
+        variant(lambda n: deg[n]),                        # low-degree first
+        [list(reversed(c)) for c in columns],             # reversed
+    ]
+
+    best, best_cross = None, None
+    for start in starts:
+        cols, cross = _optimize(start, undirected, neighbors)
+        if best_cross is None or cross < best_cross:
+            best, best_cross = cols, cross
+        if best_cross == 0:
+            break
 
     columns = best
     y_of = _straighten(columns, neighbors)
