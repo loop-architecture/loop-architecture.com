@@ -1,6 +1,6 @@
 # A whole Loop Architecture: many systems and many loops in one file.
 id: your-org
-name: Your Org
+name: DevOps
 
 # Systems the loops read from (use) and write back to (act).
 # Each system has an id, plus an optional name / description / url / repository / connector.
